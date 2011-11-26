@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : installer.xml
+    Created on : 26 novembre 2011, 16:11
+    Author     : jobou
+    Description:
+        Used to execute all installation steps for the installation of 
+        simpleforum extension
+-->
+
+<eZXMLImporter>
+    <ProccessInformation comment="Start simpleforum extension installation" />
+    <CreateSection sectionName="Forum" sectionIdentifier="forum" navigationPart="ezforumnavigationpart" referenceID="SECTION_FORUM">    
+    </CreateSection>
+    <ProccessInformation comment="Section Forum created" />
+    <CreateContent parentNode="1">
+        <ContentObject owner="14" creator="14" contentClass="folder" section="3" remoteID="forum_root_folder">
+          <Attributes>
+            <name>Forum</name>
+            <short_name>Forum</short_name>
+          </Attributes>
+          <SetReference attribute="object_id" value="FORUM_ROOT_OBJECT_ID" />
+          <SetReference attribute="node_id" value="FORUM_ROOT_NODE_ID" />
+        </ContentObject>
+    </CreateContent>
+    <ProccessInformation comment="Forum root node created" />
+    <SimpleForumSetSettings>
+        <SettingsFile location="extension/simpleforum/settings" name="menu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
+        <SettingsFile location="extension/simpleforum/settings" name="contentstructuremenu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
+        <SettingsFile location="extension/simpleforum/settings" name="content.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
+    </SimpleForumSetSettings>
+    <ProccessInformation comment="Forum settings updated" />
+</eZXMLImporter>

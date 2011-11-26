@@ -1,0 +1,7 @@
+<?php /* #?ini charset="utf-8"?
+
+[TreeMenu]
+ForumRootNodeID=__FORUM_NODE_ID__
+ShowClasses[]=forum_folder
+
+*/ ?>
