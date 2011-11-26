@@ -3,5 +3,6 @@
 [TreeMenu]
 ForumRootNodeID=59
 ShowClasses[]=forum_folder
+Dynamic=enabled
 
 */ ?>

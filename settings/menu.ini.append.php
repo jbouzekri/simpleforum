@@ -18,6 +18,7 @@ Shown[]
 Shown[default]=true
 Shown[navigation]=true
 Shown[browse]=true
+PolicyList[]=59
 
 [Leftmenu_forum]
 Name=forum
