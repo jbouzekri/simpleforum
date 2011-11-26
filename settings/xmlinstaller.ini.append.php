@@ -4,5 +4,6 @@
 ExtensionDirectories[]=simpleforum
 
 XMLInstallerHandler[]=simpleforumsetsettings
+XMLInstallerHandler[]=simpleforumcreatesection
 
-*/?>
+*/ ?>

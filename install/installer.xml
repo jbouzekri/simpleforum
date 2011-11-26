@@ -11,11 +11,11 @@
 
 <eZXMLImporter>
     <ProccessInformation comment="Start simpleforum extension installation" />
-    <CreateSection sectionName="Forum" sectionIdentifier="forum" navigationPart="ezforumnavigationpart" referenceID="SECTION_FORUM">    
-    </CreateSection>
+    <SimpleForumCreateSection sectionName="Forum" sectionIdentifier="forum" navigationPart="ezforumnavigationpart" referenceID="SECTION_FORUM">
+    </SimpleForumCreateSection>
     <ProccessInformation comment="Section Forum created" />
     <CreateContent parentNode="1">
-        <ContentObject owner="14" creator="14" contentClass="folder" section="3" remoteID="forum_root_folder">
+        <ContentObject owner="14" creator="14" contentClass="folder" section="internal:SECTION_FORUM" remoteID="forum_root_folder">
           <Attributes>
             <name>Forum</name>
             <short_name>Forum</short_name>

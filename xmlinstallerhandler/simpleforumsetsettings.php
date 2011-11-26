@@ -47,4 +47,3 @@ class simpleForumSetSettings extends eZXMLInstallerHandler
     }
 }
 
-?>
