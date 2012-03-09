@@ -63,6 +63,10 @@ class SimpleForumTopic extends eZPersistentObject
                                        'default' => 0,
                                        'required' => true ),
                   ),
+                  'function_attributes' => array(
+                      'forum_node' => 'forumNode',
+                      'user'       => 'topicUser'
+                  ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
                   'class_name' => 'SimpleForumTopic',
@@ -97,6 +101,34 @@ class SimpleForumTopic extends eZPersistentObject
         
         $object = new self( $row );
         return $object;
+    }
+    
+    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null)
+    {
+        if (!isset($cond['node_id']))
+        {
+            $contentIni = eZINI::instance('content.ini.append.php');
+            $cond['node_id'] = $contentIni->variable('NodeSettings', 'ForumRootNode');
+        }
+        $list = eZPersistentObject::fetchObjectList( self::definition(), null, $cond, $sortBy, $limit );
+        return $list;
+    }
+    
+    public static function fetch($id, $asObject = false)
+    {
+        $cond = array( 'id' => $id );
+        $topic = eZPersistentObject::fetchObject( self::definition(), null, $cond );
+        return $topic;
+    }
+    
+    public function forumNode()
+    {
+        return eZContentObjectTreeNode::fetch($this->attribute('node_id'));
+    }
+    
+    public function topicUser()
+    {
+        return eZUser::fetch($this->attribute('user_id'));
     }
 }
 ?>
