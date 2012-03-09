@@ -5,7 +5,7 @@ CREATE TABLE simpleforum_topic (
   name varchar(150) NOT NULL default '',
   content longtext NOT NULL,
   state enum('VALIDATED', 'MODERATED', 'PUBLISHED', 'CLOSED') default 'PUBLISHED',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_at int(11) NOT NULL default '0',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
