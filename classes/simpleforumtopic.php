@@ -103,14 +103,17 @@ class SimpleForumTopic extends eZPersistentObject
         return $object;
     }
     
-    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null)
+    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = false)
     {
         if (!isset($cond['node_id']))
         {
             $contentIni = eZINI::instance('content.ini.append.php');
             $cond['node_id'] = $contentIni->variable('NodeSettings', 'ForumRootNode');
         }
-        $list = eZPersistentObject::fetchObjectList( self::definition(), null, $cond, $sortBy, $limit );
+        
+        $list = eZPersistentObject::fetchObjectList( 
+                self::definition(), null, $cond, $sortBy, $limit, $asObject 
+        );
         return $list;
     }
     

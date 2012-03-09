@@ -48,6 +48,16 @@ $FunctionList['list'] = array( 'name' => 'list',
                                           'type'     => 'array',
                                           'required' => false,
                                           'default'  => array('published', 'asc')
+                                   ),
+                                   array( 'name'     => 'as_object',
+                                          'type'     => 'boolean',
+                                          'required' => false,
+                                          'default'  => true
+                                   ),
+                                   array( 'name'     => 'attribute_filter',
+                                          'type'     => 'array',
+                                          'required' => false,
+                                          'default'  => array()
                                    )
                                 )
 );

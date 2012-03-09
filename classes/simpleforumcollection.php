@@ -18,8 +18,9 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy )
+    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter )
     {
+        $filter  = array();
         $nodeIDs = array($forumNodeId);
         if ($depth != 1)
         {
@@ -29,7 +30,26 @@ class SimpleForumCollection {
                 $nodeIDs[] = $forum->attribute('node_id');
             }
         }
+        $filter['node_id'] = array($nodeIDs);
         
+        if (is_array($attributeFilter) && isset($attributeFilter[0]))
+        {
+            foreach ($attributeFilter as $filterItem)
+            {
+                if (is_array($filterItem) && isset($filterItem[0]) && count($filterItem) == 3)
+                {
+                    if ($filterItem[1] == '=')
+                    {
+                        $filter[$filterItem[0]] = $filterItem[2];
+                    }
+                    else
+                    {
+                        $filter[$filterItem[0]] = array($filterItem[1], $filterItem[2]);
+                    }
+                }
+            }
+        }
+        var_dump($filter);
         $formatedSortBy = null;
         if (is_array($sortBy))
         {
@@ -55,9 +75,7 @@ class SimpleForumCollection {
             );
         }
         
-        $result = SimpleForumTopic::fetchList(array(
-            'node_id' => array($nodeIDs)
-        ), $formatedLimit, $formatedSortBy);
+        $result = SimpleForumTopic::fetchList( $filter, $formatedLimit, $formatedSortBy, $asObject );
         
         return array( 'result' => $result );
     }
