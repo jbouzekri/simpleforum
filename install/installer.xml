@@ -15,10 +15,9 @@
     </SimpleForumCreateSection>
     <ProccessInformation comment="Section Forum created" />
     <CreateContent parentNode="1">
-        <ContentObject owner="14" creator="14" contentClass="folder" section="internal:SECTION_FORUM" remoteID="forum_root_folder">
+        <ContentObject owner="14" creator="14" contentClass="general_forum" section="internal:SECTION_FORUM" remoteID="forum_root_folder">
           <Attributes>
-            <name>Forum</name>
-            <short_name>Forum</short_name>
+            <title>Forum</title>
           </Attributes>
           <SetReference attribute="object_id" value="FORUM_ROOT_OBJECT_ID" />
           <SetReference attribute="node_id" value="FORUM_ROOT_NODE_ID" />
