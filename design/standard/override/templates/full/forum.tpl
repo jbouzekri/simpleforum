@@ -5,6 +5,8 @@
     {/foreach}
 </ul>
 
+<a href="{concat('/topic/new/',$node.node_id)|ezurl('no')}">{'Create a new topic'|i18n('simpleforum/topic')}</a>
+
 {def $topics=fetch('topic','list',hash(
     'forum_node_id', $node.node_id
 ))}
