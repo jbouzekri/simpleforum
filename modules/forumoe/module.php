@@ -13,7 +13,7 @@ $ViewList['upload'] = array(
 $ViewList['relations'] = array(
     'functions' => array( 'upload' ),
     'script' => 'relations.php',
-    'params' => array( 'ObjectID', 'ObjectVersion', 'ContentType', 'EmbedID', 'EmbedInline', 'EmbedSize' )
+    'params' => array( 'FilePath' )
     );
 
 $FunctionList = array();

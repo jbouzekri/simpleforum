@@ -2,7 +2,8 @@
                                            'scripts', array('ezoe/ez_core.js',
                                                             'ezoe/ez_core_animation.js',
                                                             'ezoe/ez_core_accordion.js',
-                                                            'ezoe/popup_utils.js'),
+                                                            'ezoe/popup_utils.js',
+                                                            'forum_popup_utils.js'),
                                            'css', array()
                                            )}
 <script type="text/javascript">
