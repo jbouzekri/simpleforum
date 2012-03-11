@@ -49,7 +49,7 @@ class SimpleForumCollection {
                 }
             }
         }
-        var_dump($filter);
+        
         $formatedSortBy = null;
         if (is_array($sortBy))
         {
@@ -78,6 +78,17 @@ class SimpleForumCollection {
         $result = SimpleForumTopic::fetchList( $filter, $formatedLimit, $formatedSortBy, $asObject );
         
         return array( 'result' => $result );
+    }
+    
+    function fetchResponse( $id )
+    {
+        $result = SimpleForumResponse::fetch($id);
+        return array( 'result' => $result );
+    }
+    
+    function fetchResponseList($topicID, $limit, $offset, $sortBy, $asObject, $attributeFilter)
+    {
+        
     }
 }
 

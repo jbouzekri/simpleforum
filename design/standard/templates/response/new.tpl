@@ -6,8 +6,8 @@
     </ul>
 {/if}
 
-<form action="{concat('/topic/new/',$forum_id)|ezurl('no')}" method="post">
+<form action="{concat('/response/new/',$topic_id)|ezurl('no')}" method="post">
     <input type="text" value="{$name}" name="name" />
     <textarea name="content">{$content}</textarea>
-    <input type="submit" name="create" value="{'Create'|i18n('simpleforum/topic')}" />
+    <input type="submit" name="create" value="{'Create'|i18n('simpleforum/response')}" />
 </form>

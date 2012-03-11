@@ -6,9 +6,8 @@ $Module = array( 'name' => 'Forum Topic Management',
 $ViewList = array();
 $ViewList['new'] = array(
     'script' => 'new.php',
-    'params' => array( 'ForumID' ) );
-$ViewList['view'] = array(
-    'script' => 'view.php',
     'params' => array( 'TopicID' ) );
+
+$FunctionList = array();
 
 ?>

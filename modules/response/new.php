@@ -3,9 +3,9 @@
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
-$forumID = $Params['ForumID'];
-$forum   = eZContentObjectTreeNode::fetch($forumID);
-if (!$forumID || !$forum || $forum->classIdentifier() != 'forum')
+$topicID = $Params['TopicID'];
+$topic   = SimpleForumTopic::fetch($topicID);
+if (!$topicID || !$topic)
 {
     return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
 }
@@ -20,41 +20,41 @@ if( $http->hasPostVariable('create') )
     $name    = $http->postVariable('name');
     if (!$name || $name == "")
     {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'Topic name is required' );
+        $errors[] = ezpI18n::tr( 'simpleforum/response', 'Response name is required' );
     }
     elseif (strlen($name) > 200)
     {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'Topic name is too long (200 characters max)' );
+        $errors[] = ezpI18n::tr( 'simpleforum/response', 'Response name is too long (200 characters max)' );
     }
     
     $content = $http->postVariable('content');
     if (!$content || $content == "")
     {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'Topic content is required' );
+        $errors[] = ezpI18n::tr( 'simpleforum/response', 'Response content is required' );
     }
     elseif (strlen($content) < 200)
     {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'Topic content must be at least 200 characters long.' );
+        $errors[] = ezpI18n::tr( 'simpleforum/response', 'Response content must be at least 200 characters long.' );
     }
     
-    $newTopic = SimpleForumTopic::create(array(
+    $newResponse = SimpleForumResponse::create(array(
         'name' => $name,
         'content' => $content,
-        'node_id' => $forumID
+        'topic_id' => $topicID
     ));
-    $newTopic->store();
-    if ($newTopic->id)
+    $newResponse->store();
+    if ($newResponse->id)
     {
         return $Module->redirectTo('/topic/view/'.$newTopic->id);
     }
     else
     {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'An error occured when trying to create the new topic' );
+        $errors[] = ezpI18n::tr( 'simpleforum/response', 'An error occured when trying to create the new response' );
     }
 }
 
-$tpl->setVariable('forum_id', $forumID);
-$tpl->setVariable('forum',    $forum);
+$tpl->setVariable('topic_id', $topicID);
+$tpl->setVariable('topic',    $topic);
 $tpl->setVariable('name',     $name);
 $tpl->setVariable('content',  $content);
 $tpl->setVariable('errors',   $errors);
@@ -62,8 +62,8 @@ $tpl->setVariable('errors',   $errors);
 $tpl->setVariable('input_handler', new simpleForumXMLInput());
 
 $Result = array();
-$Result['content'] = $tpl->fetch( 'design:topic/new.tpl' );
-$Result['path'] = array( array( 'url' => 'topic/new/'.$forumID,
+$Result['content'] = $tpl->fetch( 'design:response/new.tpl' );
+$Result['path'] = array( array( 'url' => 'response/new/'.$topicID,
                                 'text' => 'Create New Topic' ) );
 
 ?>
