@@ -2,80 +2,56 @@
 
 include_once( 'kernel/common/template.php' );
 
-$objectID        = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
-$objectVersion   = isset( $Params['ObjectVersion'] ) ? (int) $Params['ObjectVersion'] : 0;
+$fileID         = isset( $Params['FileID'] ) ? (int) $Params['FileID'] : null;
+$objectType     = isset( $Params['ObjectType'] ) ? $Params['ObjectType'] : null;
+$objectID     = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : null;
+$fileID         = isset( $Params['FileID'] ) ? (int) $Params['FileID'] : null;
 $embedInline     = isset( $Params['EmbedInline'] ) ? $Params['EmbedInline'] === 'true' : false;
 $embedSize       = isset( $Params['EmbedSize'] ) ? $Params['EmbedSize'] : '';
 $embedObjectJSON = 'false';
 $embedId         = 0;
 $tagName         = $embedInline ? 'embed-inline' : 'embed';
 
-// Supported content types: image, file, object and auto
-// file is not used, auto will decide according to site.ini rules
-$contentType   = 'objects';
-if ( isset( $Params['ContentType'] ) && $Params['ContentType'] !== '' )
-{
-    $contentType = $Params['ContentType'];
-}
+$contentType   = 'auto';
 
-
-if ( $objectID === 0  || $objectVersion === 0 )
+if ( !$objectType || !$objectID )
 {
-   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'objectType/ObjectID' ) );
    eZExecution::cleanExit();
 }
 
+if ( !$fileID )
+{
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'FileID' ) );
+   eZExecution::cleanExit();
+}
 
 $user = eZUser::currentUser();
 
-$object    = eZContentObject::fetch( $objectID );
+$image     = SimpleForumImage::fetch( $fileID );
 $imageIni  = eZINI::instance( 'image.ini' );
 $params    = array('loadImages' => true, 'imagePreGenerateSizes' => array('small', 'original') );
 
-if ( !$object )
+if ( !$image )
 {
-   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ImageID', '%value' => $fileID ) );
    eZExecution::cleanExit();
 }
 
-
-if ( isset( $Params['EmbedID'] )  && $Params['EmbedID'])
-{
-    $embedType = 'eZObject';
-    if ( is_numeric( $Params['EmbedID'] ) )
-        $embedId = $Params['EmbedID'];
-    else
-        list($embedType, $embedId) = explode('_', $Params['EmbedID']);
-    if ( $embedType === 'eZNode' )
-        $embedObject = eZContentObject::fetchByNodeID( $embedId );
-    else
-        $embedObject = eZContentObject::fetch( $embedId );
-        
-}
-
-
-if ( !$embedObject )
-{
-   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'EmbedID', '%value' => $Params['EmbedID'] ) );
-   eZExecution::cleanExit();
-}
-
-
-$imageSizeArray  = $imageIni->variable( 'AliasSettings', 'AliasList' );
+$imageSizeArray  = $imageIni->variable( 'AliasSettings', 'ForumAliasList' );
 $ini             = eZINI::instance( 'site.ini' );
 $contentIni      = eZINI::instance( 'content.ini' );
 $ezoeIni         = eZINI::instance( 'ezoe.ini' );
-$embedClassIdentifier = $embedObject->attribute( 'class_identifier' );
-$embedClassID    = $embedObject->attribute( 'contentclass_id' );
+$upload          = new simpleForumUpload();
+$classIdentifier = $upload->detectClassIdentifier( $image['mime'] );
 $sizeTypeArray   = array();
 
 
 if ( $contentType === 'auto' )
 {
     // figgure out what content type group this class is in
-    $contentType = eZOEXMLInput::embedTagContentType( $embedClassIdentifier, $embedClassID );
+    $contentType = simpleForumXMLInput::embedTagContentType( $classIdentifier );
 }
-
 
 if ( $embedSize && $contentType === 'images' )
 {
@@ -111,16 +87,16 @@ $sizeTypeArray['original'] = 'Original';
 
 // Get list of classes for embed and embed inline tags
 // use specific class list this embed class type if it exists
-if ( $contentIni->hasVariable( 'embed_' . $embedClassIdentifier, 'AvailableClasses' ) )
-    $classListData = $contentIni->variable( 'embed_' . $embedClassIdentifier, 'AvailableClasses' );
+if ( $contentIni->hasVariable( 'embed_' . $classIdentifier, 'AvailableClasses' ) )
+    $classListData = $contentIni->variable( 'embed_' . $classIdentifier, 'AvailableClasses' );
 else if ( $contentIni->hasVariable( 'embed-type_' . $contentType, 'AvailableClasses' ) )
     $classListData = $contentIni->variable( 'embed-type_' . $contentType, 'AvailableClasses' );
 else if ( $contentIni->hasVariable( 'embed', 'AvailableClasses' ) )
     $classListData = $contentIni->variable( 'embed', 'AvailableClasses' );
 
 // same for embed-inline
-if ( $contentIni->hasVariable( 'embed-inline_' . $embedClassIdentifier, 'AvailableClasses' ) )
-    $classListInlineData = $contentIni->variable( 'embed-inline_' . $embedClassIdentifier, 'AvailableClasses' );
+if ( $contentIni->hasVariable( 'embed-inline_' . $classIdentifier, 'AvailableClasses' ) )
+    $classListInlineData = $contentIni->variable( 'embed-inline_' . $classIdentifier, 'AvailableClasses' );
 else if ( $contentIni->hasVariable( 'embed-inline-type_' . $contentType, 'AvailableClasses' ) )
     $classListInlineData = $contentIni->variable( 'embed-inline-type_' . $contentType, 'AvailableClasses' );
 else if ( $contentIni->hasVariable( 'embed-inline', 'AvailableClasses' ) )
@@ -136,20 +112,6 @@ if ( $contentIni->hasVariable( 'embed-inline', 'ClassDescription' ) )
     $classListDescriptionInline = $contentIni->variable( 'embed-inline', 'ClassDescription' );
 else
     $classListDescriptionInline = array();
-
-// generate class hash
-$classList = array();
-if ( $classListData )
-{
-    $classList['-0-'] = 'None';
-    foreach ( $classListData as $class )
-    {
-        if ( isset( $classListDescription[$class] ) )
-            $classList[$class] = $classListDescription[$class];
-        else
-            $classList[$class] = $class;
-    }
-}
 
 $classListInline = array();
 if ( $classListInlineData )
@@ -177,15 +139,15 @@ else
 
 
 // view mode list
-if ( $contentIni->hasVariable( 'embed_' . $embedClassIdentifier, 'AvailableViewModes' ) )
-    $viewList = array_unique( $contentIni->variable( 'embed_' . $embedClassIdentifier, 'AvailableViewModes' ) );
+if ( $contentIni->hasVariable( 'embed_' . $classIdentifier, 'AvailableViewModes' ) )
+    $viewList = array_unique( $contentIni->variable( 'embed_' . $classIdentifier, 'AvailableViewModes' ) );
 elseif ( $contentIni->hasVariable( 'embed', 'AvailableViewModes' ) )
     $viewList = array_unique( $contentIni->variable( 'embed', 'AvailableViewModes' ) );
 else
     $viewList = array();
 
-if ( $contentIni->hasVariable( 'embed-inline_' . $embedClassIdentifier, 'AvailableViewModes' ) )
-    $viewListInline = array_unique( $contentIni->variable( 'embed-inline_' . $embedClassIdentifier, 'AvailableViewModes' ) );
+if ( $contentIni->hasVariable( 'embed-inline_' . $classIdentifier, 'AvailableViewModes' ) )
+    $viewListInline = array_unique( $contentIni->variable( 'embed-inline_' . $classIdentifier, 'AvailableViewModes' ) );
 elseif ( $contentIni->hasVariable( 'embed-inline', 'AvailableViewModes' ) )
     $viewListInline = array_unique( $contentIni->variable( 'embed-inline', 'AvailableViewModes' ) );
 else
@@ -194,29 +156,41 @@ else
 // custom attributes
 $customAttributes = array( 'embed' => array(), 'embed-inline' => array() );
 
-if ( $contentIni->hasVariable( 'embed_' . $embedClassIdentifier, 'CustomAttributes' ) )
-    $customAttributes['embed'] = $contentIni->variable( 'embed_' . $embedClassIdentifier, 'CustomAttributes' );
+if ( $contentIni->hasVariable( 'embed_' . $classIdentifier, 'CustomAttributes' ) )
+    $customAttributes['embed'] = $contentIni->variable( 'embed_' . $classIdentifier, 'CustomAttributes' );
 else if ( $contentIni->hasVariable( 'embed-type_' . $contentType, 'CustomAttributes' ) )
     $customAttributes['embed'] = $contentIni->variable( 'embed-type_' . $contentType, 'CustomAttributes' );
 else if ( $contentIni->hasVariable( 'embed', 'CustomAttributes' ) )
     $customAttributes['embed'] = $contentIni->variable( 'embed', 'CustomAttributes' );
 
-if ( $contentIni->hasVariable( 'embed-inline_' . $embedClassIdentifier, 'CustomAttributes' ) )
-    $customAttributes['embed-inline'] = $contentIni->variable( 'embed-inline_' . $embedClassIdentifier, 'CustomAttributes' );
+if ( $contentIni->hasVariable( 'embed-inline_' . $classIdentifier, 'CustomAttributes' ) )
+    $customAttributes['embed-inline'] = $contentIni->variable( 'embed-inline_' . $classIdentifier, 'CustomAttributes' );
 else if ( $contentIni->hasVariable( 'embed-inline-type_' . $contentType, 'CustomAttributes' ) )
     $customAttributes['embed-inline'] = $contentIni->variable( 'embed-inline-type_' . $contentType, 'CustomAttributes' );
 else if ( $contentIni->hasVariable( 'embed-inline', 'CustomAttributes' ) )
     $customAttributes['embed-inline'] = $contentIni->variable( 'embed-inline', 'CustomAttributes' );
 
 $tpl = eZTemplate::factory();
-$tpl->setVariable( 'object', $object );
-$tpl->setVariable( 'object_id', $objectID );
-$tpl->setVariable( 'object_version', $objectVersion );
+$tpl->setVariable( 'object', $image );
+$tpl->setVariable( 'object_id', $image['id'] );
+$tpl->setVariable( 'object_version', null );
 
+$tpl->setVariable( 'url_object_type', $objectType );
+$tpl->setVariable( 'url_object_id', $objectID );
+
+/*
 $tpl->setVariable( 'embed_id', $embedId );
 $tpl->setVariable( 'embed_type', $embedType );
 $tpl->setVariable( 'embed_object', $embedObject );
 $tpl->setVariable( 'embed_data', ezjscAjaxContent::nodeEncode( $embedObject, $params ) );
+$tpl->setVariable( 'content_type', $contentType );
+$tpl->setVariable( 'content_type_name', ucfirst( rtrim( $contentType, 's' ) ) );
+$tpl->setVariable( 'compatibility_mode', $ezoeIni->variable('EditorSettings', 'CompatibilityMode' ) );
+*/
+$tpl->setVariable( 'embed_id', $embedId );
+$tpl->setVariable( 'embed_type', null );
+$tpl->setVariable( 'embed_object', null );
+$tpl->setVariable( 'embed_data', json_encode( $image ) );
 $tpl->setVariable( 'content_type', $contentType );
 $tpl->setVariable( 'content_type_name', ucfirst( rtrim( $contentType, 's' ) ) );
 $tpl->setVariable( 'compatibility_mode', $ezoeIni->variable('EditorSettings', 'CompatibilityMode' ) );
@@ -229,6 +203,7 @@ if ( isset( $xmlTagAliasList[$tagName] ) )
 else
     $tpl->setVariable( 'tag_name_alias', $tagName );
 
+$classList = array();
 $tpl->setVariable( 'view_list', json_encode( array( 'embed' => $viewList, 'embed-inline' => $viewListInline ) ) );
 $tpl->setVariable( 'class_list', json_encode( array( 'embed' => $classList, 'embed-inline' => $classListInline ) ) );
 $tpl->setVariable( 'attribute_defaults', json_encode( array( 'embed' => $attributeDefaults, 'embed-inline' => $attributeDefaultsInline ) ) );
@@ -252,7 +227,7 @@ $tpl->setVariable( 'persistent_variable', array() );
 $tpl->setVariable( 'original_uri_string', eZURI::instance()->originalURIString() );
 
 $Result = array();
-$Result['content'] = $tpl->fetch( 'design:ezoe/tag_embed_' . $contentType . '.tpl' );
+$Result['content'] = $tpl->fetch( 'design:common/tag_embed_' . $contentType . '.tpl' );
 $Result['pagelayout'] = 'design:ezoe/popup_pagelayout.tpl';
 $Result['persistent_variable'] = $tpl->variable( 'persistent_variable' );
 

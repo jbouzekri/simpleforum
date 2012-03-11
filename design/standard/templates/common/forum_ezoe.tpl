@@ -97,8 +97,8 @@ var eZOeAttributeSettings, eZOeGlobalSettings = {ldelim}
     ez_root_url : {'/'|ezroot},
     ez_extension_url : {'/forumoe/'|ezurl},
     ez_js_url : {'/extension/ezoe/design/standard/javascript/'|ezroot},
-    ez_contentobject_id : {$ez_object.contentobject_id},
-    ez_contentobject_version : {$ez_object.contentobject_version},
+    ez_contentobject_id : '{$object_type}',
+    ez_contentobject_version : '{$object_id}',
     /* Used by language pack / plugin url fixer bellow, do not change */
     ez_tinymce_url : {'javascript/tiny_mce.js'|ezdesign},
     spellchecker_rpc_url : {'/ezoe/spellcheck_rpc'|ezurl},

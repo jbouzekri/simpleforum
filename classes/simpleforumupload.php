@@ -12,7 +12,7 @@
  */
 class simpleForumUpload extends eZContentUpload 
 {
-    function handleForumUpload( &$result, $httpFileIdentifier )
+    function handleForumUpload( &$result, $httpFileIdentifier, $subDir = false )
     {
         $result = array( 'errors' => array(),
                          'notices' => array(),
@@ -34,17 +34,23 @@ class simpleForumUpload extends eZContentUpload
         $classIdentifier = $this->detectClassIdentifier( $mime );
         if ($classIdentifier == 'image')
         {
-            if ($file->store());
+            if ($file->store($subDir));
             {
+                $filePath = $file->Filename;
                 $fileHandler = eZClusterFileHandler::instance();
                 if ( is_object( $fileHandler ) )
                 {
-                    $filePath = $file->Filename;
                     $mimeData = eZMimeType::findByFileContents( $filePath );
                     $fileHandler->fileStore( $filePath, 'image', false, $mimeData['name'] );
                 }
                 
-                return $file;
+                $image = new SimpleForumImage(array(
+                    'path' => $filePath,
+                    'mime' => $mime
+                ));
+                $image->store();
+                
+                return $image;
             }
         }
         

@@ -1,8 +1,8 @@
 <?php
 
-$objectID        = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
-$objectVersion   = isset( $Params['ObjectVersion'] ) ? (int) $Params['ObjectVersion'] : 0;
-$forcedUpload    = isset( $Params['ForcedUpload'] ) ? (int) $Params['ForcedUpload'] : 0;
+$objectType     = isset( $Params['ObjectType'] ) ? $Params['ObjectType'] : 'forum';
+$objectID       = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
+$forcedUpload   = isset( $Params['ForcedUpload'] ) ? (int) $Params['ForcedUpload'] : 0;
 
 $contentType   = 'objects';
 if ( isset( $Params['ContentType'] ) && $Params['ContentType'] !== '' )
@@ -10,18 +10,18 @@ if ( isset( $Params['ContentType'] ) && $Params['ContentType'] !== '' )
     $contentType   = $Params['ContentType'];
 }
 
-if ( $objectID === 0  || $objectVersion === 0 )
+if ( $objectID === 0 )
 {
-   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectType' ) );
    eZExecution::cleanExit();
 }
 
-$object    = eZContentObject::fetch( $objectID );
+/*$object    = eZContentObject::fetch( $objectID );
 if ( !$object )
 {
    echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
    eZExecution::cleanExit();
-}
+}*/
 
 $http      = eZHTTPTool::instance();
 $imageIni  = eZINI::instance( 'image.ini' );
@@ -29,28 +29,19 @@ $params    = array('dataMap' => array('image'));
 
 if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
 {
-    $version   = eZContentObjectVersion::fetchVersion( $objectVersion, $objectID );
-    if ( !$version )
-    {
-        echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectVersion', '%value' => $objectVersion ) );
-        eZExecution::cleanExit();
-    }
     $upload = new simpleForumUpload();
 
-    $location = false;
-    // TODO : location gestion
-    
     $objectName = '';
     if ( $http->hasPostVariable( 'objectName' ) )
     {
         $objectName = trim( $http->postVariable( 'objectName' ) );
     }
 
-    $file = $upload->handleForumUpload( $result, 'fileName' );
+    $file = $upload->handleForumUpload( $result, 'fileName', $objectType.'/'.$objectID );
     if ( $file )
     {
         echo '<html><head><title>HiddenUploadFrame</title><script type="text/javascript">';
-        echo 'window.parent.eZOEPopupUtils.selectByFilePath( "' . $file->Filename . '" );';
+        echo 'window.parent.eZOEPopupUtils.selectByFileId( "'.$objectType.'", "'.$objectID.'", "' . $file->id . '" );';
         echo '</script></head><body></body></html>';
     }
     else
@@ -72,9 +63,8 @@ $contentIni    = eZINI::instance( 'content.ini' );
 $imageDatatypeArray = $siteIni->variable( 'ImageDataTypeSettings', 'AvailableImageDataTypes' );
 
 $tpl = eZTemplate::factory();
-$tpl->setVariable( 'object', $object );
+$tpl->setVariable( 'object_type', $objectType );
 $tpl->setVariable( 'object_id', $objectID );
-$tpl->setVariable( 'object_version', $objectVersion );
 $tpl->setVariable( 'content_type', $contentType );
 
 $contentTypeCase = ucfirst( $contentType );

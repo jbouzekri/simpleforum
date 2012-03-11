@@ -8,12 +8,12 @@ $ViewList = array();
 $ViewList['upload'] = array(
     'functions' => array( 'upload' ),
     'script'    => 'upload.php',
-    'params'    => array( 'ObjectID', 'ObjectVersion', 'ContentType', 'ForcedUpload' ) );
+    'params'    => array( 'ObjectType', 'ObjectID', 'ContentType', 'ForcedUpload' ) );
 
-$ViewList['relations'] = array(
+$ViewList['embed'] = array(
     'functions' => array( 'upload' ),
-    'script' => 'relations.php',
-    'params' => array( 'FilePath' )
+    'script' => 'embed.php',
+    'params' => array( 'ObjectType', 'ObjectID', 'FileID' )
     );
 
 $FunctionList = array();

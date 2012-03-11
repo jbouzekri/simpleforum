@@ -23,3 +23,10 @@ CREATE TABLE simpleforum_response (
     CONSTRAINT FOREIGN KEY (topic_id)
       REFERENCES simpleforum_topic (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE simpleforum_image (
+  id int(11) NOT NULL auto_increment,
+  path varchar(250) NOT NULL default '',
+  mime varchar(50) NOT NULL default '',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;

@@ -1,10 +1,8 @@
-alert('load');
-
-eZOEPopupUtils.selectByFilePath = function(filepath) {
+eZOEPopupUtils.selectByFileId = function(object_type, object_id, fileId) {
     // redirects to embed window of a specific file
-    if ( filepath !== undefined )
+    if ( fileId !== undefined )
     {
         var s = tinyMCEPopup.editor.settings;
-        window.location = s.ez_extension_url + '/relations/' + encodeURIComponent(filepath);
+        window.location = s.ez_extension_url + '/embed/' + object_type + '/' + object_id + '/' + fileId;
     }
 };
