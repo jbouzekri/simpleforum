@@ -6,6 +6,7 @@ CREATE TABLE simpleforum_topic (
   content longtext NOT NULL,
   state enum('VALIDATED', 'MODERATED', 'PUBLISHED', 'CLOSED') default 'PUBLISHED',
   published int(11) NOT NULL default '0',
+  modified int(11) NOT NULL default '0',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -18,7 +19,7 @@ CREATE TABLE simpleforum_response (
   positive_vote int(11) NOT NULL default '0',
   total_vote int(11) NOT NULL default '0',
   state enum('VALIDATED', 'MODERATED', 'PUBLISHED') default 'PUBLISHED',
-  published TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  published int(11) NOT NULL default '0',
   PRIMARY KEY  (id),
     CONSTRAINT FOREIGN KEY (topic_id)
       REFERENCES simpleforum_topic (id) ON DELETE CASCADE

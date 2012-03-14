@@ -32,39 +32,9 @@ class SimpleForumCollection {
         }
         $filter['node_id'] = array($nodeIDs);
         
-        if (is_array($attributeFilter) && isset($attributeFilter[0]))
-        {
-            foreach ($attributeFilter as $filterItem)
-            {
-                if (is_array($filterItem) && isset($filterItem[0]) && count($filterItem) == 3)
-                {
-                    if ($filterItem[1] == '=')
-                    {
-                        $filter[$filterItem[0]] = $filterItem[2];
-                    }
-                    else
-                    {
-                        $filter[$filterItem[0]] = array($filterItem[1], $filterItem[2]);
-                    }
-                }
-            }
-        }
+        $this->formatAttributeFilter($attributeFilter, $filter);
         
-        $formatedSortBy = null;
-        if (is_array($sortBy))
-        {
-            if (is_array($sortBy[0]))
-            {
-                foreach ($sortBy as $sortItem)
-                {
-                    $formatedSortBy[$sortItem[0]] = $sortItem[1];
-                }
-            }
-            else
-            {
-                $formatedSortBy[$sortBy[0]] = $sortBy[1];
-            }
-        }
+        $formatedSortBy = $this->formatSortBy($sortBy);
         
         $formatedLimit = null;
         if ($limit)
@@ -88,7 +58,68 @@ class SimpleForumCollection {
     
     function fetchResponseList($topicID, $limit, $offset, $sortBy, $asObject, $attributeFilter)
     {
+        $filter  = array();
+        $filter['topic_id'] = array(array($topicID));
         
+        $this->formatAttributeFilter($attributeFilter, $filter);
+        
+        $formatedSortBy = $this->formatSortBy($sortBy);
+        
+        $formatedLimit = null;
+        if ($limit)
+        {
+            $formatedLimit = array(
+                'offset' => $offset,
+                'length' => $limit
+            );
+        }
+        
+        $result = SimpleForumResponse::fetchList( $filter, $formatedLimit, $formatedSortBy, $asObject );
+        
+        return array( 'result' => $result );
+    }
+    
+    public function formatAttributeFilter($attributeFilter, &$filter)
+    {
+        if (is_array($attributeFilter) && isset($attributeFilter[0]))
+        {
+            foreach ($attributeFilter as $filterItem)
+            {
+                if (is_array($filterItem) && isset($filterItem[0]) && count($filterItem) == 3)
+                {
+                    if ($filterItem[1] == '=')
+                    {
+                        $filter[$filterItem[0]] = $filterItem[2];
+                    }
+                    else
+                    {
+                        $filter[$filterItem[0]] = array($filterItem[1], $filterItem[2]);
+                    }
+                }
+            }
+        }
+    }
+    
+    public function formatSortBy($sortBy)
+    {
+        $formated = null;
+        
+        if (is_array($sortBy))
+        {
+            if (is_array($sortBy[0]))
+            {
+                foreach ($sortBy as $sortItem)
+                {
+                    $formatedSortBy[$sortItem[0]] = $sortItem[1];
+                }
+            }
+            else
+            {
+                $formatedSortBy[$sortBy[0]] = $sortBy[1];
+            }
+        }
+        
+        return $formated;
     }
 }
 

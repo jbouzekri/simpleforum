@@ -6,6 +6,8 @@ class SimpleForumResponse extends eZPersistentObject
      const STATUS_MODERATED = 'MODERATED';
      const STATUS_PUBLISHED = 'PUBLISHED';
      
+     protected $topic = false;
+     
      /**
      * Construct
      * use SimpleForumResponse::create
@@ -78,8 +80,8 @@ class SimpleForumResponse extends eZPersistentObject
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
-                  'class_name' => 'SimpleForumTopic',
-                  'name' => 'simpleforum_topic' );
+                  'class_name' => 'SimpleForumResponse',
+                  'name' => 'simpleforum_response' );
         
         return $def;
     }
@@ -132,12 +134,22 @@ class SimpleForumResponse extends eZPersistentObject
     
     public function topic()
     {
-        return SimpleForumTopic::fetch($this->attribute('topic_id'));
+        if (!$this->topic)
+        {
+            $this->topic = SimpleForumTopic::fetch($this->attribute('topic_id'));
+        }
+        return $this->topic;
     }
     
     public function responseUser()
     {
         return eZUser::fetch($this->attribute('user_id'));
+    }
+    
+    public function store( $fieldFilters = null )
+    {
+        $this->topic()->updateTopicModifiedDate();
+        parent::store( $fieldFilters );
     }
 }
 ?>

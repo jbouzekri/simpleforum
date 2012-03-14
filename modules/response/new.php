@@ -45,7 +45,7 @@ if( $http->hasPostVariable('create') )
     $newResponse->store();
     if ($newResponse->id)
     {
-        return $Module->redirectTo('/topic/view/'.$newTopic->id);
+        return $Module->redirectTo('/topic/view/'.$topic->id);
     }
     else
     {

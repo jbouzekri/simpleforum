@@ -62,6 +62,11 @@ class SimpleForumTopic extends eZPersistentObject
                                        'datatype' => 'integer',
                                        'default' => 0,
                                        'required' => true ),
+                     'modified' => array(
+                                       'name' => 'Modified',
+                                       'datatype' => 'integer',
+                                       'default' => 0,
+                                       'required' => true )
                   ),
                   'function_attributes' => array(
                       'forum_node' => 'forumNode',
@@ -79,6 +84,9 @@ class SimpleForumTopic extends eZPersistentObject
     {
         if (!isset($row['published'])) 
             $row['published'] = time();
+        
+        if (!isset($row['modified'])) 
+            $row['modified'] = time();
         
         if (!isset($row['state']) 
             || $row['state'] != self::STATUS_CLOSED
@@ -132,6 +140,12 @@ class SimpleForumTopic extends eZPersistentObject
     public function topicUser()
     {
         return eZUser::fetch($this->attribute('user_id'));
+    }
+    
+    public function updateTopicModifiedDate()
+    {
+        $this->setAttribute( 'modified', time() );
+        $this->store();
     }
 }
 ?>
