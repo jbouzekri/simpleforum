@@ -7,6 +7,9 @@ class SimpleForumTopic extends eZPersistentObject
      const STATUS_PUBLISHED = 'PUBLISHED';
      const STATUS_CLOSED    = 'CLOSED';
      
+     protected $forumNode = false;
+     protected $user      = false;
+     
      /**
      * Construct
      * use SimpleForumTopic::create
@@ -125,6 +128,11 @@ class SimpleForumTopic extends eZPersistentObject
         return $list;
     }
     
+    public static function fetchCount(array $filter = array())
+    {
+        return self::count( self::definition(), $filter);
+    }
+    
     public static function fetch($id, $asObject = false)
     {
         $cond = array( 'id' => $id );
@@ -134,12 +142,20 @@ class SimpleForumTopic extends eZPersistentObject
     
     public function forumNode()
     {
-        return eZContentObjectTreeNode::fetch($this->attribute('node_id'));
+        if (!$this->forumNode)
+        {
+            $this->forumNode = eZContentObjectTreeNode::fetch($this->attribute('node_id'));
+        }
+        return $this->forumNode;
     }
     
     public function topicUser()
     {
-        return eZUser::fetch($this->attribute('user_id'));
+        if (!$this->user)
+        {
+            $this->user = eZUser::fetch($this->attribute('user_id'));
+        }
+        return $this->user;
     }
     
     public function updateTopicModifiedDate()

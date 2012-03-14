@@ -7,6 +7,7 @@ class SimpleForumResponse extends eZPersistentObject
      const STATUS_PUBLISHED = 'PUBLISHED';
      
      protected $topic = false;
+     protected $user  = false;
      
      /**
      * Construct
@@ -132,6 +133,11 @@ class SimpleForumResponse extends eZPersistentObject
         return $topic;
     }
     
+    public static function fetchCount(array $filter = array())
+    {
+        return self::count( self::definition(), $filter );
+    }
+    
     public function topic()
     {
         if (!$this->topic)
@@ -143,7 +149,11 @@ class SimpleForumResponse extends eZPersistentObject
     
     public function responseUser()
     {
-        return eZUser::fetch($this->attribute('user_id'));
+        if (!$this->user)
+        {
+            $this->user = eZUser::fetch($this->attribute('user_id'));
+        }
+        return $this->user;
     }
     
     public function store( $fieldFilters = null )

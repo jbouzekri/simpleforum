@@ -21,16 +21,7 @@ class SimpleForumCollection {
     function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter )
     {
         $filter  = array();
-        $nodeIDs = array($forumNodeId);
-        if ($depth != 1)
-        {
-            $forums = eZContentObjectTreeNode::subTreeByNodeID(array('Depth'=>$depth), $forumNodeId);
-            foreach ($forums as $forum)
-            {
-                $nodeIDs[] = $forum->attribute('node_id');
-            }
-        }
-        $filter['node_id'] = array($nodeIDs);
+        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth);
         
         $this->formatAttributeFilter($attributeFilter, $filter);
         
@@ -46,6 +37,18 @@ class SimpleForumCollection {
         }
         
         $result = SimpleForumTopic::fetchList( $filter, $formatedLimit, $formatedSortBy, $asObject );
+        
+        return array( 'result' => $result );
+    }
+    
+    public function fetchTopicCount( $forumNodeId, $depth, $attributeFilter )
+    {
+        $filter  = array();
+        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth);
+        
+        $this->formatAttributeFilter($attributeFilter, $filter);
+        
+        $result = SimpleForumTopic::fetchCount( $filter );
         
         return array( 'result' => $result );
     }
@@ -79,6 +82,18 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
+    public function fetchResponseCount( $topicID, $attributeFilter )
+    {
+        $filter  = array();
+        $filter['topic_id'] = array(array($topicID));
+        
+        $this->formatAttributeFilter($attributeFilter, $filter);
+        
+        $result = SimpleResponseTopic::fetchCount( $filter );
+        
+        return array( 'result' => $result );
+    }
+    
     public function formatAttributeFilter($attributeFilter, &$filter)
     {
         if (is_array($attributeFilter) && isset($attributeFilter[0]))
@@ -102,8 +117,7 @@ class SimpleForumCollection {
     
     public function formatSortBy($sortBy)
     {
-        $formated = null;
-        
+        $formatedSortBy = null;
         if (is_array($sortBy))
         {
             if (is_array($sortBy[0]))
@@ -119,7 +133,21 @@ class SimpleForumCollection {
             }
         }
         
-        return $formated;
+        return $formatedSortBy;
+    }
+    
+    public function getForumNodeIds($forumNodeId, $depth)
+    {
+        $nodeIDs = array($forumNodeId);
+        if ($depth != 1)
+        {
+            $forums = eZContentObjectTreeNode::subTreeByNodeID(array('Depth'=>$depth), $forumNodeId);
+            foreach ($forums as $forum)
+            {
+                $nodeIDs[] = $forum->attribute('node_id');
+            }
+        }
+        return array($nodeIDs);
     }
 }
 

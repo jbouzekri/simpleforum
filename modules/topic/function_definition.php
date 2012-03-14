@@ -62,4 +62,28 @@ $FunctionList['list'] = array( 'name' => 'list',
                                 )
 );
 
+$FunctionList['list_count'] = array( 'name' => 'list_count',
+                                     'operation_types' => array( 'read' ),
+                                     'call_method' => array( 'class' => 'SimpleForumCollection',
+                                                             'method' => 'fetchTopicCount' ),
+                                     'parameter_type' => 'standard',
+                                     'parameters' => array(
+                                        array( 'name'     => 'forum_node_id',
+                                                'type'     => 'integer',
+                                                'required' => true,
+                                                'default'  => 1
+                                                ),
+                                        array( 'name'     => 'depth',
+                                                'type'     => 'integer',
+                                                'required' => false,
+                                                'default'  => 1
+                                        ),
+                                        array( 'name'     => 'attribute_filter',
+                                                'type'     => 'array',
+                                                'required' => false,
+                                                'default'  => array()
+                                        )
+                                    ) 
+);
+
 ?>

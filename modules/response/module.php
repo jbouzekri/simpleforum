@@ -6,6 +6,7 @@ $Module = array( 'name' => 'Forum Topic Management',
 $ViewList = array();
 $ViewList['new'] = array(
     'script' => 'new.php',
+    'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID' ) );
 
 $FunctionList = array();
