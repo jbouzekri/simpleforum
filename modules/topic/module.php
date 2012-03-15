@@ -18,7 +18,8 @@ $ViewList['view'] = array(
 $ViewList['list'] = array(
     'script' => 'list.php',
     'default_navigation_part' => 'ezforumnavigationpart',
-    'params' => array( 'ForumID' ) );
+    'params' => array( 'ForumID' ),
+    'unordered_params'=>array('offset'=>'Offset'));
 
 
 ?>

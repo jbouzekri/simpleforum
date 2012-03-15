@@ -4,6 +4,8 @@ CREATE TABLE simpleforum_topic (
   user_id int(11) NOT NULL default '0',
   name varchar(150) NOT NULL default '',
   content longtext NOT NULL,
+  view_count int(11) NOT NULL default '0',
+  response_count int(11) NOT NULL default '0',
   state enum('VALIDATED', 'MODERATED', 'PUBLISHED', 'CLOSED') default 'PUBLISHED',
   published int(11) NOT NULL default '0',
   modified int(11) NOT NULL default '0',

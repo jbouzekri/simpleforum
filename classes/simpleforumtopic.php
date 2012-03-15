@@ -55,6 +55,16 @@ class SimpleForumTopic extends eZPersistentObject
                                        'datatype' => 'text',
                                        'default' => '',
                                        'required' => true ),
+                    'view_count' => array(
+                                       'name' => 'ViewCount',
+                                       'datatype' => 'integer',
+                                       'default' => 0,
+                                       'required' => false ),
+                    'response_count' => array(
+                                       'name' => 'ResponseCount',
+                                       'datatype' => 'integer',
+                                       'default' => 0,
+                                       'required' => false ),
                     'state' => array(
                                        'name' => 'State',
                                        'datatype' => 'string',
@@ -72,8 +82,8 @@ class SimpleForumTopic extends eZPersistentObject
                                        'required' => true )
                   ),
                   'function_attributes' => array(
-                      'forum_node' => 'forumNode',
-                      'user'       => 'topicUser'
+                      'forum_node'     => 'forumNode',
+                      'user'           => 'topicUser'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -158,10 +168,49 @@ class SimpleForumTopic extends eZPersistentObject
         return $this->user;
     }
     
+    public function incResponseCount()
+    {
+        $incResponse = (int) $this->getAttribute( 'response_count' );
+        $incResponse++;
+        $this->setAttribute( 'response_count', $incResponse );
+        $this->store();
+    }
+    
+    public function incViewCount()
+    {
+        $incView = (int) $this->getAttribute( 'view_count' );
+        $incView++;
+        $this->setAttribute( 'view_count', $incView );
+        $this->store();
+    }
+    
     public function updateTopicModifiedDate()
     {
         $this->setAttribute( 'modified', time() );
         $this->store();
+    }
+    
+    public function fetchPath()
+    {
+        $path = array();
+        foreach ($this->forumNode()->fetchPath() as $item)
+        {
+            $path[] = array(
+                'url' => $item->urlAlias(),
+                'text' => $item->Name
+            );
+        }
+        
+        $path[] = array(
+            'url' => $this->forumNode()->urlAlias(),
+            'text' => $this->forumNode()->Name
+        );
+        
+        $path[] = array(
+            'url' => '/topic/view/'.$this->attribute('id'),
+            'text' => $this->attribute('name')
+        );
+        return $path;
     }
 }
 ?>

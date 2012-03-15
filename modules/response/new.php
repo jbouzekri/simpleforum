@@ -45,6 +45,7 @@ if( $http->hasPostVariable('create') )
     $newResponse->store();
     if ($newResponse->id)
     {
+        $topic->incResponseCount();
         return $Module->redirectTo('/topic/view/'.$topic->id);
     }
     else

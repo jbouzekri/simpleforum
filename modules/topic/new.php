@@ -45,6 +45,7 @@ if( $http->hasPostVariable('create') )
     $newTopic->store();
     if ($newTopic->id)
     {
+        eZContentCacheManager::clearContentCacheIfNeeded( $forum->object()->ID );
         return $Module->redirectTo('/topic/view/'.$newTopic->id);
     }
     else

@@ -11,3 +11,5 @@
         {response_view_gui response=$response view='list'}
     {/foreach}
 </ul>
+
+<a href="{$topic.forum_node.url_alias|ezurl('no')}">{'Back to forum'|i18n('smartphone/topic')}</a>

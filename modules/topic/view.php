@@ -17,7 +17,6 @@ $tpl->setVariable('topic',    $topic);
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:topic/view.tpl' );
-$Result['path'] = array( array( 'url' => 'topic/view/'.$topicID,
-                                'text' => 'View Topic' ) );
+$Result['path'] = $topic->fetchPath();
 
 ?>
