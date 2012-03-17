@@ -10,6 +10,12 @@ if (!$forumID || !$forum || $forum->classIdentifier() != 'forum')
     return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
 }
 
+// Test if forum Node is Hidden
+if (!$forum->canRead() || ($forum->attribute( 'is_invisible' ) && !eZContentObjectTreeNode::showInvisibleNodes()))
+{
+    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+}
+
 $tpl = eZTemplate::factory();
 
 $name    = "";

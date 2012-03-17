@@ -83,7 +83,9 @@ class SimpleForumTopic extends eZPersistentObject
                   ),
                   'function_attributes' => array(
                       'forum_node'     => 'forumNode',
-                      'user'           => 'topicUser'
+                      'user'           => 'topicUser',
+                      'is_hidden'      => 'isHidden',
+                      'is_published'   => 'isPublished'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -227,6 +229,42 @@ class SimpleForumTopic extends eZPersistentObject
             'text' => $this->attribute('name')
         );
         return $path;
+    }
+    
+    public function isHidden()
+    {
+        $isHidden = false;
+        if ($this->forumNode()->IsHidden)
+        {
+            $isHidden = true;
+        }
+        
+        return $isHidden;
+    }
+    
+    public function isPublished()
+    {
+        $isPublished = false;
+        if ($this->attribute('state') != self::STATUS_MODERATED)
+        {
+            $isPublished = true;
+        }
+        
+        return $isPublished;
+    }
+    
+    public function canRead()
+    {
+        // Test if forum Node is Hidden
+        if (!$this->forumNode()->canRead() || 
+            ($this->forumNode()->attribute( 'is_invisible' ) && !eZContentObjectTreeNode::showInvisibleNodes()))
+        {
+            return false;
+        }
+        
+        // @TODO : frontend user cannot read moderated topic
+        
+        return true;
     }
 }
 ?>

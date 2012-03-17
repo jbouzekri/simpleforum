@@ -12,6 +12,12 @@ if (!$topicID || !$topic)
     return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
 }
 
+// Test if user can read topic page
+if (!$topic->canRead())
+{
+    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+}
+
 if ( $offset )
     $offset = (int) $offset;
 
