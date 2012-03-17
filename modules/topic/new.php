@@ -15,7 +15,8 @@ $tpl = eZTemplate::factory();
 $name    = "";
 $content = "";
 $errors  = array();
-if( $http->hasPostVariable('create') )
+
+if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
 {
     $name    = $http->postVariable('name');
     if (!$name || $name == "")
@@ -37,21 +38,28 @@ if( $http->hasPostVariable('create') )
         $errors[] = ezpI18n::tr( 'simpleforum/topic', 'Topic content must be at least 200 characters long.' );
     }
     
-    $newTopic = SimpleForumTopic::create(array(
-        'name' => $name,
-        'content' => $content,
-        'node_id' => $forumID
-    ));
-    $newTopic->store();
-    if ($newTopic->id)
+    if (!count($errors))
     {
-        eZContentCacheManager::clearContentCacheIfNeeded( $forum->object()->ID );
-        return $Module->redirectTo('/topic/view/'.$newTopic->id);
+        $newTopic = SimpleForumTopic::create(array(
+            'name' => $name,
+            'content' => $content,
+            'node_id' => $forumID
+        ));
+        $newTopic->store();
+        if ($newTopic->id)
+        {
+            eZContentCacheManager::clearContentCacheIfNeeded( $forum->object()->ID );
+            return $Module->redirectTo('/topic/view/'.$newTopic->id);
+        }
+        else
+        {
+            $errors[] = ezpI18n::tr( 'simpleforum/topic', 'An error occured when trying to create the new topic' );
+        }
     }
-    else
-    {
-        $errors[] = ezpI18n::tr( 'simpleforum/topic', 'An error occured when trying to create the new topic' );
-    }
+}
+elseif ( $http->hasPostVariable('CancelButton') || $Module->isCurrentAction('Cancel') )
+{
+    return $Module->redirectTo('/topic/list/'.$forumID);
 }
 
 $tpl->setVariable('forum_id', $forumID);

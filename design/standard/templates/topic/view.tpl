@@ -12,4 +12,4 @@
     {/foreach}
 </ul>
 
-<a href="{$topic.forum_node.url_alias|ezurl('no')}">{'Back to forum'|i18n('smartphone/topic')}</a>
+<a href="{$topic.forum_node.url_alias|ezurl('no')}">{'Back to forum'|i18n('simpleforum/topic')}</a>

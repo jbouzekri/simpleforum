@@ -124,7 +124,7 @@ class SimpleForumTopic extends eZPersistentObject
         return $object;
     }
     
-    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = false)
+    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = true)
     {
         if (!isset($cond['node_id']))
         {
@@ -143,10 +143,26 @@ class SimpleForumTopic extends eZPersistentObject
         return self::count( self::definition(), $filter);
     }
     
-    public static function fetch($id, $asObject = false)
+    public static function removeByIds($ids)
+    {
+        $idList = array();
+        if (is_array($ids))
+        {
+            $idList = array_merge($idList, $ids);
+        }
+        else
+        {
+            $idList[] = $ids;
+        }
+
+        $cond = array( 'id' => array( $idList ) );
+        eZPersistentObject::removeObject( self::definition(), $cond );
+    }
+    
+    public static function fetch($id, $asObject = true)
     {
         $cond = array( 'id' => $id );
-        $topic = eZPersistentObject::fetchObject( self::definition(), null, $cond );
+        $topic = eZPersistentObject::fetchObject( self::definition(), null, $cond, $asObject );
         return $topic;
     }
     
