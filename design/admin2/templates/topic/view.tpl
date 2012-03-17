@@ -18,6 +18,11 @@
     </div>
 {/if}
 
+<div class="message-error" style="display:none;">
+    <h2><span class="time">[{currentdate()|l10n('shortdatetime')}]</span> {'The state of the topic or the response could not be changed.'|i18n('simpleforum/topic')}</h2>
+    <p>{'Contact an administrator'|i18n('simpleforum/topic')}</p>
+</div>
+
 <div class="context-block">
 
     <div class="box-header">
@@ -26,7 +31,21 @@
     </div>
 
     <div class="context-information">
-        <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$topic.modified|l10n('shortdatetime')}, <a href="{$topic.user.contentobject.main_node.url_alias|ezurl('no')}">{$topic.user.contentobject.name|wash}</a> (Topic ID: {$topic_id}, Forum ID: {$topic.node_id})</p>
+        <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$topic.modified|l10n('shortdatetime')}, <a href="{$topic.user.contentobject.main_node.url_alias|ezurl('no')}">{$topic.user.contentobject.name|wash}</a> (Topic ID: {$topic_id}, Forum ID: {$topic.node_id}), {'State'|i18n('simpleforum/topic')}: {$topic.state}</p>
+        <p class="right actions">
+            {if or($topic.is_moderated,$topic.is_closed)}
+                <a href="{concat('/topic/state/',$topic.id,'/published')|ezul('no')}"><img title="{'publish'|i18n('simpleforum/topic')}" alt="{'publish'|i18n('simpleforum/topic')}" width="16" height="16" src="{'icons/published.gif'|ezimage('no')}" /></a>
+            {/if}
+            {if or($topic.is_moderated,$topic.is_closed,$topic.is_published)}
+                <a href="{concat('/topic/state/',$topic.id,'/validated')|ezul('no')}"><img title="{'validate'|i18n('simpleforum/topic')}" alt="{'validate'|i18n('simpleforum/topic')}" width="16" height="16" src="{'icons/validate.png'|ezimage('no')}" /></a>
+            {/if}
+            {if or($topic.is_moderated,$topic.is_validated,$topic.is_published)}
+                <a href="{concat('/topic/state/',$topic.id,'/closed')|ezul('no')}"><img title="{'close'|i18n('simpleforum/topic')}" alt="{'close'|i18n('simpleforum/topic')}" width="16" height="16" src="{'icons/close.gif'|ezimage('no')}" /></a>
+            {/if}
+            {if or($topic.is_validated,$topic.is_published,$topic.is_closed)}
+                <a href="{concat('/topic/state/',$topic.id,'/moderated')|ezul('no')}"><img title="{'moderate'|i18n('simpleforum/topic')}" alt="{'moderate'|i18n('simpleforum/topic')}" width="16" height="16" src="{'icons/moderate.png'|ezimage('no')}" /></a>
+            {/if}
+        </p>
         <div class="break"></div>
     </div>
     

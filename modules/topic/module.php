@@ -29,4 +29,9 @@ $ViewList['list'] = array(
     'single_post_actions' => array( 'NewButton' => 'New',
                                     'DeleteButton' => 'Delete' ));
 
+$ViewList['state'] = array(
+    'script' => 'state.php',
+    'default_navigation_part' => 'ezforumnavigationpart',
+    'params' => array( 'TopicID', 'NewState' ));
+
 ?>

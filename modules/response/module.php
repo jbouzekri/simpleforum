@@ -11,6 +11,11 @@ $ViewList['new'] = array(
     'single_post_actions' => array( 'NewButton' => 'New',
                                     'CancelButton' => 'Cancel'));
 
+$ViewList['state'] = array(
+    'script' => 'state.php',
+    'default_navigation_part' => 'ezforumnavigationpart',
+    'params' => array( 'ResponseID', 'NewState' ));
+
 $FunctionList = array();
 
 ?>

@@ -1,5 +1,7 @@
 {def $topic_count=fetch('topic', 'list_count', hash('forum_node_id', $node.node_id))}
-{'Total'|i18n('simpleforum/topic')} : {$topic_count}
+{'Total'|i18n('simpleforum/topic')} : {$topic_count}<br />
+{def $topic_closed_count=fetch('topic', 'list_count', hash('forum_node_id', $node.node_id, 'attribute_filter', array('state','=','CLOSED')))}
+{'Total Closed'|i18n('simpleforum/topic')} : {$topic_closed_count}<br />
 
 {def $topics=fetch('topic', 'list', hash('forum_node_id', $node.node_id,
                                          'sort_by', array('modified', 'desc'),

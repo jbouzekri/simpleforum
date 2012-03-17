@@ -65,3 +65,12 @@
     </div>
     
 </form>
+{literal}
+<script type="text/javascript">
+    function confirmDiscard( question )
+    {
+        // Ask user if he really wants to do it.
+        return confirm( question );
+    }
+</script>
+{/literal}

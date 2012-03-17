@@ -30,6 +30,11 @@
     </div>
 {/if}
 
+<div class="message-error" style="display:none;">
+    <h2><span class="time">[{currentdate()|l10n('shortdatetime')}]</span> {'The state of the topic could not be changed.'|i18n('simpleforum/topic')}</h2>
+    <p>{'Contact an administrator'|i18n('simpleforum/topic')}</p>
+</div>
+
 <div class="context-block">
 
     <div class="box-header">

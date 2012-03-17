@@ -76,8 +76,11 @@ class SimpleForumResponse extends eZPersistentObject
                                        'required' => false )
                   ),
                   'function_attributes' => array(
-                      'topic'      => 'topic',
-                      'user'       => 'responseUser'
+                      'topic'        => 'topic',
+                      'user'         => 'responseUser',
+                      'is_published' => 'isPublished',
+                      'is_validated' => 'isValidated',
+                      'is_moderated' => 'isModerated'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -87,15 +90,22 @@ class SimpleForumResponse extends eZPersistentObject
         return $def;
     }
     
+    public static function availableStates()
+    {
+        return array(
+            self::STATUS_MODERATED,
+            self::STATUS_PUBLISHED,
+            self::STATUS_VALIDATED
+        );
+    }
+    
     public static function create(array $row = array())
     {
         if (!isset($row['published'])) 
             $row['published'] = time();
         
         if (!isset($row['state']) 
-            || $row['state'] != self::STATUS_MODERATED
-            || $row['state'] != self::STATUS_PUBLISHED
-            || $row['state'] != self::STATUS_VALIDATED) 
+            || !in_array($row['state'], self::availableStates())) 
             $row['state'] = self::STATUS_PUBLISHED;
         
         if (!isset($row['topic_id'])) 
@@ -113,7 +123,7 @@ class SimpleForumResponse extends eZPersistentObject
         return $object;
     }
     
-    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = false)
+    public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = true)
     {
         if (!isset($cond['topic_id']))
         {
@@ -126,7 +136,7 @@ class SimpleForumResponse extends eZPersistentObject
         return $list;
     }
     
-    public static function fetch($id, $asObject = false)
+    public static function fetch($id, $asObject = true)
     {
         $cond = array( 'id' => $id );
         $topic = eZPersistentObject::fetchObject( self::definition(), null, $cond, $asObject );
@@ -161,6 +171,26 @@ class SimpleForumResponse extends eZPersistentObject
     {
         $this->topic()->updateTopicModifiedDate();
         parent::store( $fieldFilters );
+    }
+    
+    public function isPublished()
+    {
+        return $this->attribute('state') == self::STATUS_PUBLISHED;
+    }
+    
+    public function isValidated()
+    {
+        return $this->attribute('state') == self::STATUS_VALIDATED;
+    }
+    
+    public function isModerated()
+    {
+        return $this->attribute('state') == self::STATUS_MODERATED;
+    }
+    
+    public function isVisible()
+    {
+        return $this->attribute('state') != self::STATUS_MODERATED;
     }
 }
 ?>

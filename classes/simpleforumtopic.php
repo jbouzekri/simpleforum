@@ -85,7 +85,11 @@ class SimpleForumTopic extends eZPersistentObject
                       'forum_node'     => 'forumNode',
                       'user'           => 'topicUser',
                       'is_hidden'      => 'isHidden',
-                      'is_published'   => 'isPublished'
+                      'is_published'   => 'isPublished',
+                      'is_validated'   => 'isValidated',
+                      'is_moderated'   => 'isModerated',
+                      'is_closed'      => 'isClosed',
+                      'is_visible'     => 'isVisible',
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -93,6 +97,16 @@ class SimpleForumTopic extends eZPersistentObject
                   'name' => 'simpleforum_topic' );
         
         return $def;
+    }
+    
+    public static function availableStates()
+    {
+        return array(
+            self::STATUS_CLOSED,
+            self::STATUS_MODERATED,
+            self::STATUS_PUBLISHED,
+            self::STATUS_VALIDATED
+        );
     }
     
     public static function create(array $row = array())
@@ -104,10 +118,7 @@ class SimpleForumTopic extends eZPersistentObject
             $row['modified'] = time();
         
         if (!isset($row['state']) 
-            || $row['state'] != self::STATUS_CLOSED
-            || $row['state'] != self::STATUS_MODERATED
-            || $row['state'] != self::STATUS_PUBLISHED
-            || $row['state'] != self::STATUS_VALIDATED) 
+            || !in_array($row['state'], self::availableStates())) 
             $row['state'] = self::STATUS_PUBLISHED;
         
         if (!isset($row['node_id'])) 
@@ -244,13 +255,27 @@ class SimpleForumTopic extends eZPersistentObject
     
     public function isPublished()
     {
-        $isPublished = false;
-        if ($this->attribute('state') != self::STATUS_MODERATED)
-        {
-            $isPublished = true;
-        }
-        
-        return $isPublished;
+        return $this->attribute('state') == self::STATUS_PUBLISHED;
+    }
+    
+    public function isValidated()
+    {
+        return $this->attribute('state') == self::STATUS_VALIDATED;
+    }
+    
+    public function isModerated()
+    {
+        return $this->attribute('state') == self::STATUS_MODERATED;
+    }
+    
+    public function isClosed()
+    {
+        return $this->attribute('state') == self::STATUS_CLOSED;
+    }
+    
+    public function isVisible()
+    {
+        return $this->attribute('state') != self::STATUS_MODERATED;
     }
     
     public function canRead()
