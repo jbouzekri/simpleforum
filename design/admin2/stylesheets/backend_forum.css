@@ -6,5 +6,6 @@
         Style Forum BO specific views
 */
 
+.simpleforum-topic_responses {margin-top:10px}
 .simpleforum-topic_responses .context-information {border-top:1px solid #CCCCCC}
 .simpleforum-topic_content {margin-bottom: 10px}

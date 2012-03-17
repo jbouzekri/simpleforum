@@ -19,7 +19,8 @@ $ViewList['view'] = array(
     'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
     'single_post_actions' => array( 'NewResponseButton' => 'NewResponse',
                                     'BackToForumButton' => 'BackToForum',
-                                    'BackToTopicListButton' => 'BackToTopicList') );
+                                    'BackToTopicListButton' => 'BackToTopicList',
+                                    'DeleteTopicButton' => 'DeleteTopic') );
 
 $ViewList['list'] = array(
     'script' => 'list.php',
@@ -27,11 +28,17 @@ $ViewList['list'] = array(
     'params' => array( 'ForumID' ),
     'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
     'single_post_actions' => array( 'NewButton' => 'New',
-                                    'DeleteButton' => 'Delete' ));
+                                    'DeleteButton' => 'Delete',
+                                    'BackToForumButton' => 'BackToForum'));
 
 $ViewList['state'] = array(
     'script' => 'state.php',
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID', 'NewState' ));
+
+$ViewList['delete'] = array(
+    'script' => 'delete.php',
+    'default_navigation_part' => 'ezforumnavigationpart',
+    'params' => array( 'TopicID' ));
 
 ?>

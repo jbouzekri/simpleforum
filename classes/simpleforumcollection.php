@@ -96,7 +96,7 @@ class SimpleForumCollection {
     
     public function formatAttributeFilter($attributeFilter, &$filter)
     {
-        if (is_array($attributeFilter) && isset($attributeFilter[0]))
+        if (is_array($attributeFilter) && isset($attributeFilter[0]) && is_array($attributeFilter[0]))
         {
             foreach ($attributeFilter as $filterItem)
             {
@@ -111,6 +111,17 @@ class SimpleForumCollection {
                         $filter[$filterItem[0]] = array($filterItem[1], $filterItem[2]);
                     }
                 }
+            }
+        }
+        elseif (is_array($attributeFilter) && isset($attributeFilter[0]) && count($attributeFilter) == 3)
+        {
+            if ($attributeFilter[1] == '=')
+            {
+                $filter[$attributeFilter[0]] = $attributeFilter[2];
+            }
+            else
+            {
+                $filter[$attributeFilter[0]] = array($attributeFilter[1], $attributeFilter[2]);
             }
         }
     }

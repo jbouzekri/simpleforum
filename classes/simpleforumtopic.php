@@ -239,6 +239,7 @@ class SimpleForumTopic extends eZPersistentObject
             'url' => '/topic/view/'.$this->attribute('id'),
             'text' => $this->attribute('name')
         );
+        
         return $path;
     }
     
@@ -291,5 +292,9 @@ class SimpleForumTopic extends eZPersistentObject
         
         return true;
     }
+    
+    public function canDelete()
+    {
+        return true;
+    }
 }
-?>

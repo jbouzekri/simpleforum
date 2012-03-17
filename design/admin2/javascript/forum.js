@@ -3,6 +3,11 @@
  * and open the template in the editor.
  */
 
+function forumConfirmDiscard( question )
+{
+    // Ask user if he really wants to do it.
+    return confirm( question );
+}
 
 jQuery(function( $ )
 {

@@ -45,6 +45,10 @@ elseif ($http->hasPostVariable('BackToTopicListButton') || $Module->isCurrentAct
 {
     return $Module->redirectTo('/topic/list/'.$topic->attribute('node_id'));
 }
+elseif ($http->hasPostVariable('DeleteButton') || $Module->isCurrentAction('Delete') )
+{
+    return $Module->redirectTo('/topic/delete/'.$topic->attribute('id'));
+}
 
 $tpl = eZTemplate::factory();
 

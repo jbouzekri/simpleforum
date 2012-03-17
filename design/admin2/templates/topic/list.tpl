@@ -49,7 +49,8 @@
         
     <form action="/topic/list/{$forum_id}" method="post" name="topiclist">
         
-        <input type="submit" title="Create a new topic" value="{'New Topic'|i18n('simpleforum/topic')}" name="NewButton" class="button" />
+        <input type="submit" title="Create a new topic" value="{'New Topic'|i18n('simpleforum/topic')}" name="NewButton" class="defaultbutton" />
+        <input type="submit" title="Back to Forum" value="{'Back to Forum'|i18n('simpleforum/topic')}" name="BackToForumButton" class="button" />
         
         <div class="context-block">
             <div class="box-header">

@@ -48,6 +48,10 @@ elseif( $http->hasPostVariable('DeleteButton') || $Module->isCurrentAction('Dele
         $tpl->setVariable('notice', ezpI18n::tr( 'simpleforum/topic', 'Success when deleting topics' ) );
     }
 }
+elseif( $http->hasPostVariable('BackToForumButton') || $Module->isCurrentAction('BackToForum') )
+{
+    return $Module->redirectTo($forum->urlAlias());
+}
 
 $tpl->setVariable('forum_id', $forumID);
 $tpl->setVariable('forum',    $forum);

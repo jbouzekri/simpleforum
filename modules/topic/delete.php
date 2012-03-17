@@ -3,10 +3,9 @@
 $Module = $Params['Module'];
 $http   = eZHTTPTool::instance();
 
-$newState = $Params['NewState'];
 $topicID  = $Params['TopicID'];
 
-$topic   = SimpleForumTopic::fetch($topicID);
+$topic = SimpleForumTopic::fetch($topicID);
 if (!$topicID || !$topic)
 {
     if ($http->variable('ajax'))
@@ -23,7 +22,7 @@ if (!$topicID || !$topic)
 }
 
 // Test if user can read topic page
-if (!$topic->canRead())
+if (!$topic->canDelete())
 {
     if ($http->variable('ajax'))
     {
@@ -38,12 +37,8 @@ if (!$topic->canRead())
     }
 }
 
-if (in_array(strtoupper($newState), SimpleForumTopic::availableStates()))
-{
-    $topic->setAttribute('state', strtoupper($newState));
-    $topic->store();
-    eZContentCacheManager::clearContentCacheIfNeeded( $topic->forumNode()->object()->ID );
-}
+$topic->remove();
+eZContentCacheManager::clearContentCacheIfNeeded( $topic->forumNode()->object()->ID );
 
 if ($http->variable('ajax'))
 {
