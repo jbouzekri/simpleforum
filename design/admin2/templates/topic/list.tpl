@@ -83,7 +83,7 @@
                             </tbody>
                         </table>
                         <br />
-                        <input type="submit" title="{'Delete Topics'|i18n('simpleforum/topic'}" value="{'Delete Topics'|i18n('simpleforum/topic')}" name="DeleteButton" class="button" />
+                        <input type="submit" title="{'Delete Topics'|i18n('simpleforum/topic')}" value="{'Delete Topics'|i18n('simpleforum/topic')}" name="DeleteButton" class="button" />
                     </div>
                 </div>
             </div>

@@ -197,6 +197,24 @@ class SimpleForumTopic extends eZPersistentObject
         return $this->user;
     }
     
+    public function incForumTopicCount()
+    {
+        $dataMap = $this->forumNode()->dataMap();
+        $incTopic = (int) $dataMap['topic_count']->content();
+        $incTopic++;
+        $dataMap['topic_count']->fromString( $incTopic );
+        $dataMap['topic_count']->store();
+    }
+    
+    public function decForumTopicCount()
+    {
+        $dataMap = $this->forumNode()->dataMap();
+        $decTopic = (int) $dataMap['topic_count']->content();
+        $decTopic--;
+        $dataMap['topic_count']->fromString( $decTopic );
+        $dataMap['topic_count']->store();
+    }
+    
     public function incResponseCount()
     {
         $incResponse = (int) $this->attribute( 'response_count' );

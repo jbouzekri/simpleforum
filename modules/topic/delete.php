@@ -38,6 +38,7 @@ if (!$topic->canDelete())
 }
 
 $topic->remove();
+$topic->decForumTopicCount();
 eZContentCacheManager::clearContentCacheIfNeeded( $topic->forumNode()->object()->ID );
 
 if ($http->variable('ajax'))

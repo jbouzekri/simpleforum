@@ -54,6 +54,7 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
         $newTopic->store();
         if ($newTopic->id)
         {
+            $newTopic->incForumTopicCount();
             eZContentCacheManager::clearContentCacheIfNeeded( $forum->object()->ID );
             return $Module->redirectTo('/topic/view/'.$newTopic->id);
         }
