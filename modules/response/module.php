@@ -16,6 +16,11 @@ $ViewList['state'] = array(
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ResponseID', 'NewState' ));
 
+$ViewList['delete'] = array(
+    'script' => 'delete.php',
+    'default_navigation_part' => 'ezforumnavigationpart',
+    'params' => array( 'ResponseID' ));
+
 $FunctionList = array();
 
 ?>

@@ -4,7 +4,7 @@
         <div class="box-bc"><div class="box-ml">
             <div class="button-left">
                 <input type="submit" title="{'Create the new topic'|i18n('simpleforum/topic')}" value="{'Save topic'|i18n('simpleforum/topic')}" name="NewButton" class="defaultbutton">
-                <input type="submit" title="{'Cancel action'|i18n('simpleforum/topic')}" onclick="return forumConfirmDiscard( '{'Are you sure you want to cancel?'|i18n('simpleforum/topic')}' );" value="{'Cancel Topic'|i18n('simpleforum/topic')}" name="CancelButton" class="button">
+                <input type="submit" title="{'Cancel action'|i18n('simpleforum/topic')}" onclick="return confirm( '{'Are you sure you want to cancel?'|i18n('simpleforum/topic')}' );" value="{'Cancel Topic'|i18n('simpleforum/topic')}" name="CancelButton" class="button">
             </div>
             <div class="button-right"></div>
             <div class="float-break"></div>
@@ -57,7 +57,7 @@
             <div class="controlbar">
                 <div class="block">
                     <input type="submit" title="{'Create the new topic'|i18n('simpleforum/topic')}" value="{'Save topic'|i18n('simpleforum/topic')}" name="NewButton" class="defaultbutton">
-                    <input type="submit" title="{'Cancel action'|i18n('simpleforum/topic')}" onclick="return forumConfirmDiscard( '{'Are you sure you want to cancel?'|i18n('simpleforum/topic')}' );" value="{'Cancel Topic'|i18n('simpleforum/topic')}" name="CancelButton" class="button">
+                    <input type="submit" title="{'Cancel action'|i18n('simpleforum/topic')}" onclick="return confirm( '{'Are you sure you want to cancel?'|i18n('simpleforum/topic')}' );" value="{'Cancel Topic'|i18n('simpleforum/topic')}" name="CancelButton" class="button">
                 </div>
             </div>
         </div>

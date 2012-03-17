@@ -295,6 +295,7 @@ class SimpleForumTopic extends eZPersistentObject
     
     public function canDelete()
     {
+        // TODO
         return true;
     }
 }

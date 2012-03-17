@@ -12,6 +12,7 @@
             {if or($response.is_validated,$response.is_published)}
                 <a href="{concat('/response/state/',$response.id,'/moderated')|ezul('no')}"><img title="{'moderate'|i18n('simpleforum/response')}" alt="{'moderate'|i18n('simpleforum/response')}" width="16" height="16" src="{'icons/moderate.png'|ezimage('no')}" /></a>
             {/if}
+            <a href="{concat('/response/delete/',$response.id)|ezul('no')}" onclick="return confirm( '{'Are you sure you want to delete the response?'|i18n('simpleforum/response')}' );"><img title="{'delete'|i18n('simpleforum/response')}" alt="{'delete'|i18n('simpleforum/response')}" width="16" height="16" src="{'icons/delete.gif'|ezimage('no')}" /></a>
         </p>
         <div class="break"></div>
     </div>

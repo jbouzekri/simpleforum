@@ -56,7 +56,7 @@
     <form action="/topic/view/{$topic_id}" method="post" name="topiclist">
         
         <input type="submit" title="Create a new response" value="{'New Response'|i18n('simpleforum/topic')}" name="NewResponseButton" class="defaultbutton" />
-        <input type="submit" title="Delete topic" value="{'Delete Topic'|i18n('simpleforum/topic')}" onclick="return forumConfirmDiscard( '{'Are you sure you want to delete the topic?'|i18n('simpleforum/topic')}' );" name="DeleteButton" class="button" />
+        <input type="submit" title="Delete topic" value="{'Delete Topic'|i18n('simpleforum/topic')}" onclick="return confirm( '{'Are you sure you want to delete the topic?'|i18n('simpleforum/topic')}' );" name="DeleteButton" class="button" />
         
         <div class="context-block">
             <div class="box-bc">

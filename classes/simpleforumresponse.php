@@ -192,5 +192,11 @@ class SimpleForumResponse extends eZPersistentObject
     {
         return $this->attribute('state') != self::STATUS_MODERATED;
     }
+    
+    public function canDelete()
+    {
+        // TODO
+        return true;
+    }
 }
 ?>
