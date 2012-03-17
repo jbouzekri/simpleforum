@@ -39,7 +39,6 @@
 
     <div class="context-information">
         <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$forum.object.published|l10n('shortdatetime')}, <a href="{$forum.object.owner.main_node.url_alias|ezurl('no')}">{$forum.object.owner.name|wash}</a> (Node ID: {$forum.node_id}, Object ID: {$forum.object.id})</p>
-        <p class="right translation">English (United Kingdom)&nbsp;<img width="18" height="12" style="vertical-align: middle;" alt="" src="/share/icons/flags/eng-GB.gif"></p>
         <div class="break"></div>
     </div>
         

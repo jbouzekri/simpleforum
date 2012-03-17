@@ -186,7 +186,7 @@ class SimpleForumTopic extends eZPersistentObject
     
     public function incResponseCount()
     {
-        $incResponse = (int) $this->getAttribute( 'response_count' );
+        $incResponse = (int) $this->attribute( 'response_count' );
         $incResponse++;
         $this->setAttribute( 'response_count', $incResponse );
         $this->store();

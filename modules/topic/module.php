@@ -10,13 +10,16 @@ $ViewList['new'] = array(
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ForumID' ),
     'single_post_actions' => array( 'NewButton' => 'New',
-                                    'CancelButton' => 'Cancel'),
-    'post_action_parameters' => array( 'New' => array(  )));
+                                    'CancelButton' => 'Cancel'));
 
 $ViewList['view'] = array(
     'script' => 'view.php',
     'default_navigation_part' => 'ezforumnavigationpart',
-    'params' => array( 'TopicID' ) );
+    'params' => array( 'TopicID' ),
+    'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
+    'single_post_actions' => array( 'NewResponseButton' => 'NewResponse',
+                                    'BackToForumButton' => 'BackToForum',
+                                    'BackToTopicListButton' => 'BackToTopicList') );
 
 $ViewList['list'] = array(
     'script' => 'list.php',

@@ -15,7 +15,7 @@ $tpl = eZTemplate::factory();
 $name    = "";
 $content = "";
 $errors  = array();
-if( $http->hasPostVariable('create') )
+if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
 {
     $name    = $http->postVariable('name');
     if (!$name || $name == "")
@@ -37,21 +37,29 @@ if( $http->hasPostVariable('create') )
         $errors[] = ezpI18n::tr( 'simpleforum/response', 'Response content must be at least 200 characters long.' );
     }
     
-    $newResponse = SimpleForumResponse::create(array(
-        'name' => $name,
-        'content' => $content,
-        'topic_id' => $topicID
-    ));
-    $newResponse->store();
-    if ($newResponse->id)
+    if (!count($errors))
     {
-        $topic->incResponseCount();
-        return $Module->redirectTo('/topic/view/'.$topic->id);
+        $newResponse = SimpleForumResponse::create(array(
+            'name' => $name,
+            'content' => $content,
+            'topic_id' => $topicID
+        ));
+        $newResponse->store();
+        if ($newResponse->id)
+        {
+            $topic->incResponseCount();
+            $topic->updateTopicModifiedDate();
+            return $Module->redirectTo('/topic/view/'.$topic->id);
+        }
+        else
+        {
+            $errors[] = ezpI18n::tr( 'simpleforum/response', 'An error occured when trying to create the new response' );
+        }
     }
-    else
-    {
-        $errors[] = ezpI18n::tr( 'simpleforum/response', 'An error occured when trying to create the new response' );
-    }
+}
+elseif ( $http->hasPostVariable('CancelButton') || $Module->isCurrentAction('Cancel') )
+{
+    return $Module->redirectTo('/topic/view/'.$topicID);
 }
 
 $tpl->setVariable('topic_id', $topicID);

@@ -1,0 +1,10 @@
+/* 
+    Document   : forum.css
+    Created on : 17 mars 2012, 14:36:03
+    Author     : jobou
+    Description:
+        Style Forum BO specific views
+*/
+
+.simpleforum-topic_responses .context-information {border-top:1px solid #CCCCCC}
+.simpleforum-topic_content {margin-bottom: 10px}

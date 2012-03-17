@@ -76,7 +76,7 @@ class SimpleForumResponse extends eZPersistentObject
                                        'required' => false )
                   ),
                   'function_attributes' => array(
-                      'forum_node' => 'topic',
+                      'topic'      => 'topic',
                       'user'       => 'responseUser'
                   ),
                   'keys' => array( 'id' ),
@@ -153,6 +153,7 @@ class SimpleForumResponse extends eZPersistentObject
         {
             $this->user = eZUser::fetch($this->attribute('user_id'));
         }
+        
         return $this->user;
     }
     

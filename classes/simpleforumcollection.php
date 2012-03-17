@@ -89,7 +89,7 @@ class SimpleForumCollection {
         
         $this->formatAttributeFilter($attributeFilter, $filter);
         
-        $result = SimpleResponseTopic::fetchCount( $filter );
+        $result = SimpleForumResponse::fetchCount( $filter );
         
         return array( 'result' => $result );
     }
