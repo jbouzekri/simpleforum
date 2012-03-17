@@ -1,4 +1,4 @@
-<tr class="simpleforum-topic_item">
+<tr class="simpleforum-topic_item {$class}">
     <td><input type="checkbox" name="delete_ids[]" value="{$topic.id}" /></td>
     <td><a href="{concat('/topic/view/',$topic.id)|ezurl('no')}">{$topic.name}</a></td>
     <td>{$topic.modified|l10n('shortdatetime')}</td>

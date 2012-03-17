@@ -38,6 +38,7 @@ if (!$response->canDelete())
 }
 
 $response->remove();
+$response->topic()->decResponseCount();
 
 if ($http->variable('ajax'))
 {

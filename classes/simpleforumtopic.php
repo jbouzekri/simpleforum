@@ -205,6 +205,14 @@ class SimpleForumTopic extends eZPersistentObject
         $this->store();
     }
     
+    public function decResponseCount()
+    {
+        $decResponse = (int) $this->attribute( 'response_count' );
+        $decResponse--;
+        $this->setAttribute( 'response_count', $decResponse );
+        $this->store();
+    }
+    
     public function incViewCount()
     {
         $incView = (int) $this->getAttribute( 'view_count' );

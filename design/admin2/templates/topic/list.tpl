@@ -74,8 +74,8 @@
                                     <th width="20%">{'Actions'|i18n('simpleforum/topic')}</th>
                                 </tr>
                                 {if count($topics)}
-                                    {foreach $topics as $topic}
-                                        {topic_view_gui topic=$topic view='list'}
+                                    {foreach $topics as $topic sequence array( bglight, bgdark ) as $class}
+                                        {topic_view_gui topic=$topic view='list' class=$class}
                                     {/foreach}
                                 {else}
                                     <tr><td colspan="7">{'No topic'|i18n('simpleforum/topic')}</td></tr>
