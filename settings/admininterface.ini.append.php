@@ -12,6 +12,7 @@ AdditionalTabs[]=lasttopics
 Title=Last Topics
 Description=The last 10 topics activities in the forum
 NavigationPartName=ezforumnavigationpart
+HeaderTemplate=
 Template=lasttopics.tpl
 
  */
