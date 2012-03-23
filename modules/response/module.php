@@ -24,9 +24,19 @@ $ViewList['delete'] = array(
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ResponseID' ));
 
+$Node = array(
+    'name'=> 'Node',
+    'values'=> array()
+);
+
+$Subtree = array(
+    'name'=> 'Subtree',
+    'values'=> array()
+);
+
 $FunctionList             = array();
-$FunctionList[ 'create' ] = array();
-$FunctionList[ 'state' ]  = array();
-$FunctionList[ 'remove' ] = array();
+$FunctionList[ 'create' ] = array('Node' => $Node, 'Subtree' => $Subtree);
+$FunctionList[ 'state' ]  = array('Node' => $Node, 'Subtree' => $Subtree);
+$FunctionList[ 'remove' ] = array('Node' => $Node, 'Subtree' => $Subtree);
 
 ?>

@@ -157,6 +157,64 @@
     </CreateContent>
     <ProccessInformation comment="Forum root node created" />
     
+    <CreateRole>
+        <Role name="Forum Navigation" createRole="true" referenceID="FORUM_NAVIGATION_ROLE">
+            <Policy module="topic" function="read">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+        </Role>
+    </CreateRole>
+    <ProccessInformation comment="Forum navigation role created" />
+    
+    <CreateRole>
+        <Role name="Forum Contribution" createRole="true" referenceID="FORUM_CONTRIBUTION_ROLE">
+            <Policy module="topic" function="create">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+            <Policy module="response" function="create">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+        </Role>
+    </CreateRole>
+    <ProccessInformation comment="Forum contribution role created" />
+    
+    <CreateRole>
+        <Role name="Forum Administration" createRole="true" referenceID="FORUM_ADMINISTRATION_ROLE">
+            <Policy module="topic" function="state">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+            <Policy module="response" function="state">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+            <Policy module="topic" function="remove">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+            <Policy module="response" function="remove">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
+        </Role>
+    </CreateRole>
+    <ProccessInformation comment="Forum administration role created" />
+    
+    <AssignRoles>
+        <RoleAssignment roleID="internal:FORUM_NAVIGATION_ROLE"  assignTo="42" />
+    </AssignRoles>
+    <ProccessInformation comment="Assign forum navigation role to anonymous group" />
+    
     <SimpleForumSetSettings>
         <SettingsFile location="extension/simpleforum/settings" name="menu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
         <SettingsFile location="extension/simpleforum/settings" name="contentstructuremenu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
