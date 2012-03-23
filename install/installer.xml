@@ -11,11 +11,143 @@
 
 <eZXMLImporter>
     <ProccessInformation comment="Start simpleforum extension installation" />
+    
+    <CreateClass>
+        <ContentClass isContainer="true"
+                      identifier="forum"
+                     remoteID="2b03dc364b80a7565a030da020ede014"
+                     objectNamePattern="&lt;title&gt;"
+                     urlAliasPattern="&lt;title&gt;"
+                     classExistAction="replace">
+        <Names eng-GB="Forum" always-available="eng-GB"/>
+        <Groups>
+            <Group name="Forum" />
+        </Groups>
+        <Attributes>
+            <Attribute datatype="ezstring"
+                       required="true"
+                       searchable="true"
+                       informationCollector="false"
+                       translatable="true"
+                       identifier="title"
+                       placement="1">
+                <Names eng-GB="Title" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <max-length>150</max-length>
+                    <default-string />
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezxmltext"
+                       required="false"
+                       searchable="true"
+                       informationCollector="false"
+                       translatable="true"
+                       identifier="description"
+                       placement="2">
+                <Names eng-GB="Description" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <text-column-count>2</text-column-count>
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezimage"
+                       required="false"
+                       searchable="false"
+                       informationCollector="false"
+                       translatable="false"
+                       identifier="image"
+                       placement="3">
+                <Names eng-GB="Image" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <max-size>2</max-size>
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezinteger"
+                       required="true"
+                       searchable="false"
+                       informationCollector="false"
+                       translatable="false"
+                       identifier="depth"
+                       placement="4">
+                <Names eng-GB="Depth" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <default-value>1</default-value>
+                    <min-value>0</min-value>
+                    <max-value />
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezinteger"
+                       required="true"
+                       searchable="false"
+                       informationCollector="false"
+                       translatable="false"
+                       identifier="topic_count"
+                       placement="5">
+                <Names eng-GB="Topic Number" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <default-value>0</default-value>
+                    <min-value>0</min-value>
+                    <max-value />
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezstring"
+                       required="false"
+                       searchable="true"
+                       informationCollector="false"
+                       translatable="true"
+                       identifier="meta_title"
+                       placement="6">
+                <Names eng-GB="Meta Title" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <max-length>150</max-length>
+                    <default-string />
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="eztext"
+                       required="false"
+                       searchable="true"
+                       informationCollector="false"
+                       translatable="true"
+                       identifier="meta_description"
+                       placement="7">
+                <Names eng-GB="Meta Description" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <text-column-count>2</text-column-count>
+                </DatatypeParameters>
+            </Attribute>
+            <Attribute datatype="ezkeyword"
+                       required="false"
+                       searchable="true"
+                       informationCollector="false"
+                       translatable="true"
+                       identifier="meta_keywords"
+                       placement="8">
+                <Names eng-GB="Meta Keywords" always-available="eng-GB"/>
+                <DatatypeParameters>
+                    <keyword-string />
+                </DatatypeParameters>
+            </Attribute>
+          </Attributes>
+       </ContentClass>
+    </CreateClass>
+    <ProccessInformation comment="Class forum created" />
+    
     <SimpleForumCreateSection sectionName="Forum" sectionIdentifier="forum" navigationPart="ezforumnavigationpart" referenceID="SECTION_FORUM">
     </SimpleForumCreateSection>
     <ProccessInformation comment="Section Forum created" />
+    
+    <CreateRole>
+        <Role name="Anonymous" createRole="false">
+            <Policy module="content" function="read">
+                <Limitations>
+                    <Section>internal:SECTION_FORUM</Section>
+                </Limitations>
+            </Policy>
+        </Role>
+    </CreateRole>
+    <ProccessInformation comment="Anonymous user allowed to read Section Forum" />
+    
     <CreateContent parentNode="1">
-        <ContentObject owner="14" creator="14" contentClass="general_forum" section="internal:SECTION_FORUM" remoteID="forum_root_folder">
+        <ContentObject owner="14" creator="14" contentClass="forum" section="internal:SECTION_FORUM" remoteID="3a022c6c16f7e14613a936104904878e">
           <Attributes>
             <title>Forum</title>
           </Attributes>
@@ -24,10 +156,16 @@
         </ContentObject>
     </CreateContent>
     <ProccessInformation comment="Forum root node created" />
+    
     <SimpleForumSetSettings>
         <SettingsFile location="extension/simpleforum/settings" name="menu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
         <SettingsFile location="extension/simpleforum/settings" name="contentstructuremenu.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
         <SettingsFile location="extension/simpleforum/settings" name="content.ini.append.php" key="__FORUM_NODE_ID__" value="internal:FORUM_ROOT_NODE_ID"></SettingsFile>
     </SimpleForumSetSettings>
     <ProccessInformation comment="Forum settings updated" />
+    
+    <SimpleForumAlwaysAvailable object="internal:FORUM_ROOT_OBJECT_ID" node="internal:FORUM_ROOT_NODE_ID" newState="1">
+    </SimpleForumAlwaysAvailable>
+    <ProccessInformation comment="Forum node translation always available" />
+    
 </eZXMLImporter>

@@ -17,6 +17,7 @@ class simpleForumCreateSection extends eZXMLInstallerHandler
         $navigationPart = $xmlNode->getAttribute( 'navigationPart' );
         $referenceID    = $xmlNode->getAttribute( 'referenceID' );
 
+        $sectionID = false;
         if( $sectionIdentifier )
         {
             $section = eZSection::fetchByIdentifier( $sectionIdentifier );
