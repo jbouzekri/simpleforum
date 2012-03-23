@@ -7,6 +7,7 @@ $ViewList = array();
 
 $ViewList['new'] = array(
     'script' => 'new.php',
+    'functions' => array( 'create' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ForumID' ),
     'single_post_actions' => array( 'NewButton' => 'New',
@@ -14,6 +15,7 @@ $ViewList['new'] = array(
 
 $ViewList['view'] = array(
     'script' => 'view.php',
+    'functions' => array( 'read' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID' ),
     'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
@@ -24,6 +26,7 @@ $ViewList['view'] = array(
 
 $ViewList['list'] = array(
     'script' => 'list.php',
+    'functions' => array( 'read' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ForumID' ),
     'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
@@ -33,12 +36,20 @@ $ViewList['list'] = array(
 
 $ViewList['state'] = array(
     'script' => 'state.php',
+    'functions' => array( 'state' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID', 'NewState' ));
 
 $ViewList['delete'] = array(
     'script' => 'delete.php',
+    'functions' => array( 'remove' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID' ));
+
+$FunctionList             = array();
+$FunctionList[ 'read' ]   = array();
+$FunctionList[ 'create' ] = array();
+$FunctionList[ 'state' ]  = array();
+$FunctionList[ 'remove' ] = array();
 
 ?>

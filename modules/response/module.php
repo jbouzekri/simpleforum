@@ -6,6 +6,7 @@ $Module = array( 'name' => 'Forum Topic Management',
 $ViewList = array();
 $ViewList['new'] = array(
     'script' => 'new.php',
+    'functions' => array( 'create' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID' ),
     'single_post_actions' => array( 'NewButton' => 'New',
@@ -13,14 +14,19 @@ $ViewList['new'] = array(
 
 $ViewList['state'] = array(
     'script' => 'state.php',
+    'functions' => array( 'state' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ResponseID', 'NewState' ));
 
 $ViewList['delete'] = array(
     'script' => 'delete.php',
+    'functions' => array( 'remove' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ResponseID' ));
 
-$FunctionList = array();
+$FunctionList             = array();
+$FunctionList[ 'create' ] = array();
+$FunctionList[ 'state' ]  = array();
+$FunctionList[ 'remove' ] = array();
 
 ?>
