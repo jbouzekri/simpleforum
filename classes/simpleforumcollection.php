@@ -73,9 +73,17 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    function fetchResponseList($topicID, $limit, $offset, $sortBy, $asObject, $attributeFilter)
+    function fetchResponseList($topicID, $limit, $offset, $sortBy, $asObject, $attributeFilter, $limitation)
     {
         $filter  = array();
+        
+        $topic = SimpleForumTopic::fetch($topicID);
+        if ( !$topic || 
+             (!$topic->canRead() && !is_array($limitation)) )
+        {
+        	return array( 'result' => array() );
+        }
+        
         $filter['topic_id'] = array(array($topicID));
         
         $this->formatAttributeFilter($attributeFilter, $filter);
@@ -96,9 +104,17 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    public function fetchResponseCount( $topicID, $attributeFilter )
+    public function fetchResponseCount( $topicID, $attributeFilter, $limitation )
     {
         $filter  = array();
+        
+        $topic = SimpleForumTopic::fetch($topicID);
+        if ( !$topic ||
+             (!$topic->canRead() && !is_array($limitation)) )
+        {
+        	return array( 'result' => 0 );
+        }
+        
         $filter['topic_id'] = array(array($topicID));
         
         $this->formatAttributeFilter($attributeFilter, $filter);

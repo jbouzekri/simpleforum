@@ -80,7 +80,9 @@ class SimpleForumResponse extends eZPersistentObject
                       'user'         => 'responseUser',
                       'is_published' => 'isPublished',
                       'is_validated' => 'isValidated',
-                      'is_moderated' => 'isModerated'
+                      'is_moderated' => 'isModerated',
+                  	  'can_read'     => 'canRead',
+                  	  'can_delete'   => 'canDelete'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -191,6 +193,17 @@ class SimpleForumResponse extends eZPersistentObject
     public function isVisible()
     {
         return $this->attribute('state') != self::STATUS_MODERATED;
+    }
+    
+    public function canRead()
+    {
+    	if ( !$this->topic()->canRead() || 
+    		 (!self::showModeratedResponses() && $this->isModerated()) )
+    	{
+    		return false;
+    	}
+    	
+    	return true;
     }
     
     public function canDelete()

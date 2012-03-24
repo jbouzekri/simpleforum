@@ -90,6 +90,8 @@ class SimpleForumTopic extends eZPersistentObject
                       'is_moderated'   => 'isModerated',
                       'is_closed'      => 'isClosed',
                       'is_visible'     => 'isVisible',
+                  	  'can_read'       => 'canRead',
+                  	  'can_delete'     => 'canDelete'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',

@@ -53,7 +53,12 @@ $FunctionList['list'] = array( 'name' => 'list',
                                           'type'     => 'array',
                                           'required' => false,
                                           'default'  => array()
-                                   )
+                                   ),
+                               	   array( 'name'     => 'limitation',
+                               		      'type'     => 'array',
+                               			  'required' => false,
+                               			  'default'  => false
+                               	   )
                                 )
 );
 
@@ -72,7 +77,12 @@ $FunctionList['list_count'] = array( 'name' => 'list_count',
                                                 'type'     => 'array',
                                                 'required' => false,
                                                 'default'  => array()
-                                        )
+                                        ),
+	                               	    array( 'name'     => 'limitation',
+	                               		       'type'     => 'array',
+	                               	 	       'required' => false,
+	                               			   'default'  => false
+	                               	    )
                                     ) 
 );
 
