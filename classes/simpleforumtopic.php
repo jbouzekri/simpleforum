@@ -235,7 +235,7 @@ class SimpleForumTopic extends eZPersistentObject
     
     public function incViewCount()
     {
-        $incView = (int) $this->getAttribute( 'view_count' );
+        $incView = (int) $this->attribute( 'view_count' );
         $incView++;
         $this->setAttribute( 'view_count', $incView );
         $this->store();

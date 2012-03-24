@@ -1,5 +1,10 @@
 <?php
 
+eZDebug::updateSettings(array(
+		"debug-enabled" => false,
+		"debug-by-ip" => false
+));
+
 $Module = $Params['Module'];
 $http   = eZHTTPTool::instance();
 

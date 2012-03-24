@@ -5,5 +5,24 @@
 
 
 jQuery(document).ready(function(){
-    alert('ok');
+    if (typeof topic_view != 'undefined')
+    {
+    	// The topic_view cookie does not exists
+    	if (!$.cookie("topic_view"))
+    	{
+    	    $.ajax({url:'/topic/inc_view_count/'+topic_view});
+    		$.cookie("topic_view", topic_view, { path: '/', expires: 1 });
+    	}
+    	else
+    	{
+    		tmpTopicView = $.cookie("topic_view")+'';
+    		topicViewArray = tmpTopicView.split('|');
+    		if (!jQuery.inArray( topic_view, topicViewArray ))
+    		{
+    			$.ajax({url:'/topic/inc_view_count/'+topic_view});
+    			topicViewArray.push(topic_view);
+    			$.cookie("topic_view", topicViewArray.join('|'), { path: '/', expires: 1 });
+    		}
+    	}
+    }
 });

@@ -20,3 +20,8 @@
 </div>
 
 <a href="{$topic.forum_node.url_alias|ezurl('no')}">{'Back to forum'|i18n('simpleforum/topic')}</a>
+
+{ezscript_require( 'ezjsc::jquery' )}
+<script type="text/javascript">
+ var topic_view = {$topic.id};
+</script>

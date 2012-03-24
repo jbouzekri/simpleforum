@@ -46,6 +46,12 @@ $ViewList['delete'] = array(
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'TopicID' ));
 
+$ViewList['inc_view_count'] = array(
+		'script' => 'inc_view_count.php',
+		'functions' => array( 'read' ),
+		'default_navigation_part' => 'ezforumnavigationpart',
+		'params' => array( 'TopicID' ));
+
 $Node = array(
     'name'=> 'Node',
     'values'=> array()

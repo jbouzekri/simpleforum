@@ -1,3 +1,6 @@
+{set-block scope=global variable=cache_ttl}7200{/set-block}
+
+
 {if is_set( $view_parameters.offset )}
     {def $offset=$view_parameters.offset}
 {else}
