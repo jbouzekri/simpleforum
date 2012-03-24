@@ -55,6 +55,7 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
         {
             $topic->incResponseCount();
             $topic->updateTopicModifiedDate();
+            eZContentCacheManager::clearContentCacheIfNeeded( $newResponse->topic()->forumNode()->object()->ID );
             return $Module->redirectTo('/topic/view/'.$topic->id);
         }
         else
