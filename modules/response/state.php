@@ -22,8 +22,8 @@ if (!$responseID || !$response)
     }
 }
 
-// Test if user can read topic page
-if (!$response->topic()->canRead())
+// Test if user can read topic page and can change state
+if (!$response->topic()->canRead() || !SimpleForumTools::checkAccess($response->topic()->forumNode(), 'response', 'state'))
 {
     if ($http->variable('ajax'))
     {
