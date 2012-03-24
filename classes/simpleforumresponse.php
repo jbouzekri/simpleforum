@@ -195,8 +195,23 @@ class SimpleForumResponse extends eZPersistentObject
     
     public function canDelete()
     {
-        // TODO
+        if (!SimpleForumTools::checkAccess($this->topic()->forumNode(), 'response', 'remove'))
+        {
+        	return false;
+        }
+        
         return true;
+    }
+    
+    public static function showModeratedResponses()
+    {
+    	$ini = eZINI::instance('site.ini.append.php');
+    	if ( !$ini->variable('SiteAccessSettings', 'ShowModeratedForumItems') )
+    	{
+    		return false;
+    	}
+    
+    	return true;
     }
 }
 ?>

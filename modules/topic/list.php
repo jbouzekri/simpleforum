@@ -18,7 +18,7 @@ if (!$forum->canRead() || ($forum->attribute( 'is_invisible' ) && !eZContentObje
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
 
-if (!SimpleForumTopic::checkAccess($forum))
+if (!SimpleForumTools::checkAccess($forum))
 {
 	return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }

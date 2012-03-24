@@ -23,7 +23,7 @@ if (!$topicID || !$topic)
 }
 
 // Test if user can read topic page or change topic
-if (!$topic->canRead() || !SimpleForumTopic::checkAccess($topic->forumNode(), 'state'))
+if (!$topic->canRead() || !SimpleForumTools::checkAccess($topic->forumNode(), 'topic', 'state'))
 {
     if ($http->variable('ajax'))
     {

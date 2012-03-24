@@ -23,7 +23,7 @@ class SimpleForumCollection {
         $filter  = array();
         
         $forumNode = eZContentObjectTreeNode::fetch($forumNodeId);
-    	if (!SimpleForumTopic::checkAccess($forumNode) && !is_array($limitation))
+    	if (!SimpleForumTools::checkAccess($forumNode) && !is_array($limitation))
     	{
         	return array( 'result' => array() );
     	}
@@ -53,7 +53,7 @@ class SimpleForumCollection {
         $filter  = array();
         
         $forumNode = eZContentObjectTreeNode::fetch($forumNodeId);
-        if (!SimpleForumTopic::checkAccess($forumNode) && !is_array($limitation))
+        if (!SimpleForumTools::checkAccess($forumNode) && !is_array($limitation))
         {
         	return array( 'result' => 0 );
         }
@@ -169,7 +169,7 @@ class SimpleForumCollection {
             $forums = eZContentObjectTreeNode::subTreeByNodeID(array('Depth'=>$depth), $forumNodeId);
             foreach ($forums as $forum)
             {
-            	if (SimpleForumTopic::checkAccess($forum) || is_array($limitation))
+            	if (SimpleForumTools::checkAccess($forum) || is_array($limitation))
             	{
                 	$nodeIDs[] = $forum->attribute('node_id');
             	}
