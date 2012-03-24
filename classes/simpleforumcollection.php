@@ -18,10 +18,17 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter )
+    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter, $limitation )
     {
         $filter  = array();
-        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth);
+        
+        $forumNode = eZContentObjectTreeNode::fetch($forumNodeId);
+    	if (!SimpleForumTopic::checkAccess($forumNode) && !is_array($limitation))
+    	{
+        	return array( 'result' => array() );
+    	}
+    	
+        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth, $limitation);
         
         $this->formatAttributeFilter($attributeFilter, $filter);
         
@@ -41,10 +48,17 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    public function fetchTopicCount( $forumNodeId, $depth, $attributeFilter )
+    public function fetchTopicCount( $forumNodeId, $depth, $attributeFilter, $limitation )
     {
         $filter  = array();
-        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth);
+        
+        $forumNode = eZContentObjectTreeNode::fetch($forumNodeId);
+        if (!SimpleForumTopic::checkAccess($forumNode) && !is_array($limitation))
+        {
+        	return array( 'result' => 0 );
+        }
+        
+        $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth, $limitation);
         
         $this->formatAttributeFilter($attributeFilter, $filter);
         
@@ -147,7 +161,7 @@ class SimpleForumCollection {
         return $formatedSortBy;
     }
     
-    public function getForumNodeIds($forumNodeId, $depth)
+    public function getForumNodeIds($forumNodeId, $depth, $limitation = false)
     {
         $nodeIDs = array($forumNodeId);
         if ($depth != 1)
@@ -155,7 +169,10 @@ class SimpleForumCollection {
             $forums = eZContentObjectTreeNode::subTreeByNodeID(array('Depth'=>$depth), $forumNodeId);
             foreach ($forums as $forum)
             {
-                $nodeIDs[] = $forum->attribute('node_id');
+            	if (SimpleForumTopic::checkAccess($forum) || is_array($limitation))
+            	{
+                	$nodeIDs[] = $forum->attribute('node_id');
+            	}
             }
         }
         return array($nodeIDs);

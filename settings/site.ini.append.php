@@ -6,4 +6,7 @@ ExtensionAutoloadPath[]=simpleforum
 [RegionalSettings]
 TranslationExtensions[]=simpleforum
 
+[SiteAccessSettings]
+ShowModeratedTopics=true
+
 */ ?>
