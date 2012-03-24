@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
     	{
     		tmpTopicView = $.cookie("topic_view")+'';
     		topicViewArray = tmpTopicView.split('|');
-    		if (!jQuery.inArray( topic_view+'', topicViewArray ))
+    		if (topicViewArray.indexOf(topic_view+"") < 0)
     		{
     			$.ajax({url:'/topic/inc_view_count/'+topic_view});
     			topicViewArray.push(topic_view);
