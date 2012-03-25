@@ -180,6 +180,11 @@
                     <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
                 </Limitations>
             </Policy>
+            <Policy module="response" function="rate">
+                <Limitations>
+                    <Subtree>internal:FORUM_ROOT_NODE_ID</Subtree>
+                </Limitations>
+            </Policy>
         </Role>
     </CreateRole>
     <ProccessInformation comment="Forum contribution role created" />

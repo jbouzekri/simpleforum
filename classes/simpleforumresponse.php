@@ -82,7 +82,8 @@ class SimpleForumResponse extends eZPersistentObject
                       'is_validated' => 'isValidated',
                       'is_moderated' => 'isModerated',
                   	  'can_read'     => 'canRead',
-                  	  'can_delete'   => 'canDelete'
+                  	  'can_delete'   => 'canDelete',
+                  	  'can_rate'     => 'canRate'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -225,6 +226,53 @@ class SimpleForumResponse extends eZPersistentObject
     	}
     
     	return true;
+    }
+    
+    public function canRate()
+    {
+    	if ($this->canRead() 
+    		&& SimpleForumTools::checkAccess($this->topic()->forumNode(), 'response', 'rate'))
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    public function addPositiveVote()
+    {
+    	$positiveVote = $this->attribute('positive_vote');
+    	$totalVote    = $this->attribute('total_vote');
+    	$positiveVote++;
+    	$totalVote++;
+    	$this->setAttribute( 'positive_vote', $positiveVote );
+    	$this->setAttribute( 'total_vote', $totalVote );
+        $this->store();
+    }
+    
+    public function addNegativeVote()
+    {
+    	$totalVote = $this->attribute('total_vote');
+    	$totalVote++;
+    	$this->setAttribute( 'total_vote', $totalVote );
+        $this->store();
+    }
+    
+    public function canResetVote()
+    {
+    	if ($this->canRate() && SimpleForumTools::checkAccess($this->topic()->forumNode(), 'response', 'state'))
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    public function resetVote()
+    {
+    	$this->setAttribute( 'positive_vote', 0 );
+    	$this->setAttribute( 'total_vote', 0 );
+    	$this->store();
     }
 }
 ?>

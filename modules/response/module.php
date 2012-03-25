@@ -24,6 +24,12 @@ $ViewList['delete'] = array(
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ResponseID' ));
 
+$ViewList['rate'] = array(
+		'script' => 'rate.php',
+		'functions' => array( 'rate' ),
+		'default_navigation_part' => 'ezforumnavigationpart',
+		'params' => array( 'Action', 'ResponseID' ));
+
 $Node = array(
     'name'=> 'Node',
     'values'=> array()
@@ -38,5 +44,6 @@ $FunctionList             = array();
 $FunctionList[ 'create' ] = array('Node' => $Node, 'Subtree' => $Subtree);
 $FunctionList[ 'state' ]  = array('Node' => $Node, 'Subtree' => $Subtree);
 $FunctionList[ 'remove' ] = array('Node' => $Node, 'Subtree' => $Subtree);
+$FunctionList[ 'rate' ]   = array('Node' => $Node, 'Subtree' => $Subtree);
 
 ?>

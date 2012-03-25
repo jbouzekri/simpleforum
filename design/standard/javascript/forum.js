@@ -25,4 +25,21 @@ jQuery(document).ready(function(){
     		}
     	}
     }
+    
+    if (typeof response_rate != 'undefined')
+    {
+    	if ($.cookie("response_rate"))
+    	{
+    		tmpResponseRate   = $.cookie("response_rate")+'';
+    		responseRateArray = tmpResponseRate.split('|');
+	    	$('div[id|=response]').each(function(){
+	    		responseDivId = $(this).attr('id');
+	    		responseDivId = responseDivId.split('-');	    		
+	    		if (responseRateArray.indexOf(responseDivId[1]+"") >= 0) 
+	    		{
+	    			$(this).find('.rate p').hide();
+	    		}
+	    	});
+    	}
+    }
 });
