@@ -5,7 +5,7 @@
     </div>
     <div class="rate">
         {if $response.total_vote|gt(0)}
-            {ceil(mul(div($response.positive_vote,$response.total_vote),100))} %
+            {$response.rate} %
         {else}
             {'Be the first to note this response'|i18n('simpleforum/response')}
         {/if}

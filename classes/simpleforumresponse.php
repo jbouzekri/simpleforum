@@ -76,14 +76,16 @@ class SimpleForumResponse extends eZPersistentObject
                                        'required' => false )
                   ),
                   'function_attributes' => array(
-                      'topic'        => 'topic',
-                      'user'         => 'responseUser',
-                      'is_published' => 'isPublished',
-                      'is_validated' => 'isValidated',
-                      'is_moderated' => 'isModerated',
-                  	  'can_read'     => 'canRead',
-                  	  'can_delete'   => 'canDelete',
-                  	  'can_rate'     => 'canRate'
+                      'topic'          => 'topic',
+                      'user'           => 'responseUser',
+                      'is_published'   => 'isPublished',
+                      'is_validated'   => 'isValidated',
+                      'is_moderated'   => 'isModerated',
+                  	  'can_read'       => 'canRead',
+                  	  'can_delete'     => 'canDelete',
+                  	  'can_rate'       => 'canRate',
+                  	  'can_reset_vote' => 'canResetVote',
+                  	  'rate'           => 'currentRate'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -273,6 +275,16 @@ class SimpleForumResponse extends eZPersistentObject
     	$this->setAttribute( 'positive_vote', 0 );
     	$this->setAttribute( 'total_vote', 0 );
     	$this->store();
+    }
+    
+    public function currentRate()
+    {
+    	if ($this->attribute('total_vote') > 0)
+    	{
+    		return ceil( ($this->attribute('positive_vote') / $this->attribute('total_vote')) * 100 );
+    	}
+    	
+    	return -1;
     }
 }
 ?>

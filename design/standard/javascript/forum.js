@@ -42,4 +42,8 @@ jQuery(document).ready(function(){
 	    	});
     	}
     }
+    
+    $('div[id|=response] .rate a').click(function(){
+    	
+    });
 });
