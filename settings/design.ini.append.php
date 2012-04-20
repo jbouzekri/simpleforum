@@ -11,6 +11,7 @@ BackendJavaScriptList[]=forum.js
 FrontendJavaScriptList[]=jquery-1.6.4.min.js
 FrontendJavaScriptList[]=jquery.cookie.js
 FrontendJavaScriptList[]=forum.js
+FrontendJavaScriptList[]=forum.cookie.js
 
 */
 
