@@ -9,4 +9,7 @@ TranslationExtensions[]=simpleforum
 [SiteAccessSettings]
 ShowModeratedForumItems=true
 
+[ForumSearchSettings]
+SearchEngine=simpleForumSolr
+
 */ ?>
