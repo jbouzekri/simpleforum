@@ -2,6 +2,17 @@
 
 class simpleForumSolr implements ezpSearchEngine
 {
+    var $SolrINI;
+    var $FindINI;
+    var $SiteINI;
+    
+    function __construct()
+    {
+        $this->SolrINI = eZINI::instance( 'solr.ini' );
+        $this->FindINI = eZINI::instance( 'ezfind.ini' );
+        $this->SiteINI = eZINI::instance( 'site.ini' );
+    }
+    
 	/**
 	 * Whether a commit operation is required after adding/removing objects.
 	 *
@@ -10,7 +21,7 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function needCommit()
 	{
-		return false;
+		return true;
 	}
 	
 	/**
@@ -79,6 +90,6 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function commit()
 	{
-		
+	    $this->Solr->commit();
 	}
 }
