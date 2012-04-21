@@ -1,7 +1,9 @@
 <?php /* 
 
 [ForumSolrBase]
-SearchServerURI=http://localhost:8983/solr/cmsclub
+SearchServerHost=localhost
+SearchServerPort=8983
+SearchServerPath=/solr/cmsclub
 
 */
 ?>

@@ -3,14 +3,24 @@
 class simpleForumSolr implements ezpSearchEngine
 {
     var $SolrINI;
-    var $FindINI;
-    var $SiteINI;
+    
+    var $handler;
+    var $manager;
+    var $session;
     
     function __construct()
     {
         $this->SolrINI = eZINI::instance( 'solr.ini' );
-        $this->FindINI = eZINI::instance( 'ezfind.ini' );
-        $this->SiteINI = eZINI::instance( 'site.ini' );
+
+        $host = $this->SolrINI->variable('ForumSolrBase', 'SearchServerHost');
+        $port = $this->SolrINI->variable('ForumSolrBase', 'SearchServerPort');
+        $path = $this->SolrINI->variable('ForumSolrBase', 'SearchServerPath');
+        
+        $this->handler = new ezcSearchSolrHandler( $host, $port, $path );
+        $this->manager = new ezcSearchEmbeddedManager;
+        $this->session = new ezcSearchSession( $this->handler, $this->manager );
+        
+        $this->handler->beginTransaction();
     }
     
 	/**
@@ -42,9 +52,16 @@ class simpleForumSolr implements ezpSearchEngine
 	 * @param bool $commit Whether to commit after adding the object
 	 * @return bool True if the operation succeed.
 	 */
-	public function addObject( $contentObject, $commit = true )
+	public function addObject( $object, $commit = true )
 	{
-		return true;
+	        
+        $doc = $object->getSearchObject();        
+        $this->session->index( $doc );
+        
+        // Reconnect at each update because of a reset connection problem
+        $this->handler->reConnect();
+        
+        return true;
 	}
 	
 	/**
@@ -90,6 +107,9 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function commit()
 	{
-	    $this->Solr->commit();
+	    // Reconnect at each update because of a reset connection problem
+	    $this->handler->reConnect();
+	    
+	    $this->handler->commit();
 	}
 }

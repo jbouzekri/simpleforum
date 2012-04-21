@@ -61,7 +61,14 @@ if (!$searchEngine)
 if ($searchEngine == 'simpleForumSolr')
 {
     $solrINI = eZINI::instance( 'solr.ini' );
-    $solrBase = new eZSolrBase( $solrINI->variable('ForumSolrBase', 'SearchServerURI') );
+    
+    $host = $solrINI->variable('ForumSolrBase', 'SearchServerHost');
+    $port = $solrINI->variable('ForumSolrBase', 'SearchServerPort');
+    $path = $solrINI->variable('ForumSolrBase', 'SearchServerPath');
+    
+    $url = 'http://'.$host.':'.$port.$path;
+    
+    $solrBase = new eZSolrBase( $url );
     $pingResult = $solrBase->ping();
     if ( !isset( $pingResult['status'] ) || $pingResult['status'] !== 'OK' )
     {
@@ -78,7 +85,13 @@ $topics = SimpleForumTopic::fetchList();
 foreach ($topics as $topic)
 {
     // Index topic
-    $simpleForumSearch->addObject( $topic, false );
+    $simpleForumSearch->addObject( $topic );
+    
+    // Index responses
+    foreach ($topic->getAllResponses() as $response)
+    {
+        $simpleForumSearch->addObject( $response );
+    }
 }
 
 // Check if search engine need commit

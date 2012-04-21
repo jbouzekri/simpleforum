@@ -7,6 +7,8 @@ class SimpleForumTopic extends eZPersistentObject
      const STATUS_PUBLISHED = 'PUBLISHED';
      const STATUS_CLOSED    = 'CLOSED';
      
+     const SEARCH_TYPE = 'topic';
+     
      protected $forumNode = false;
      protected $user      = false;
      
@@ -346,5 +348,31 @@ class SimpleForumTopic extends eZPersistentObject
         }
     	
         return true;
+    }
+    
+    public function toArray()
+    {
+        $array                  = array();
+        $array['id']            = md5(self::SEARCH_TYPE.$this->attribute('id'));
+        $array['entity_id']     = $this->attribute('id');
+        $array['type']          = self::SEARCH_TYPE;
+        $array['url']           = '/topic/view/'.$this->attribute('id');
+        $array['language_code'] = 'fre-FR';
+        $array['content']       = $this->attribute('content');
+        $array['published']     = $this->attribute('published');
+        $array['modified']      = $this->attribute('modified');
+        return $array;
+    }
+    
+    public function getSearchObject()
+    {
+        $searchObject = new simpleForumTopicSearch();
+        $searchObject->setState( $this->toArray() );
+        return $searchObject;
+    }
+    
+    public function getAllResponses()
+    {
+        return SimpleForumResponse::fetchList(array('topic_id'=>$this->attribute('id')));
     }
 }

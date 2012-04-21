@@ -2,12 +2,14 @@
  
 class SimpleForumResponse extends eZPersistentObject
 {
-     const STATUS_VALIDATED = 'VALIDATED';
-     const STATUS_MODERATED = 'MODERATED';
-     const STATUS_PUBLISHED = 'PUBLISHED';
+    const SEARCH_TYPE = 'response';
+    
+    const STATUS_VALIDATED = 'VALIDATED';
+    const STATUS_MODERATED = 'MODERATED';
+    const STATUS_PUBLISHED = 'PUBLISHED';
      
-     protected $topic = false;
-     protected $user  = false;
+    protected $topic = false;
+    protected $user  = false;
      
      /**
      * Construct
@@ -285,6 +287,28 @@ class SimpleForumResponse extends eZPersistentObject
     	}
     	
     	return -1;
+    }
+    
+    public function toArray()
+    {
+        $array                  = array();
+        $array['id']            = md5(self::SEARCH_TYPE.$this->attribute('id'));
+        $array['entity_id']     = $this->attribute('id');
+        $array['topic_id']      = $this->attribute('topic_id');
+        $array['type']          = self::SEARCH_TYPE;
+        $array['url']           = '/topic/view/'.$this->attribute('topic_id');
+        $array['language_code'] = 'fre-FR';
+        $array['content']       = $this->attribute('content');
+        $array['published']     = $this->attribute('published');
+        
+        return $array;
+    }
+    
+    public function getSearchObject()
+    {
+        $searchObject = new simpleForumResponseSearch();
+        $searchObject->setState( $this->toArray() );
+        return $searchObject;
     }
 }
 ?>
