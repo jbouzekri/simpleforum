@@ -80,13 +80,29 @@ class simpleForumSolr implements ezpSearchEngine
 	 * Searches $searchText in the search database.
 	 *
 	 * @see supportedSearchTypes()
-	 * @param string $searchText Search term
-	 * @param array $params Search parameters
-	 * @param array $searchTypes Search types
+	 * 
+	 * @param string $searchText  Search term
+	 * @param array  $params      Search parameters
+	 * @param array  $searchTypes Search types
 	 */
 	public function search( $searchText, $params = array(), $searchTypes = array() )
 	{
-		return array();
+	    // initialize a pre-configured query
+	    $q = $this->session->createFindQuery( 'simpleForumTopicSearch' );
+	    
+	    // limit the query and order
+	    $q->limit( 10 );
+	    
+	    // run the query and show titles for found documents
+	    $r = $this->session->find( $q );
+	    
+	    $result = array();
+	    foreach( $r->documents as $res )
+	    {
+	        $result[] = $res->document;
+	    }
+	    
+		return $result;
 	}
 	
 	/**
@@ -97,7 +113,10 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function supportedSearchTypes()
 	{
-		return array();
+		return array(
+		    simpleForumResponseSearch::SEARCH_TYPE,
+		    simpleForumTopicSearch::SEARCH_TYPE        
+		);
 	}
 	
 	/**

@@ -9,9 +9,11 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
     public $type;
     public $url;
     public $language_code;
-    public $text;
+    public $content;
     public $published;
     public $modified;
+    
+    public $ez_object = false;
     
     public function __construct()
     {     
@@ -25,7 +27,7 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
             'type' => $this->type,
             'url' => $this->url,
             'language_code' => $this->language_code,
-            'text' => $this->text,
+            'content' => $this->content,
             'published' => $this->published,
             'modified' => $this->modified
         );
@@ -35,14 +37,55 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
     
     function setState( array $state )
     {
-        $this->id            = $state['id'];
-        $this->entity_id     = $state['entity_id'];
-        $this->type          = self::SEARCH_TYPE;
-        $this->url           = '/topic/view/'.$state['entity_id'];
-        $this->language_code = 'fre-FR';
-        $this->text          = $state['content'];
-        $this->published     = date('c', $state['published']);
-        $this->modified      = date('c', $state['modified']);
+        if ( isset($state['id']) )
+            $this->id = $state['id'];
+        
+        if ( isset($state['entity_id']) )
+        {
+            $this->entity_id = $state['entity_id'];
+            $this->ez_object = SimpleForumTopic::fetch($state['entity_id']);
+        }
+        
+        $this->type = isset($state['type']) ? $state['type'] : self::SEARCH_TYPE;
+        
+        if ( isset($state['url']) )
+        {
+            $this->url = $state['url'];
+        }
+        elseif ( isset($state['entity_id']) )
+        {
+            $this->url = '/topic/view/'.$state['entity_id'];
+        }
+        
+        if ( isset($state['language_code']) )
+            $this->language_code = $state['language_code'];
+        
+        if ( isset($state['content']) )
+            $this->content = $state['content'];
+        
+        if ( isset($state['published']) )
+        {
+            if ( $state['published'] instanceof DateTime )
+            {
+                $this->published = $state['published']->format('U');
+            }
+            else
+            {
+                $this->published = date('c', $state['published']);
+            }
+        }
+        
+        if ( isset($state['modified']) )
+        {
+            if ( $state['modified'] instanceof DateTime )
+            {
+                $this->modified = $state['modified']->format('U');
+            }
+            else
+            {
+                $this->modified = date('c', $state['modified']);
+            }
+        }
     }
     
     static public function getDefinition()
@@ -51,15 +94,31 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
         
         $n->idProperty = 'id';
         
+        $n->fields['id']            = new ezcSearchDefinitionDocumentField( 'id', ezcSearchDocumentDefinition::STRING );
         $n->fields['entity_id']     = new ezcSearchDefinitionDocumentField( 'entity_id', ezcSearchDocumentDefinition::INT );
         $n->fields['type']          = new ezcSearchDefinitionDocumentField( 'type', ezcSearchDocumentDefinition::STRING );
         $n->fields['url']           = new ezcSearchDefinitionDocumentField( 'url', ezcSearchDocumentDefinition::STRING );
         $n->fields['language_code'] = new ezcSearchDefinitionDocumentField( 'language_code', ezcSearchDocumentDefinition::STRING );
-        $n->fields['text']          = new ezcSearchDefinitionDocumentField( 'text', ezcSearchDocumentDefinition::TEXT );
+        $n->fields['content']       = new ezcSearchDefinitionDocumentField( 'content', ezcSearchDocumentDefinition::TEXT );
         $n->fields['published']     = new ezcSearchDefinitionDocumentField( 'published', ezcSearchDocumentDefinition::DATE );
         $n->fields['modified']      = new ezcSearchDefinitionDocumentField( 'modified', ezcSearchDocumentDefinition::DATE, 0 );
         
         return $n;
+    }
+    
+    public function getEzObject()
+    {
+        if ($this->ez_object)
+        {
+            return $this->ez_object;
+        }
+        
+        if ($this->entity_id)
+        {
+            return SimpleForumTopic::fetch($this->entity_id);
+        }
+        
+        return false;
     }
 }
 ?>

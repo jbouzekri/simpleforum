@@ -462,6 +462,7 @@
  <fields>
   <!-- Global unique ID -->
   <field name="id" type="mstring" indexed="true" stored="true" />
+  <field name="id_s" type="mstring" indexed="true" stored="true" />
 
    <!-- Object ID -->
    <field name="entity_id_l" type="sint" indexed="true" stored="true" />
@@ -476,7 +477,7 @@
    <field name="language_code_s" type="mstring" indexed="true" stored="true" />
    
    <!-- Texte --> 
-   <field name="text_t" type="text" indexed="true" stored="true" />
+   <field name="content_t" type="text" indexed="true" stored="true" />
    
    <!-- Date -->
    <field name="published_l" type="sint" indexed="true" stored="true" />
@@ -515,7 +516,7 @@
         is added to the index.  It's used either to index the same field differently,
         or to add multiple fields to the same field for easier/faster searching.  -->
 
-    <copyField source="text_t" dest="simpleforum_text"/>
+    <copyField source="content_t" dest="simpleforum_text"/>
     <copyField source="url_s" dest="simpleforum_text"/>
     <copyField source="author_name" dest="simpleforum_text"/>
 </schema>

@@ -193,6 +193,27 @@ class SimpleForumCollection {
         }
         return array($nodeIDs);
     }
+    
+    public function searchTopic( $query, $forumNodeId, $limit, $offset )
+    {
+        $searchArray = eZSearch::buildSearchArray();
+        
+        $parameters = array();
+        if ( $limit !== false)
+            $parameters['limit'] = $limit;
+        
+        if ( $offset !== false)
+            $parameters['offset'] = $offset;
+        
+        $searchResult = array();
+        if ($engine = simpleForumSearch::instance()->getEngine())
+        {
+            $searchResult = $engine->search( $query,
+                    $parameters,
+                    $searchArray );
+        }
+        return array( 'result' => $searchResult );
+    }
 }
 
 ?>

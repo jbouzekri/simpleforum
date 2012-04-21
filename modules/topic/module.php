@@ -52,6 +52,13 @@ $ViewList['inc_view_count'] = array(
 		'default_navigation_part' => 'ezforumnavigationpart',
 		'params' => array( 'TopicID' ));
 
+$ViewList['search'] = array(
+        'script' => 'search.php',
+        'functions' => array( 'read' ),
+        'default_navigation_part' => 'ezforumnavigationpart',
+        'unordered_params'=>array('offset'=>'Offset'),
+        'single_post_actions' => array( 'SearchButton' => 'Search' ) );
+
 $Node = array(
     'name'=> 'Node',
     'values'=> array()
