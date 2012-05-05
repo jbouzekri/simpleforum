@@ -95,7 +95,6 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
         $n->idProperty = 'id';
         
         $n->fields['id']             = new ezcSearchDefinitionDocumentField( 'id', ezcSearchDocumentDefinition::STRING );
-        $n->fields['ezcsearch_type'] = new ezcSearchDefinitionDocumentField( 'ezcsearch_type', ezcSearchDocumentDefinition::STRING );
         $n->fields['entity_id']      = new ezcSearchDefinitionDocumentField( 'entity_id', ezcSearchDocumentDefinition::INT );
         $n->fields['type']           = new ezcSearchDefinitionDocumentField( 'type', ezcSearchDocumentDefinition::STRING );
         $n->fields['url']            = new ezcSearchDefinitionDocumentField( 'url', ezcSearchDocumentDefinition::STRING );
