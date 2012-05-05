@@ -204,7 +204,7 @@ class SimpleForumCollection {
             $parameters['offset'] = $offset;
         
         if ( $forumNodeId !== false)
-            $parameters['forum_node_id'] = $forumNodeId;
+            $parameters['parent_node_id'] = $forumNodeId;
         
         if ( is_array($sortBy) && !empty($sortBy) )
             $parameters['sort_by'] = $sortBy;
@@ -229,6 +229,44 @@ class SimpleForumCollection {
                     'simpleForumTopicSearch' );
         }
         
+        return array( 'result' => $searchResult );
+    }
+    
+    public function searchResponse( $query, $topicId, $limit, $offset, $sortBy, $attributeFilter )
+    {
+        $parameters = array();
+        if ( $limit !== false)
+            $parameters['limit'] = $limit;
+    
+        if ( $offset !== false)
+            $parameters['offset'] = $offset;
+    
+        if ( $topicId !== false)
+            $parameters['parent_node_id'] = $topicId;
+    
+        if ( is_array($sortBy) && !empty($sortBy) )
+            $parameters['sort_by'] = $sortBy;
+    
+        if (is_array($attributeFilter) && !empty($attributeFilter))
+        {
+            if (!is_array($attributeFilter[0]))
+            {
+                $parameters['attribute_filter'] = array($attributeFilter);
+            }
+            else
+            {
+                $parameters['attribute_filter'] = $attributeFilter;
+            }
+        }
+    
+        $searchResult = array();
+        if ($engine = simpleForumSearch::instance()->getEngine())
+        {
+            $searchResult = $engine->search( $query,
+                    $parameters,
+                    'simpleForumResponseSearch' );
+        }
+    
         return array( 'result' => $searchResult );
     }
 }

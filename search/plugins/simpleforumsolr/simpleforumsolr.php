@@ -109,9 +109,9 @@ class simpleForumSolr implements ezpSearchEngine
 	    $q->limit( $limit , $offset );
 	    $q->highlight();
 	    
-	    if (isset($params['forum_node_id']))
+	    if (isset($params['parent_node_id']))
 	    {
-	        $q->where( $q->eq('parent_id', $params['forum_node_id']) );
+	        $q->where( $q->eq('parent_id', $params['parent_node_id']) );
 	    }
 	    
 	    if (isset($params['attribute_filter']) && is_array($params['attribute_filter']))

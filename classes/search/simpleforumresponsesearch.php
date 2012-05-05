@@ -127,5 +127,20 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
     
         return false;
     }
+    
+    public function attribute( $name )
+    {
+        if (property_exists($this, $name))
+        {
+            return $this->$name;
+        }
+    
+        return '';
+    }
+    
+    public function attributes()
+    {
+        return array_keys(get_class_vars('simpleForumTopicSearch'));
+    }
 }
 ?>
