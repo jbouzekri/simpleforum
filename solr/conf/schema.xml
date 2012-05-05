@@ -467,6 +467,7 @@
    <!-- Object ID -->
    <field name="entity_id_l" type="sint" indexed="true" stored="true" />
    <field name="type_s" type="mstring" indexed="true" stored="true" />
+   <field name="parent_id_l" type="sint" indexed="true" stored="true" />
    
    <field name="ezcsearch_type_s" type="mstring" indexed="true" stored="true" />
 

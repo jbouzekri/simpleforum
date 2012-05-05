@@ -86,11 +86,32 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function search( $searchText, $params = array(), $searchTypes = array() )
 	{
-	    // initialize a pre-configured query
-	    $q = $this->session->createFindQuery( 'simpleForumTopicSearch' );
+	    if (is_array($searchTypes))
+	    {
+	        $searchTypes = $searchTypes[0];
+	    }
 	    
-	    // limit the query and order
-	    $q->limit( 10 );
+	    $limit = 10;
+	    if (isset($params['limit']))
+	    {
+	        $limit = $params['limit'];
+	    }
+	    
+	    $offset = 0;
+	    if (isset($params['offset']))
+	    {
+	        $offset = $params['offset'];
+	    }
+	    
+	    // initialize a pre-configured query
+	    $q = $this->session->createFindQuery( $searchTypes );
+	    $q->where($searchText);
+	    $q->limit( $limit , $offset );
+	    
+	    if (isset($params['forum_node_id']))
+	    {
+	        $q->where( $q->eq('parent_id', $params['forum_node_id']) );
+	    }
 	    
 	    // run the query and show titles for found documents
 	    $r = $this->session->find( $q );

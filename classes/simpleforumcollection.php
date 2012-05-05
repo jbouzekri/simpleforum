@@ -196,8 +196,6 @@ class SimpleForumCollection {
     
     public function searchTopic( $query, $forumNodeId, $limit, $offset )
     {
-        $searchArray = eZSearch::buildSearchArray();
-        
         $parameters = array();
         if ( $limit !== false)
             $parameters['limit'] = $limit;
@@ -205,12 +203,15 @@ class SimpleForumCollection {
         if ( $offset !== false)
             $parameters['offset'] = $offset;
         
+        if ( $forumNodeId !== false)
+            $parameters['forum_node_id'] = $forumNodeId;
+        
         $searchResult = array();
         if ($engine = simpleForumSearch::instance()->getEngine())
         {
             $searchResult = $engine->search( $query,
                     $parameters,
-                    $searchArray );
+                    'simpleForumTopicSearch' );
         }
         return array( 'result' => $searchResult );
     }

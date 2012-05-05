@@ -355,6 +355,7 @@ class SimpleForumTopic extends eZPersistentObject
         $array                  = array();
         $array['id']            = md5(self::SEARCH_TYPE.$this->attribute('id'));
         $array['entity_id']     = $this->attribute('id');
+        $array['parent_id']     = $this->attribute('node_id');
         $array['type']          = self::SEARCH_TYPE;
         $array['url']           = '/topic/view/'.$this->attribute('id');
         $array['language_code'] = 'fre-FR';

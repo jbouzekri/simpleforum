@@ -6,6 +6,7 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
     
     public $id;
     public $entity_id;
+    public $parent_id;
     public $type;
     public $url;
     public $language_code;
@@ -24,6 +25,7 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
         $state = array(
             'id' => $this->id,
             'entity_id' => $this->entity_id,
+            'parent_id' => $this->parent_id,
             'type' => $this->type,
             'url' => $this->url,
             'language_code' => $this->language_code,
@@ -44,6 +46,11 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
         {
             $this->entity_id = $state['entity_id'];
             $this->ez_object = SimpleForumResponse::fetch($state['entity_id']);
+        }
+        
+        if ( isset($state['parent_id']) )
+        {
+            $this->parent_id = $state['parent_id'];
         }
         
         $this->type = isset($state['type']) ? $state['type'] : self::SEARCH_TYPE;
@@ -96,6 +103,7 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
         
         $n->fields['id']             = new ezcSearchDefinitionDocumentField( 'id', ezcSearchDocumentDefinition::STRING );
         $n->fields['entity_id']      = new ezcSearchDefinitionDocumentField( 'entity_id', ezcSearchDocumentDefinition::INT );
+        $n->fields['parent_id']      = new ezcSearchDefinitionDocumentField( 'parent_id', ezcSearchDocumentDefinition::INT );
         $n->fields['type']           = new ezcSearchDefinitionDocumentField( 'type', ezcSearchDocumentDefinition::STRING );
         $n->fields['url']            = new ezcSearchDefinitionDocumentField( 'url', ezcSearchDocumentDefinition::STRING );
         $n->fields['language_code']  = new ezcSearchDefinitionDocumentField( 'language_code', ezcSearchDocumentDefinition::STRING );
