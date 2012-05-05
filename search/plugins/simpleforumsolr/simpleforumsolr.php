@@ -139,11 +139,9 @@ class simpleForumSolr implements ezpSearchEngine
 	public function cleanUp()
 	{    
         $deleteResponse = $this->session->createDeleteQuery('simpleForumResponseSearch');
-        $this->handler->reConnect();
         $this->handler->delete( $deleteResponse );
         
         $deleteTopic = $this->session->createDeleteQuery('simpleForumTopicSearch');
-        $this->handler->reConnect();
         $this->handler->delete( $deleteTopic );
 	}
 }
