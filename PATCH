@@ -1,0 +1,12 @@
+ezc/Search/src/handlers/solr.php :
+
+Replace :
+$values = $this->mapFieldValueForReturn( $field->type, $values );
+By :
+$values = $this->mapFieldValueForReturn( $field->type, $values[0] );
+
+Add : 
+$expectedLength = false;
+At the start of methods :
+public function sendRawGetCommand( $type, $queryString = array() )
+public function sendRawPostCommand( $type, $queryString, $data )

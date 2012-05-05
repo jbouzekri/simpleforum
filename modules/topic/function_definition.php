@@ -122,6 +122,11 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                'type'     => 'integer',
                                                'required' => false,
                                                'default'  => 0
+                                        ),
+                                        array( 'name'     => 'sort_by',
+                                               'type'     => 'array',
+                                               'required' => false,
+                                               'default'  => array()
                                         )
                                 )
 );

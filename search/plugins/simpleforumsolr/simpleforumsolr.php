@@ -107,10 +107,17 @@ class simpleForumSolr implements ezpSearchEngine
 	    $q = $this->session->createFindQuery( $searchTypes );
 	    $q->where($searchText);
 	    $q->limit( $limit , $offset );
+	    $q->highlight();
 	    
 	    if (isset($params['forum_node_id']))
 	    {
 	        $q->where( $q->eq('parent_id', $params['forum_node_id']) );
+	    }
+	    
+	    if (isset($params['sort_by']))
+	    {
+	        $order = ($params['sort_by'][1] == 'desc') ? ezcSearchQueryTools::DESC : ezcSearchQueryTools::ASC;
+	        $q->orderBy( $params['sort_by'][0], $order );
 	    }
 	    
 	    // run the query and show titles for found documents
@@ -121,7 +128,7 @@ class simpleForumSolr implements ezpSearchEngine
 	    {
 	        $result[] = $res->document;
 	    }
-	    
+	    var_dump($result);
 		return $result;
 	}
 	

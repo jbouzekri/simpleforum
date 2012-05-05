@@ -461,37 +461,37 @@
 
  <fields>
   <!-- Global unique ID -->
-  <field name="id" type="mstring" indexed="true" stored="true" />
-  <field name="id_s" type="mstring" indexed="true" stored="true" />
+  <field name="id" type="mstring" indexed="true" stored="true" multiValued="false" />
+  <field name="id_s" type="mstring" indexed="true" stored="true" multiValued="false" />
 
    <!-- Object ID -->
-   <field name="entity_id_l" type="sint" indexed="true" stored="true" />
-   <field name="type_s" type="mstring" indexed="true" stored="true" />
-   <field name="parent_id_l" type="sint" indexed="true" stored="true" />
+   <field name="entity_id_l" type="sint" indexed="true" stored="true" multiValued="false" />
+   <field name="type_s" type="mstring" indexed="true" stored="true" multiValued="false" />
+   <field name="parent_id_l" type="sint" indexed="true" stored="true" multiValued="false" />
    
-   <field name="ezcsearch_type_s" type="mstring" indexed="true" stored="true" />
+   <field name="ezcsearch_type_s" type="mstring" indexed="true" stored="true" multiValued="false" />
 
    <!-- URL -->   
    <field name="url_s" type="mstring" indexed="true" stored="true" />   
   
    <!-- Language code --> 
-   <field name="language_code_s" type="mstring" indexed="true" stored="true" />
+   <field name="language_code_s" type="mstring" indexed="true" stored="true" multiValued="false" />
    
    <!-- Texte --> 
    <field name="content_t" type="text" indexed="true" stored="true" />
    
    <!-- Date -->
-   <field name="published_l" type="sint" indexed="true" stored="true" />
-   <field name="modified_l" type="sint" indexed="true" stored="true" />
+   <field name="published_l" type="sint" indexed="true" stored="true" multiValued="false"  />
+   <field name="modified_l" type="sint" indexed="true" stored="true" multiValued="false"  />
    
    <!-- Author Type -->
-   <field name="author_type" type="mstring" indexed="true" stored="true" />
-   <field name="author_id" type="sint" indexed="true" stored="true" />
-   <field name="author_name" type="mstring" indexed="true" stored="true" />
+   <field name="author_type" type="mstring" indexed="true" stored="true" multiValued="false" />
+   <field name="author_id" type="sint" indexed="true" stored="true" multiValued="false" />
+   <field name="author_name" type="mstring" indexed="true" stored="true" multiValued="false" />
    
    <!-- State -->
-   <field name="is_visible" type="boolean" indexed="true" stored="true" />
-   <field name="state" type="mstring" indexed="true" stored="true" />
+   <field name="is_visible" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="state" type="mstring" indexed="true" stored="true" multiValued="false" />
    
    <!-- Copy Field -->
    <field name="simpleforum_text" type="text" indexed="true" stored="true" multiValued="true" termVectors="true" />
@@ -499,7 +499,7 @@
    <!-- Here, default is used to create a "timestamp" field indicating
         When each document was indexed.
    -->
-   <field name="timestamp" type="date" indexed="true" stored="true" default="NOW"/>
+   <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false" />
  </fields>
 
  <!-- Field to use to determine and enforce document uniqueness.

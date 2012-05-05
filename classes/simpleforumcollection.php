@@ -194,7 +194,7 @@ class SimpleForumCollection {
         return array($nodeIDs);
     }
     
-    public function searchTopic( $query, $forumNodeId, $limit, $offset )
+    public function searchTopic( $query, $forumNodeId, $limit, $offset, $sortBy )
     {
         $parameters = array();
         if ( $limit !== false)
@@ -206,6 +206,9 @@ class SimpleForumCollection {
         if ( $forumNodeId !== false)
             $parameters['forum_node_id'] = $forumNodeId;
         
+        if ( is_array($sortBy) && !empty($sortBy) )
+            $parameters['sort_by'] = $sortBy;
+        
         $searchResult = array();
         if ($engine = simpleForumSearch::instance()->getEngine())
         {
@@ -213,6 +216,7 @@ class SimpleForumCollection {
                     $parameters,
                     'simpleForumTopicSearch' );
         }
+        print_r($searchResult);
         return array( 'result' => $searchResult );
     }
 }

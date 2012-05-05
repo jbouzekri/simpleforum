@@ -109,7 +109,7 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
         $n->fields['language_code']  = new ezcSearchDefinitionDocumentField( 'language_code', ezcSearchDocumentDefinition::STRING );
         $n->fields['content']        = new ezcSearchDefinitionDocumentField( 'content', ezcSearchDocumentDefinition::TEXT );
         $n->fields['published']      = new ezcSearchDefinitionDocumentField( 'published', ezcSearchDocumentDefinition::DATE );
-        $n->fields['modified']       = new ezcSearchDefinitionDocumentField( 'modified', ezcSearchDocumentDefinition::DATE, 0 );
+        $n->fields['modified']       = new ezcSearchDefinitionDocumentField( 'modified', ezcSearchDocumentDefinition::DATE );
         
         return $n;
     }
@@ -127,6 +127,21 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
         }
         
         return false;
+    }
+    
+    public function attribute( $name )
+    {
+        if (property_exists($this, $name))
+        {
+            return $this->$name;
+        }
+        
+        return '';
+    }
+    
+    public function attributes()
+    {
+        return array_keys(get_class_vars('simpleForumTopicSearch'));
     }
 }
 ?>
