@@ -114,6 +114,17 @@ class simpleForumSolr implements ezpSearchEngine
 	        $q->where( $q->eq('parent_id', $params['forum_node_id']) );
 	    }
 	    
+	    if (isset($params['attribute_filter']) && is_array($params['attribute_filter']))
+	    {
+	        foreach ($params['attribute_filter'] as $filter)
+	        {
+	            if (is_array($filter))
+	            {
+	                $q->where( $q->eq($filter[0], $filter[1]) );
+	            }
+	        }
+	    }
+	    
 	    if (isset($params['sort_by']))
 	    {
 	        $order = ($params['sort_by'][1] == 'desc') ? ezcSearchQueryTools::DESC : ezcSearchQueryTools::ASC;
@@ -128,7 +139,7 @@ class simpleForumSolr implements ezpSearchEngine
 	    {
 	        $result[] = $res->document;
 	    }
-	    var_dump($result);
+	    
 		return $result;
 	}
 	

@@ -127,6 +127,11 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                'type'     => 'array',
                                                'required' => false,
                                                'default'  => array()
+                                        ),
+                                        array( 'name'     => 'attribute_filter',
+                                               'type'     => 'array',
+                                               'required' => false,
+                                               'default'  => array()
                                         )
                                 )
 );
