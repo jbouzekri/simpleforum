@@ -5,8 +5,8 @@ Tabs[]=forum
 
 [Topmenu_forum]
 URL[]
-URL[default]=content/view/full/59
-URL[browse]=content/browse/59
+URL[default]=content/view/full/63
+URL[browse]=content/browse/63
 NavigationPartIdentifier=ezforumnavigationpart
 Name=Forum
 Tooltip=Manage the forum of the site.
@@ -18,7 +18,7 @@ Shown[]
 Shown[default]=true
 Shown[navigation]=true
 Shown[browse]=true
-PolicyList[]=59
+PolicyList[]=63
 
 [Leftmenu_forum]
 Name=forum

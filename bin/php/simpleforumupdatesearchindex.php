@@ -80,6 +80,13 @@ if ($searchEngine == 'simpleForumSolr')
 // Instantiate search engine
 $simpleForumSearch = new $searchEngine();
 
+if ( $options['clean'] )
+{
+    $cli->output( "Cleaning up all forum search data" );
+    $simpleForumSearch->cleanUp();
+    $simpleForumSearch->commit();
+}
+die();
 // Fetch topic to index
 $topics = SimpleForumTopic::fetchList();
 foreach ($topics as $topic)

@@ -54,7 +54,6 @@ class simpleForumSolr implements ezpSearchEngine
 	 */
 	public function addObject( $object, $commit = true )
 	{
-	        
         $doc = $object->getSearchObject();        
         $this->session->index( $doc );
         
@@ -130,5 +129,22 @@ class simpleForumSolr implements ezpSearchEngine
 	    $this->handler->reConnect();
 	    
 	    $this->handler->commit();
+	}
+	
+	/**
+	 * Clean entire index
+	 *
+	 * @see needCommit()
+	 */
+	public function cleanUp()
+	{    
+        $deleteResponse = $this->handler->createDeleteQuery('simpleForumResponseSearch', simpleForumResponseSearch::getDefinition());
+        
+        $this->handler->reConnect();
+        $this->handler->delete( $deleteResponse );
+        
+        $deleteTopic = $this->handler->createDeleteQuery('simpleForumTopicSearch', simpleForumTopicSearch::getDefinition());
+        $this->handler->reConnect();
+        $this->handler->delete( $deleteTopic );
 	}
 }
