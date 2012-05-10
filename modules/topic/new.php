@@ -75,8 +75,6 @@ $tpl->setVariable('name',     $name);
 $tpl->setVariable('content',  $content);
 $tpl->setVariable('errors',   $errors);
 
-$tpl->setVariable('input_handler', new simpleForumXMLInput());
-
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:topic/new.tpl' );
 $Result['path'] = array( array( 'url' => 'topic/new/'.$forumID,
