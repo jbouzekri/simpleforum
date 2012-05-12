@@ -27,7 +27,7 @@
 </div>
 {include name=navigator
          uri='design:navigator/google.tpl'
-         page_uri=concat('/topic/view/',$topic.id)|ezurl('no')
+         page_uri=$topic.url_alias
          item_count=$responses_count
          view_parameters=$view_parameters
          item_limit=ezini('NbElements', 'ResponseListNb', 'forum.ini.append.php')}

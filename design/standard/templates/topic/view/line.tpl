@@ -1,1 +1,1 @@
-<li><a href="{concat('/topic/view/',$topic.id)|ezurl('no')}">{$topic.id} / {$topic.name}</a></li>
+<li><a href="{$topic.url_alias|ezurl('no')}">{$topic.id} / {$topic.name}</a></li>

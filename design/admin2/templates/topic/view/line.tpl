@@ -1,5 +1,5 @@
 <tr class="{$class}">
-    <td><a href="/topic/view/{$topic.id}">{$topic.name}</a></td>
+    <td><a href="{$topic.url_alias|ezurl('no')}">{$topic.name}</a></td>
     <td><a href="{$topic.user.contentobject.main_node.url_alias|ezurl('no')}">{$topic.user.contentobject.name}</a></td>
     <td>{$topic.modified|l10n('shortdatetime')}</td>
     <td>{$topic.state}</td>
