@@ -1,8 +1,10 @@
 <?php /* #?ini charset="utf8"?
 
+# Add the forum section in admin
 [TopAdminMenu]
 Tabs[]=forum
 
+# Configure the forum tab link in admin
 [Topmenu_forum]
 URL[]
 URL[default]=content/view/full/63
@@ -20,6 +22,7 @@ Shown[navigation]=true
 Shown[browse]=true
 PolicyList[]=63
 
+# Configure the left menu in forum section
 [Leftmenu_forum]
 Name=forum
 Links[]
@@ -29,6 +32,7 @@ PolicyList_look_and_feel[]=56
 Links[toolbar_management]=visual/toolbarlist
 PolicyList_toolbar_management[]=visual/toolbarlist
 
+# Add the forum section navigation part
 [NavigationPart]
 Part[ezforumnavigationpart]=Forum
 

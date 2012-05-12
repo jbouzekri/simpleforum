@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * topic/state view
+ * Change the state of a topic. Used in admin.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 eZDebug::updateSettings(array(
 		"debug-enabled" => false,
 		"debug-by-ip" => false

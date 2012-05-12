@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Define the search engine for solr and ezfind extension
+ * Solr must used the multi core configuration. See documentation for more information
+ *
+ * @author jobou
+ * @package simpleforum
+ */
 class simpleForumSolr implements ezpSearchEngine
 {
     var $SolrINI;

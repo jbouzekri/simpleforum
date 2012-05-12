@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * response/rate view
+ * Rate up/down a response.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 eZDebug::updateSettings(array(
 		"debug-enabled" => false,
 		"debug-by-ip" => false

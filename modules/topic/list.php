@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * topic/list view
+ * list the topic of a forum
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 

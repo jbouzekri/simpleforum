@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Define all fetch responses functions
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 $FunctionList = array();
 $FunctionList['object'] = array( 'name' => 'object',
                                'operation_types' => array( 'read' ),

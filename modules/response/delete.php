@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * response/delete view
+ * Delete a response. Used in admin.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 eZDebug::updateSettings(array(
 		"debug-enabled" => false,
 		"debug-by-ip" => false

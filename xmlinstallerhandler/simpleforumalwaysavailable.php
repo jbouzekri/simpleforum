@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Update an object to set the alwaysavailable parameter in ezxmlinstaller script
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 
 class simpleForumAlwaysAvailable extends eZXMLInstallerHandler

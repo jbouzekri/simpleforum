@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * topic/new view
+ * Create a new topic
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * response/state view
+ * Change the state of the response.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 eZDebug::updateSettings(array(
 		"debug-enabled" => false,
 		"debug-by-ip" => false

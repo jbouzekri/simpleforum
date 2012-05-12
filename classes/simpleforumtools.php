@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Description of simpleforumtopiccollection
- *
+ * @file
+ * Some functions used in simpleforum code
+ * 
  * @author jobou
+ * @package simpleforum
  */
 class SimpleForumTools {
 	

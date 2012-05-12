@@ -1,5 +1,12 @@
 <?php
- 
+
+/**
+ * @file
+ * SimpleForumResponse object which represents a response to a forum topic
+ *
+ * @author jobou
+ * @package simpleforum
+ */
 class SimpleForumResponse extends eZPersistentObject
 {
     const SEARCH_TYPE = 'response';

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * response/new view
+ * Create a new response.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 

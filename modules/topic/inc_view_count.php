@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * topic/inc_view_count view
+ * Increment the counter of topic view number.
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 eZDebug::updateSettings(array(
 		"debug-enabled" => false,
 		"debug-by-ip" => false

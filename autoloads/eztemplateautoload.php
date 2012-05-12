@@ -1,10 +1,14 @@
 <?php
 
-/*! \file eztemplateautoload.php
-*/
+/**
+ * @file
+ * Define the new functions and operator provided by simpleforum extension
+ * 
+ * @author jobou
+ * @package simpleforum
+ */
 
-
-
+// Init the function and operator array
 $eZTemplateOperatorArray = array();
 $eZTemplateFunctionArray[] = array( 'function' => 'simpleForumForwardInit',
                                     'function_names' => array( 
@@ -12,6 +16,7 @@ $eZTemplateFunctionArray[] = array( 'function' => 'simpleForumForwardInit',
                                         'response_view_gui'
                                     ) );
 
+// Configure the functions
 if ( !function_exists( 'simpleForumForwardInit' ) )
 {
     function &simpleForumForwardInit()

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Create a new section in ezxmlinstaller script
+ * Copied from ezxmlinstaller handler to fix some bugs
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 
 class simpleForumCreateSection extends eZXMLInstallerHandler

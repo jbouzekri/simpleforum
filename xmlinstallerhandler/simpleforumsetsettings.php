@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * Used in ezxmlinstaller script
+ * Replace a string by another one in a file
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 
 class simpleForumSetSettings extends eZXMLInstallerHandler

@@ -1,8 +1,11 @@
 <?php /* #?ini charset="utf-8"?
 
 [TreeMenu]
-ForumRootNodeID=59
-ShowClasses[]=forum_folder
+# Set the forum tree root node id
+ForumRootNodeID=63
+# Add the forum class to show in the forum left tree
+ShowClasses[]=forum
+# Enabled the dynamic tree
 Dynamic=enabled
 
 */ ?>

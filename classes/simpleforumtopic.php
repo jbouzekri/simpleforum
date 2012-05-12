@@ -1,5 +1,12 @@
 <?php
- 
+
+/**
+ * @file
+ * SimpleForumTopic object which represents a forum topic
+ *
+ * @author jobou
+ * @package simpleforum
+ */ 
 class SimpleForumTopic extends eZPersistentObject
 {
      const STATUS_VALIDATED = 'VALIDATED';

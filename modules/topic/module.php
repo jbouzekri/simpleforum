@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Configure all view for topic module
+ *
+ * @author jobou
+ * @package simpleforum
+ */
+
 $Module = array( 'name' => 'Forum Topic Management',
                  'variable_params' => true );
 

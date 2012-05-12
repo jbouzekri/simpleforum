@@ -1,6 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * @file
+ * Update the search engine index with forum data
+ * 
+ * @author jobou
+ * @package simpleforum
+ */
+
 require 'autoload.php';
 
 set_time_limit( 0 );
