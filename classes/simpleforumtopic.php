@@ -105,6 +105,7 @@ class SimpleForumTopic extends eZPersistentObject
                   	  'can_delete'      => 'canDelete',
                       'language_code'   => 'languageCode',
                       'language_object' => 'languageObject',
+                      'url_alias'       => 'urlAlias'
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -158,6 +159,26 @@ class SimpleForumTopic extends eZPersistentObject
         return $object;
     }
     
+    public function store($fieldFilters = null)
+    {
+        parent::store($fieldFilters);
+        
+        $parentAlias = eZURLAliasML::fetchByAction( 
+                "eznode", 
+                $this->attribute('node_id') 
+        );
+        if (count($parentAlias))
+        {
+            $urlAliasMl = eZURLAliasML::create(
+                    eZURLAliasML::convertToAlias($this->attribute('name')),
+                    'module:topic/view/'.$this->attribute('id'), 
+                    $parentAlias[0]->attribute('id'), 
+                    $this->languageObject()->attribute('id')
+            );
+            $urlAliasMl->store();
+        }
+    }
+    
     public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = true)
     {
         if (!isset($cond['node_id']))
@@ -204,7 +225,10 @@ class SimpleForumTopic extends eZPersistentObject
     {
         if (!$this->forumNode)
         {
-            $this->forumNode = eZContentObjectTreeNode::fetch($this->attribute('node_id'));
+            $this->forumNode = eZContentObjectTreeNode::fetch(
+                $this->attribute('node_id'),
+                $this->languageCode()
+            );
         }
         return $this->forumNode;
     }
@@ -374,7 +398,7 @@ class SimpleForumTopic extends eZPersistentObject
         $array['entity_id']     = $this->attribute('id');
         $array['parent_id']     = $this->attribute('node_id');
         $array['type']          = self::SEARCH_TYPE;
-        $array['url']           = '/topic/view/'.$this->attribute('id');
+        $array['url']           = $this->urlAlias();
         $array['language_code'] = $this->languageCode();
         $array['content']       = $this->attribute('content');
         $array['published']     = $this->attribute('published');
@@ -404,9 +428,40 @@ class SimpleForumTopic extends eZPersistentObject
         return $this->language;
     }
         
-    function languageCode()
+    public function languageCode()
     {
         $languageObject = $this->languageObject();
         return ( $languageObject !== false ) ?  $languageObject->attribute( 'locale' ) : false;
+    }
+    
+    public function urlAlias()
+    {
+        $useURLAlias =& $GLOBALS['eZContentObjectTreeNodeUseURLAlias'];
+        $ini         = eZINI::instance();
+        $cleanURL    = '';
+        
+        if ( !isset( $useURLAlias ) )
+        {
+            $useURLAlias = $ini->variable( 'URLTranslator', 'Translation' ) == 'enabled';
+        }
+        
+        if ( $useURLAlias )
+        {
+            $aliases = eZURLAliasML::fetchByAction('module', 'topic/view/'.$this->attribute('id'));
+            if (count($aliases))
+            {
+                $cleanURL = $this->forumNode()->urlAlias().'/'.$aliases[0]->attribute('text');
+            }
+            else
+           {
+               $cleanURL = 'topic/view/'.$this->attribute('id');
+            }   
+        }
+        else
+       {
+           $cleanURL = 'topic/view/'.$this->attribute('id');
+        }
+        
+        return $cleanURL;
     }
 }
