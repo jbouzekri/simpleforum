@@ -169,8 +169,12 @@ class SimpleForumTopic extends eZPersistentObject
         );
         if (count($parentAlias))
         {
+            $text = eZURLAliasML::findUniqueText(
+                $parentAlias[0]->attribute('id'),
+                eZURLAliasML::convertToAlias($this->attribute('name'))
+            );
             $urlAliasMl = eZURLAliasML::create(
-                    eZURLAliasML::convertToAlias($this->attribute('name')),
+                    $text,
                     'module:topic/view/'.$this->attribute('id'), 
                     $parentAlias[0]->attribute('id'), 
                     $this->languageObject()->attribute('id')
