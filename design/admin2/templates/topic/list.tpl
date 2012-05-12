@@ -90,7 +90,7 @@
                         <table cellspacing="0" class="list cache">
                             <tbody>
                                 <tr>
-                                    <th width="5%"><input type="checkbox" /></th>
+                                    <th width="5%"><input type="checkbox" id="simpleforum_checkall" /></th>
                                     <th width="45%"><a href="{concat('/topic/list/',$forum_id,'/(sort)/name')|ezurl('no')}/(order)/{if $order|eq('asc')}desc{else}asc{/if}">{'Subject'|i18n('simpleforum/topic')}</a></th>
                                     <th width="15%"><a href="{concat('/topic/list/',$forum_id,'/(sort)/modified')|ezurl('no')}/(order)/{if $order|eq('asc')}desc{else}asc{/if}">{'Last Modified'|i18n('simpleforum/topic')}</a></th>
                                     <th width="5%"><a href="{concat('/topic/list/',$forum_id,'/(sort)/view_count')|ezurl('no')}/(order)/{if $order|eq('asc')}desc{else}asc{/if}">{'Nb views'|i18n('simpleforum/topic')}</a></th>

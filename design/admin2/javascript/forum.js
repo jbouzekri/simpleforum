@@ -22,4 +22,15 @@ jQuery(function( $ )
         });
         return false;
     });
+    
+    $('#simpleforum_checkall').click(function(){
+    	if (typeof($(this).attr('checked')) == 'undefined')
+    	{
+    		$('.simpleforum-topic_item input:checkbox').removeAttr('checked');
+    	}
+    	else
+    	{
+    		$('.simpleforum-topic_item input:checkbox').attr('checked','checked');
+    	}
+    });
 });
