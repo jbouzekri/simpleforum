@@ -44,30 +44,32 @@
         <div class="header-mainline"></div>
     </div>
     
-    <table id="tab-translations-list" class="list" cellspacing="0" summary="{'Language list of translations for current object.'|i18n( 'design/admin/node/view/full' )}">
-        <tr>
-            <th>{'Language'|i18n( 'design/admin/node/view/full' )}</th>
-            <th>{'Locale'|i18n( 'design/admin/node/view/full' )}</th>
-        </tr>
-        {foreach $forum.object.languages as $language sequence array( bglight, bgdark ) as $style}
-            <tr class="{$style}">
-                <td>
-                    <img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale}" />
-                    &nbsp;
-                    {if eq( $language.locale, $view_parameters.language )}
-                        <b><a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a></b>
-                    {else}
-                        <a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a>
-                    {/if}
-                </td>
-                <td>{$language.locale}</td>
-            </tr> 
-        {/foreach}
-    </table>
-
     <div class="context-information">
         <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$forum.object.published|l10n('shortdatetime')}, <a href="{$forum.object.owner.main_node.url_alias|ezurl('no')}">{$forum.object.owner.name|wash}</a> (Node ID: {$forum.node_id}, Object ID: {$forum.object.id})</p>
         <div class="break"></div>
+    </div>
+    
+    <div class="context-block">
+        <table id="tab-translations-list" class="list" cellspacing="0" summary="{'Language list of translations for current object.'|i18n( 'design/admin/node/view/full' )}">
+            <tr>
+                <th>{'Language'|i18n( 'design/admin/node/view/full' )}</th>
+                <th>{'Locale'|i18n( 'design/admin/node/view/full' )}</th>
+            </tr>
+            {foreach $forum.object.languages as $language sequence array( bglight, bgdark ) as $style}
+                <tr class="{$style}">
+                    <td>
+                        <img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale}" />
+                        &nbsp;
+                        {if eq( $language.locale, $view_parameters.language )}
+                            <b><a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a></b>
+                        {else}
+                            <a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a>
+                        {/if}
+                    </td>
+                    <td>{$language.locale}</td>
+                </tr> 
+            {/foreach}
+        </table>
     </div>
         
     <form action="/topic/list/{$forum_id}/(language)/{$view_parameters.language}" method="post" name="topiclist">
