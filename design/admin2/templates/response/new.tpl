@@ -34,7 +34,7 @@
             <div class="box-content">
                 <div class="context-information">
                     <p class="right translation">
-                        English (United Kingdom)&nbsp;<img width="18" height="12" alt="eng-GB" style="vertical-align: middle;" src="/share/icons/flags/eng-GB.gif">
+                        {$topic.language_object.name}&nbsp;<img width="18" height="12" alt="{$topic.language_object.locale}" style="vertical-align: middle;" src={$topic.language_object.locale|flag_icon} />
                     </p>
                     <div class="break"></div>
                 </div>

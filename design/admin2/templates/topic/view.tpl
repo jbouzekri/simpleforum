@@ -56,7 +56,7 @@
     </div>
     
     <form action="/topic/view/{$topic_id}" method="post" name="topiclist">
-        
+        <input type="hidden" name="language_redirect" value="{$topic.language_code}" />
         <input type="submit" title="Create a new response" value="{'New Response'|i18n('simpleforum/topic')}" name="NewResponseButton" class="defaultbutton" />
         <input type="submit" title="Delete topic" value="{'Delete Topic'|i18n('simpleforum/topic')}" onclick="return confirm( '{'Are you sure you want to delete the topic?'|i18n('simpleforum/topic')}' );" name="DeleteButton" class="button" />
         

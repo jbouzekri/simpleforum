@@ -78,16 +78,18 @@ class SimpleForumResponse extends eZPersistentObject
                                        'required' => false )
                   ),
                   'function_attributes' => array(
-                      'topic'          => 'topic',
-                      'user'           => 'responseUser',
-                      'is_published'   => 'isPublished',
-                      'is_validated'   => 'isValidated',
-                      'is_moderated'   => 'isModerated',
-                  	  'can_read'       => 'canRead',
-                  	  'can_delete'     => 'canDelete',
-                  	  'can_rate'       => 'canRate',
-                  	  'can_reset_vote' => 'canResetVote',
-                  	  'rate'           => 'currentRate'
+                      'topic'           => 'topic',
+                      'user'            => 'responseUser',
+                      'is_published'    => 'isPublished',
+                      'is_validated'    => 'isValidated',
+                      'is_moderated'    => 'isModerated',
+                  	  'can_read'        => 'canRead',
+                  	  'can_delete'      => 'canDelete',
+                  	  'can_rate'        => 'canRate',
+                  	  'can_reset_vote'  => 'canResetVote',
+                  	  'rate'            => 'currentRate',
+                      'language_code'   => 'languageCode',
+                      'language_object' => 'languageObject',
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -298,7 +300,7 @@ class SimpleForumResponse extends eZPersistentObject
         $array['topic_id']      = $this->attribute('topic_id');
         $array['type']          = self::SEARCH_TYPE;
         $array['url']           = '/topic/view/'.$this->attribute('topic_id');
-        $array['language_code'] = 'fre-FR';
+        $array['language_code'] = $this->topic()->languageCode();
         $array['content']       = $this->attribute('content');
         $array['published']     = $this->attribute('published');
         
@@ -310,6 +312,16 @@ class SimpleForumResponse extends eZPersistentObject
         $searchObject = new simpleForumResponseSearch();
         $searchObject->setState( $this->toArray() );
         return $searchObject;
+    }
+    
+    public function languageObject()
+    {
+        return $this->topic()->languageObject();
+    }
+    
+    function languageCode()
+    {
+        return $this->topic()->languageCode();
     }
 
 }

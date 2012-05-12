@@ -43,7 +43,12 @@ elseif ($http->hasPostVariable('BackToForumButton') || $Module->isCurrentAction(
 }
 elseif ($http->hasPostVariable('BackToTopicListButton') || $Module->isCurrentAction('BackToTopicList') )
 {
-    return $Module->redirectTo('/topic/list/'.$topic->attribute('node_id'));
+    $languageRedirect = "";
+    if ($http->hasPostVariable('language_redirect'))
+    {
+        $languageRedirect = "/(language)/".$http->postVariable('language_redirect');
+    }
+    return $Module->redirectTo('/topic/list/'.$topic->attribute('node_id').$languageRedirect);
 }
 elseif ($http->hasPostVariable('DeleteButton') || $Module->isCurrentAction('Delete') )
 {
