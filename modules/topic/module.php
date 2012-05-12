@@ -10,6 +10,7 @@ $ViewList['new'] = array(
     'functions' => array( 'create' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ForumID' ),
+    'unordered_params'=>array('language'=>'Language'),
     'single_post_actions' => array( 'NewButton' => 'New',
                                     'CancelButton' => 'Cancel'));
 
@@ -29,7 +30,7 @@ $ViewList['list'] = array(
     'functions' => array( 'read' ),
     'default_navigation_part' => 'ezforumnavigationpart',
     'params' => array( 'ForumID' ),
-    'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order'),
+    'unordered_params'=>array('offset'=>'Offset','sort'=>'Sort','order'=>'Order','language'=>'Language'),
     'single_post_actions' => array( 'NewButton' => 'New',
                                     'DeleteButton' => 'Delete',
                                     'BackToForumButton' => 'BackToForum'));

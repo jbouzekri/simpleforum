@@ -23,7 +23,7 @@
     <p>{'Contact an administrator'|i18n('simpleforum/topic')}</p>
 </div>
 
-<div class="context-block">
+<div class="context-block simpleforum_topic">
 
     <div class="box-header">
         <h1 class="context-title">{$topic.name}</h1>
@@ -31,7 +31,9 @@
     </div>
 
     <div class="context-information">
-        <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$topic.modified|l10n('shortdatetime')}, <a href="{$topic.user.contentobject.main_node.url_alias|ezurl('no')}">{$topic.user.contentobject.name|wash}</a> (Topic ID: {$topic_id}, Forum ID: {$topic.node_id}), {'State'|i18n('simpleforum/topic')}: {$topic.state}</p>
+        <p class="left modified">
+            &nbsp;<img width="18" height="12" alt="{$topic.language_object.locale}" style="vertical-align: middle;" src="{$topic.language_object.locale|flag_icon}" />&nbsp;{$topic.language_object.name},&nbsp;
+            {'Last modified'|i18n('simpleforum')}: {$topic.modified|l10n('shortdatetime')}, <a href="{$topic.user.contentobject.main_node.url_alias|ezurl('no')}">{$topic.user.contentobject.name|wash}</a> (Topic ID: {$topic_id}, Forum ID: {$topic.node_id}), {'State'|i18n('simpleforum/topic')}: {$topic.state|i18n('simpleforum/topic')}</p>
         <p class="right actions">
             {if or($topic.is_moderated,$topic.is_closed)}
                 <a href="{concat('/topic/state/',$topic.id,'/published')|ezurl('no')}"><img title="{'publish'|i18n('simpleforum/topic')}" alt="{'publish'|i18n('simpleforum/topic')}" width="16" height="16" src="{'icons/published.gif'|ezimage('no')}" /></a>

@@ -9,6 +9,7 @@ CREATE TABLE simpleforum_topic (
   state enum('VALIDATED', 'MODERATED', 'PUBLISHED', 'CLOSED') default 'PUBLISHED',
   published int(11) NOT NULL default '0',
   modified int(11) NOT NULL default '0',
+  language_id int(11) NOT NULL default '0',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 

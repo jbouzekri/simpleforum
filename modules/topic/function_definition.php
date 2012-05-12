@@ -63,7 +63,12 @@ $FunctionList['list'] = array( 'name' => 'list',
                                		      'type'     => 'array',
                                			  'required' => false,
                                			  'default'  => false
-                               	   )
+                               	),
+                               	   array( 'name'     => 'language',
+                               		       'type'     => 'string',
+                               			   'required' => false,
+                               			   'default'  => false
+                               	)
                                 )
 );
 
@@ -92,7 +97,12 @@ $FunctionList['list_count'] = array( 'name' => 'list_count',
                                      			'type'     => 'array',
                                      			'required' => false,
                                      			'default'  => false
-                                     	)
+                                    ),
+                                   	    array( 'name'     => 'language',
+                                   		        'type'     => 'string',
+                                   		        'required' => false,
+                                   			    'default'  => false
+                                   	)
                                     ) 
 );
 
@@ -132,7 +142,12 @@ $FunctionList['search'] = array( 'name' => 'search',
                                                'type'     => 'array',
                                                'required' => false,
                                                'default'  => array()
-                                        )
+                                        ),
+                                   	    array( 'name'     => 'language',
+                                   		        'type'     => 'string',
+                                   		        'required' => false,
+                                   			    'default'  => false
+                                   	)
                                 )
 );
 

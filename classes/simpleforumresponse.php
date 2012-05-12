@@ -311,20 +311,6 @@ class SimpleForumResponse extends eZPersistentObject
         $searchObject->setState( $this->toArray() );
         return $searchObject;
     }
-    
-    public function attribute( $name )
-    {
-        if (property_exists($this, $name))
-        {
-            return $this->$name;
-        }
-        
-        return '';
-    }
-    
-    public function attributes()
-    {
-        return array_keys(get_class_vars('simpleForumTopicSearch'));
-    }
+
 }
 ?>

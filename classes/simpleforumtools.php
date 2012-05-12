@@ -125,4 +125,32 @@ class SimpleForumTools {
 			}
 		}
 	}
+	
+	public static function getLanguageId($forumNodeId, $language = false)
+	{
+	    if (in_array($language, eZContentLanguage::fetchLocaleList()))
+	    {
+	        $languageObject = eZContentLanguage::fetchByLocale($language);
+	        return $languageObject->attribute('id');
+	    }
+	    
+	    if (is_int($language))
+	    {
+	        $languageObject = eZContentLanguage::fetch($language);
+	        if ($languageObject)
+	        {
+	            return $language;
+	        }
+	    }
+	    
+	    $forum = eZContentObjectTreeNode::fetch($forumNodeId);
+	    $languageObject = $forum->object()->currentLanguageObject();
+	    if ($languageObject)
+	    {
+	        return $languageObject->attribute('id');
+	    }
+	    
+	    eZDebug::writeError('Unable to find a language to instance topic');
+	    return false;
+	}
 }

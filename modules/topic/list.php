@@ -5,11 +5,17 @@ $http = eZHTTPTool::instance();
 
 $offset  = $Params['Offset'];
 $forumID = $Params['ForumID'];
+$language = $Params['Language'];
 
 $forum = eZContentObjectTreeNode::fetch($forumID);
 if (!$forumID || !$forum || $forum->classIdentifier() != 'forum')
 {
     return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
+}
+
+if (!$language || !in_array($language, eZContentLanguage::fetchLocaleList()))
+{
+    $language = $forum->object()->currentLanguage();
 }
 
 // Test if forum Node is Hidden
@@ -35,14 +41,22 @@ else
     $UserParameters = array();
 }
 
-$viewParameters = array( 'offset' => $offset );
+$viewParameters = array( 'offset'   => $offset,
+                          'language' => $language );
 $viewParameters = array_merge( $viewParameters, $UserParameters );
 
 $tpl = eZTemplate::factory();
 
 if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
 {
-    return $Module->redirectTo('/topic/new/'.$forumID);
+    if ($language != $forum->object()->currentLanguage())
+    {
+        return $Module->redirectTo('/topic/new/'.$forumID.'/(language)/'.$language);
+    }
+    else
+    {
+        return $Module->redirectTo('/topic/new/'.$forumID);
+    }
 }
 elseif( $http->hasPostVariable('DeleteButton') || $Module->isCurrentAction('Delete') )
 {

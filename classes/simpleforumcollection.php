@@ -18,7 +18,7 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter, $limitation )
+    function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter, $limitation, $language )
     {
         $filter  = array();
         
@@ -48,7 +48,7 @@ class SimpleForumCollection {
         return array( 'result' => $result );
     }
     
-    public function fetchTopicCount( $forumNodeId, $depth, $attributeFilter, $limitation )
+    public function fetchTopicCount( $forumNodeId, $depth, $attributeFilter, $limitation, $language )
     {
         $filter  = array();
         
@@ -194,7 +194,7 @@ class SimpleForumCollection {
         return array($nodeIDs);
     }
     
-    public function searchTopic( $query, $forumNodeId, $limit, $offset, $sortBy, $attributeFilter )
+    public function searchTopic( $query, $forumNodeId, $limit, $offset, $sortBy, $attributeFilter, $language )
     {
         $parameters = array();
         if ( $limit !== false)

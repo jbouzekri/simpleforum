@@ -3,6 +3,8 @@
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
+$language = $Params['Language'];
+
 $forumID = $Params['ForumID'];
 $forum   = eZContentObjectTreeNode::fetch($forumID);
 if (!$forumID || !$forum || $forum->classIdentifier() != 'forum')
@@ -10,11 +12,29 @@ if (!$forumID || !$forum || $forum->classIdentifier() != 'forum')
     return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
 }
 
+if (!$language || !in_array($language, eZContentLanguage::fetchLocaleList()))
+{
+    $language = $forum->object()->currentLanguage();
+}
+
 // Test if forum Node is Hidden
 if (!$forum->canRead() || ($forum->attribute( 'is_invisible' ) && !eZContentObjectTreeNode::showInvisibleNodes()))
 {
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
+
+if ( isset( $Params['UserParameters'] ) )
+{
+    $UserParameters = $Params['UserParameters'];
+}
+else
+{
+    $UserParameters = array();
+}
+
+$viewParameters = array( 'language' => $language );
+$viewParameters = array_merge( $viewParameters, $UserParameters );
+
 
 $tpl = eZTemplate::factory();
 
@@ -47,9 +67,10 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
     if (!count($errors))
     {
         $newTopic = SimpleForumTopic::create(array(
-            'name' => $name,
-            'content' => $content,
-            'node_id' => $forumID
+            'name'        => $name,
+            'content'     => $content,
+            'node_id'     => $forumID,
+            'language_id' => $language
         ));
         $newTopic->store();
         if ($newTopic->id)
@@ -66,14 +87,16 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
 }
 elseif ( $http->hasPostVariable('CancelButton') || $Module->isCurrentAction('Cancel') )
 {
-    return $Module->redirectTo('/topic/list/'.$forumID);
+    return $Module->redirectTo('/topic/list/'.$forumID.'/(language)/'.$language);
 }
 
-$tpl->setVariable('forum_id', $forumID);
-$tpl->setVariable('forum',    $forum);
-$tpl->setVariable('name',     $name);
-$tpl->setVariable('content',  $content);
-$tpl->setVariable('errors',   $errors);
+$tpl->setVariable('forum_id',        $forumID);
+$tpl->setVariable('forum',           $forum);
+$tpl->setVariable('name',            $name);
+$tpl->setVariable('content',         $content);
+$tpl->setVariable('errors',          $errors);
+$tpl->setVariable('view_parameters', $viewParameters);
+$tpl->setVariable('language',        eZContentLanguage::fetchByLocale($language));
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:topic/new.tpl' );

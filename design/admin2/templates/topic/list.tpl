@@ -41,13 +41,34 @@
         <h1 class="context-title"><img width="32" height="32" title="General Forum" alt="General Forum" src="/share/icons/crystal/32x32/filesystems/folder_man.png" class="transparent-png-icon">&nbsp;{$forum.name|wash}&nbsp;[{$forum.object.class_name}]&nbsp;</h1>
         <div class="header-mainline"></div>
     </div>
+    
+    <table id="tab-translations-list" class="list" cellspacing="0" summary="{'Language list of translations for current object.'|i18n( 'design/admin/node/view/full' )}">
+        <tr>
+            <th>{'Language'|i18n( 'design/admin/node/view/full' )}</th>
+            <th>{'Locale'|i18n( 'design/admin/node/view/full' )}</th>
+        </tr>
+        {foreach $forum.object.languages as $language sequence array( bglight, bgdark ) as $style}
+            <tr class="{$style}">
+                <td>
+                    <img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale}" />
+                    &nbsp;
+                    {if eq( $language.locale, $view_parameters.language )}
+                        <b><a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a></b>
+                    {else}
+                        <a href={concat( '/topic/list/',$forum_id,'/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">{$language.name}</a>
+                    {/if}
+                </td>
+                <td>{$language.locale}</td>
+            </tr> 
+        {/foreach}
+    </table>
 
     <div class="context-information">
         <p class="left modified">{'Last modified'|i18n('simpleforum')}: {$forum.object.published|l10n('shortdatetime')}, <a href="{$forum.object.owner.main_node.url_alias|ezurl('no')}">{$forum.object.owner.name|wash}</a> (Node ID: {$forum.node_id}, Object ID: {$forum.object.id})</p>
         <div class="break"></div>
     </div>
         
-    <form action="/topic/list/{$forum_id}" method="post" name="topiclist">
+    <form action="/topic/list/{$forum_id}/(language)/{$view_parameters.language}" method="post" name="topiclist">
         
         <input type="submit" title="Create a new topic" value="{'New Topic'|i18n('simpleforum/topic')}" name="NewButton" class="defaultbutton" />
         <input type="submit" title="Back to Forum" value="{'Back to Forum'|i18n('simpleforum/topic')}" name="BackToForumButton" class="button" />

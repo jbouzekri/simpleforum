@@ -11,6 +11,7 @@ class SimpleForumTopic extends eZPersistentObject
      
      protected $forumNode = false;
      protected $user      = false;
+     protected $language  = false;
      
      /**
      * Construct
@@ -81,19 +82,29 @@ class SimpleForumTopic extends eZPersistentObject
                                        'name' => 'Modified',
                                        'datatype' => 'integer',
                                        'default' => 0,
-                                       'required' => true )
+                                       'required' => true ),
+                     'language_id' => array(
+                                       'name' => 'LanguageID',
+                                       'datatype' => 'integer',
+                                       'default' => 0,
+                                       'required' => true,
+                                       'foreign_class' => 'eZContentLanguage',
+                                       'foreign_attribute' => 'id',
+                                       'multiplicity' => '1..*' )
                   ),
                   'function_attributes' => array(
-                      'forum_node'     => 'forumNode',
-                      'user'           => 'topicUser',
-                      'is_hidden'      => 'isHidden',
-                      'is_published'   => 'isPublished',
-                      'is_validated'   => 'isValidated',
-                      'is_moderated'   => 'isModerated',
-                      'is_closed'      => 'isClosed',
-                      'is_visible'     => 'isVisible',
-                  	  'can_read'       => 'canRead',
-                  	  'can_delete'     => 'canDelete'
+                      'forum_node'      => 'forumNode',
+                      'user'            => 'topicUser',
+                      'is_hidden'       => 'isHidden',
+                      'is_published'    => 'isPublished',
+                      'is_validated'    => 'isValidated',
+                      'is_moderated'    => 'isModerated',
+                      'is_closed'       => 'isClosed',
+                      'is_visible'      => 'isVisible',
+                  	  'can_read'        => 'canRead',
+                  	  'can_delete'      => 'canDelete',
+                      'language_code'   => 'languageCode',
+                      'language_object' => 'languageObject',
                   ),
                   'keys' => array( 'id' ),
                   'increment_key' => 'id',
@@ -136,6 +147,12 @@ class SimpleForumTopic extends eZPersistentObject
             $user = eZUser::currentUser();
             $row['user_id'] = $user->id();
         }
+        
+        if (!isset($row['language_id']))
+        {
+            $row['language_id'] = false;
+        }
+        $row['language_id'] = SimpleForumTools::getLanguageId($row['node_id'], $row['language_id']);
         
         $object = new self( $row );
         return $object;
@@ -358,7 +375,7 @@ class SimpleForumTopic extends eZPersistentObject
         $array['parent_id']     = $this->attribute('node_id');
         $array['type']          = self::SEARCH_TYPE;
         $array['url']           = '/topic/view/'.$this->attribute('id');
-        $array['language_code'] = 'fre-FR';
+        $array['language_code'] = $this->languageCode();
         $array['content']       = $this->attribute('content');
         $array['published']     = $this->attribute('published');
         $array['modified']      = $this->attribute('modified');
@@ -375,5 +392,21 @@ class SimpleForumTopic extends eZPersistentObject
     public function getAllResponses()
     {
         return SimpleForumResponse::fetchList(array('topic_id'=>$this->attribute('id')));
+    }
+    
+    public function languageObject()
+    {
+        if (!$this->language)
+        {
+            $this->language = $this->attribute('language_id') ? eZContentLanguage::fetch( $this->attribute('language_id') ) : false;
+        }
+        
+        return $this->language;
+    }
+        
+    function languageCode()
+    {
+        $languageObject = $this->languageObject();
+        return ( $languageObject !== false ) ?  $languageObject->attribute( 'locale' ) : false;
     }
 }

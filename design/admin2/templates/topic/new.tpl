@@ -1,5 +1,5 @@
-<form action="{concat('/topic/new/',$forum_id)|ezurl('no')}" method="post">
-
+<form action="{concat('/topic/new/',$forum_id,'/(language)/',$view_parameters.language)|ezurl('no')}" method="post">
+    <input type="hidden" name="language_code" value="{$view_parameters.language}" />
     <div class="controlbar" id="controlbar-top">
         <div class="box-bc"><div class="box-ml">
             <div class="button-left">
@@ -34,7 +34,7 @@
             <div class="box-content">
                 <div class="context-information">
                     <p class="right translation">
-                        English (United Kingdom)&nbsp;<img width="18" height="12" alt="eng-GB" style="vertical-align: middle;" src="/share/icons/flags/eng-GB.gif">
+                        {$language.name}&nbsp;<img width="18" height="12" alt="{$language.locale}" style="vertical-align: middle;" src="{$language.locale|flag_icon}" />
                     </p>
                     <div class="break"></div>
                 </div>
