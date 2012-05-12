@@ -108,6 +108,13 @@
                             </tbody>
                         </table>
                         <br />
+                        {include name=navigator
+                                 uri='design:navigator/google.tpl'
+                                 page_uri=concat('/topic/list/',$forum.node_id)
+                                 item_count=$topics_count
+                                 view_parameters=$view_parameters
+                                 item_limit=$limit}
+                        <br />
                         <input type="submit" title="{'Delete Topics'|i18n('simpleforum/topic')}" value="{'Delete Topics'|i18n('simpleforum/topic')}" name="DeleteButton" class="button" />
                     </div>
                 </div>
@@ -116,12 +123,5 @@
     </form>
 
 </div>
-
-{include name=navigator
-         uri='design:navigator/google.tpl'
-         page_uri=concat('/topic/list/',$forum.node_id)
-         item_count=$topics_count
-         view_parameters=$view_parameters
-         item_limit=$limit}
 
 {undef $topics $offset $topics_count $limit $sort $order}
