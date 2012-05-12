@@ -20,9 +20,11 @@
 {def $topics=fetch('topic', 'list', hash('forum_node_id', $forum.node_id,
                                          'limit', $limit,
                                          'offset', $offset,
-                                         'sort_by', array($sort, $order) ))}
+                                         'sort_by', array($sort, $order),
+                                         'language', $view_parameters.language ))}
 
-{def $topics_count=fetch('topic', 'list_count', hash( 'forum_node_id', $forum.node_id ))}
+{def $topics_count=fetch('topic', 'list_count', hash( 'forum_node_id', $forum.node_id,
+                                                      'language', $view_parameters.language ))}
 
 {if is_set( $notice )}
     <div class="message-feedback">

@@ -21,7 +21,6 @@ class SimpleForumCollection {
     function fetchTopicList( $forumNodeId, $depth, $limit, $offset, $sortBy, $asObject, $attributeFilter, $limitation, $language )
     {
         $filter  = array();
-        
         $forumNode = eZContentObjectTreeNode::fetch($forumNodeId);
     	if (!SimpleForumTools::checkAccess($forumNode) && !is_array($limitation))
     	{
@@ -31,6 +30,11 @@ class SimpleForumCollection {
         $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth, $limitation);
         
         $this->formatAttributeFilter($attributeFilter, $filter);
+        
+        if (!is_array($language))
+        {
+            $filter['language_id'] = SimpleForumTools::getLanguageId($forumNodeId, $language);
+        }
         
         $formatedSortBy = $this->formatSortBy($sortBy);
         
@@ -61,6 +65,11 @@ class SimpleForumCollection {
         $filter['node_id'] = $this->getForumNodeIds($forumNodeId, $depth, $limitation);
         
         $this->formatAttributeFilter($attributeFilter, $filter);
+        
+        if (!is_array($language))
+        {
+            $filter['language_id'] = SimpleForumTools::getLanguageId($forumNodeId, $language);
+        }
         
         $result = SimpleForumTopic::fetchCount( $filter );
         
