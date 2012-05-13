@@ -13,11 +13,21 @@ include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 
 class simpleForumCreateSection extends eZXMLInstallerHandler
 {
-
+    /**
+     * Constructor
+     */
     function simpleForumCreateSection( )
     {
     }
 
+    /**
+     * Execute actions when ezxmlinstaller file has a SimpleForumCreateSection tag
+     *
+     * @see eZXMLInstallerHandler::execute()
+     *
+     * @param DOMElement $xml
+     *   the SimpleForumCreateSection dom element
+     */
     function execute( $xmlNode )
     {
         // ezcontentnavigationpart
@@ -63,11 +73,29 @@ class simpleForumCreateSection extends eZXMLInstallerHandler
         $this->addReference( $refArray );
     }
 
+    /**
+     * Define the xml tag name used by this handler
+     *
+     * @static
+     *
+     * @return array
+     */
     static public function handlerInfo()
     {
-        return array( 'XMLName' => 'SimpleForumCreateSection', 'Info' => 'create new section' );
+        return array( 
+            'XMLName' => 'SimpleForumCreateSection',
+            'Info'    => 'create new section' 
+        );
     }
 
+    /**
+     * Return the id of a section when knowing its name
+     * 
+     * @param string $name
+     *   the name of the section
+     *   
+     * @return int|boolean
+     */
     private function sectionIDbyName( $name )
     {
         $sectionID = false;

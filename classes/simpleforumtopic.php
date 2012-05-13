@@ -31,6 +31,11 @@ class SimpleForumTopic extends eZPersistentObject
         parent::eZPersistentObject( $row );
     }
  
+    /**
+     * Define the SimpleForumTopic attributes
+     *
+     * @return array
+     */
     public static function definition()
     {
         static $def = array( 'fields' => array(
@@ -122,6 +127,11 @@ class SimpleForumTopic extends eZPersistentObject
         return $def;
     }
     
+    /**
+     * Return an array with the states availables for the SimpleForumTopic entity
+     *
+     * @return array
+     */
     public static function availableStates()
     {
         return array(
@@ -132,6 +142,13 @@ class SimpleForumTopic extends eZPersistentObject
         );
     }
     
+    /**
+     * Instanciate a SimpleForumTopic object
+     *
+     * @param array $row
+     *
+     * @return SimpleForumTopic
+     */
     public static function create(array $row = array())
     {
         if (!isset($row['published'])) 
@@ -166,6 +183,15 @@ class SimpleForumTopic extends eZPersistentObject
         return $object;
     }
     
+    /**
+     * Store a SimpleForumTopic object in database
+     * Generate an url_alias
+     * 
+     * @see eZPersistentObject::store()
+     * 
+     * @param mixed $fieldFilters
+     *    If specified only certain fields will be stored.
+     */
     public function store($fieldFilters = null)
     {
         parent::store($fieldFilters);
@@ -190,6 +216,20 @@ class SimpleForumTopic extends eZPersistentObject
         }
     }
     
+    /**
+     * Fetch a list of SimpleForumTopic
+     *
+     * @param array   $cond
+     *   an array of condition to filter on SimpleForumTopic attributes
+     * @param int     $limit
+     *   the maximum number of object to return
+     * @param array   $sortBy
+     *   the sorting order configuration
+     * @param boolean $asObject
+     *   define if the method return an array of object or array
+     *
+     * @return array
+     */
     public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = true)
     {
         if (!isset($cond['node_id']))
@@ -204,11 +244,25 @@ class SimpleForumTopic extends eZPersistentObject
         return $list;
     }
     
+    /**
+     * Count the number of SimpleForumTopic
+     * 
+     * @param array $filter
+     *   filter the set of SimpleForumTopic to count
+     * 
+     * @return int
+     */
     public static function fetchCount(array $filter = array())
     {
         return self::count( self::definition(), $filter);
     }
     
+    /**
+     * Remove a list of topic by ids
+     * 
+     * @param mixed $ids
+     *   the id of SimpleForumTopic to remove
+     */
     public static function removeByIds($ids)
     {
         $idList = array();
@@ -225,6 +279,16 @@ class SimpleForumTopic extends eZPersistentObject
         eZPersistentObject::removeObject( self::definition(), $cond );
     }
     
+    /**
+     * Return an unique SimpleForumTopic
+     *
+     * @param int     $id
+     *   the id of the SimpleForumTopic to return
+     * @param boolean $asObject
+     *   Define if the SimpleForumTopic returns as an array or object
+     *
+     * @return mixed
+     */
     public static function fetch($id, $asObject = true)
     {
         $cond = array( 'id' => $id );
@@ -232,6 +296,11 @@ class SimpleForumTopic extends eZPersistentObject
         return $topic;
     }
     
+    /**
+     * Return the forum node parent of the topic
+     *
+     * @return eZContentObjectTreeNode
+     */
     public function forumNode()
     {
         if (!$this->forumNode)
@@ -244,6 +313,11 @@ class SimpleForumTopic extends eZPersistentObject
         return $this->forumNode;
     }
     
+    /**
+     * Get the author of the topic
+     * 
+     * @return eZUser
+     */
     public function topicUser()
     {
         if (!$this->user)
@@ -253,6 +327,9 @@ class SimpleForumTopic extends eZPersistentObject
         return $this->user;
     }
     
+    /**
+     * Increment the counter of topics in forum node
+     */
     public function incForumTopicCount()
     {
         $dataMap = $this->forumNode()->dataMap();
@@ -262,6 +339,9 @@ class SimpleForumTopic extends eZPersistentObject
         $dataMap['topic_count']->store();
     }
     
+    /**
+     * Decrement the counter of topics in forum node
+     */
     public function decForumTopicCount()
     {
         $dataMap = $this->forumNode()->dataMap();
@@ -271,6 +351,9 @@ class SimpleForumTopic extends eZPersistentObject
         $dataMap['topic_count']->store();
     }
     
+    /**
+     * Increment the response count in the topic
+     */
     public function incResponseCount()
     {
         $incResponse = (int) $this->attribute( 'response_count' );
@@ -279,6 +362,9 @@ class SimpleForumTopic extends eZPersistentObject
         $this->store();
     }
     
+    /**
+     * Decrement the response count in the topic
+     */
     public function decResponseCount()
     {
         $decResponse = (int) $this->attribute( 'response_count' );
@@ -287,6 +373,9 @@ class SimpleForumTopic extends eZPersistentObject
         $this->store();
     }
     
+    /**
+     * Increment the view counter in the topic
+     */
     public function incViewCount()
     {
         $incView = (int) $this->attribute( 'view_count' );
@@ -295,12 +384,20 @@ class SimpleForumTopic extends eZPersistentObject
         $this->store();
     }
     
+    /**
+     * Update the last modified date of the topic
+     */
     public function updateTopicModifiedDate()
     {
         $this->setAttribute( 'modified', time() );
         $this->store();
     }
     
+    /**
+     * Return the path of the topic
+     * 
+     * @return array
+     */
     public function fetchPath()
     {
         $path = array();
@@ -318,13 +415,18 @@ class SimpleForumTopic extends eZPersistentObject
         );
         
         $path[] = array(
-            'url' => '/topic/view/'.$this->attribute('id'),
+            'url' => $this->urlAlias(),
             'text' => $this->attribute('name')
         );
         
         return $path;
     }
     
+    /**
+     * Check if the topic is hidden by the forum node
+     * 
+     * @return boolean
+     */
     public function isHidden()
     {
         $isHidden = false;
@@ -336,31 +438,62 @@ class SimpleForumTopic extends eZPersistentObject
         return $isHidden;
     }
     
+    /**
+     * Check if the topic has been published
+     * 
+     * @return boolean
+     */
     public function isPublished()
     {
         return $this->attribute('state') == self::STATUS_PUBLISHED;
     }
     
+    /**
+     * Check if the topic has been validated
+     *
+     * @return boolean
+     */
     public function isValidated()
     {
         return $this->attribute('state') == self::STATUS_VALIDATED;
     }
     
+    /**
+     * Check if the topic has been moderated
+     *
+     * @return boolean
+     */
     public function isModerated()
     {
         return $this->attribute('state') == self::STATUS_MODERATED;
     }
     
+    /**
+     * Check if the topic has been closed
+     *
+     * @return boolean
+     */
     public function isClosed()
     {
         return $this->attribute('state') == self::STATUS_CLOSED;
     }
     
+    /**
+     * Check if the topic is visible.
+     * For the moment, it means that it has not been moderated
+     *
+     * @return boolean
+     */
     public function isVisible()
     {
         return $this->attribute('state') != self::STATUS_MODERATED;
     }
     
+    /**
+     * Check if the current user can read the topic
+     *
+     * @return boolean
+     */
     public function canRead()
     {
         // Test if forum Node is Hidden
@@ -381,6 +514,11 @@ class SimpleForumTopic extends eZPersistentObject
         return true;
     }
     
+    /**
+     * Check if the settings show moderated forum is enabled
+     * 
+     * @return boolean
+     */
     public static function showModeratedTopics()
     {
     	$ini = eZINI::instance('site.ini.append.php');
@@ -392,6 +530,11 @@ class SimpleForumTopic extends eZPersistentObject
     	return true;
     }
     
+    /**
+     * Check if the current user can delete a topic
+     * 
+     * @return boolean
+     */
     public function canDelete()
     {
         if ( !SimpleForumTools::checkAccess($this->forumNode(), 'topic', 'remove') )
@@ -402,6 +545,12 @@ class SimpleForumTopic extends eZPersistentObject
         return true;
     }
     
+    /**
+     * Return the current topic object in array
+     * Used to index in solr
+     * 
+     * @return array
+     */
     public function toArray()
     {
         $array                  = array();
@@ -417,6 +566,11 @@ class SimpleForumTopic extends eZPersistentObject
         return $array;
     }
     
+    /**
+     * Return the solr search object associated with the topic
+     * 
+     * @return simpleForumTopicSearch
+     */
     public function getSearchObject()
     {
         $searchObject = new simpleForumTopicSearch();
@@ -424,11 +578,21 @@ class SimpleForumTopic extends eZPersistentObject
         return $searchObject;
     }
     
+    /**
+     * Return all the responses of the topic
+     * 
+     * @return array
+     */
     public function getAllResponses()
     {
         return SimpleForumResponse::fetchList(array('topic_id'=>$this->attribute('id')));
     }
     
+    /**
+     * Return the language object of the topic
+     * 
+     * @return eZContentLanguage
+     */
     public function languageObject()
     {
         if (!$this->language)
@@ -438,13 +602,23 @@ class SimpleForumTopic extends eZPersistentObject
         
         return $this->language;
     }
-        
+    
+    /**
+     * Return the locale of the topic
+     * 
+     * @return string
+     */
     public function languageCode()
     {
         $languageObject = $this->languageObject();
         return ( $languageObject !== false ) ?  $languageObject->attribute( 'locale' ) : false;
     }
     
+    /**
+     * Get the full url alias of the topic
+     * 
+     * @return string
+     */
     public function urlAlias()
     {
         $useURLAlias =& $GLOBALS['eZContentObjectTreeNodeUseURLAlias'];

@@ -14,10 +14,21 @@ include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 class simpleForumSetSettings extends eZXMLInstallerHandler
 {
 
+    /**
+     * Constructor
+     */
     function simpleForumSetSettings( )
     {
     }
 
+    /**
+     * Execute actions when ezxmlinstaller file has a SimpleForumSetSettings tag
+     * 
+     * @see eZXMLInstallerHandler::execute()
+     * 
+     * @param DOMElement $xml
+     *   the SimpleForumSetSettings dom element
+     */
     function execute( $xml )
     {
         $settingsFileList = $xml->getElementsByTagName( 'SettingsFile' );
@@ -47,6 +58,13 @@ class simpleForumSetSettings extends eZXMLInstallerHandler
         eZCache::clearByID( array( 'ini', 'global_ini' ) );
     }
 
+    /**
+     * Define the xml tag name used by this handler
+     * 
+     * @static
+     * 
+     * @return array
+     */
     static public function handlerInfo()
     {
         return array( 

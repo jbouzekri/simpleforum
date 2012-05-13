@@ -10,12 +10,40 @@
  */
 class simpleForumSolr implements ezpSearchEngine
 {
+    /**
+     * Load the solr.ini settings
+     * 
+     * @var eZINI
+     */
     var $SolrINI;
     
+    /**
+     * solr search handler
+     * 
+     * @var ezcSearchSolrHandler
+     */
     var $handler;
+    
+    /**
+     * solr search manager
+     * 
+     * @var ezcSearchEmbeddedManager
+     */
     var $manager;
+    
+    /**
+     * solr search session
+     * 
+     * @var ezcSearchSession
+     */
     var $session;
     
+    /**
+     * Constructor
+     * 
+     * Instanciate solr search
+     * Start a transaction
+     */
     function __construct()
     {
         $this->SolrINI = eZINI::instance( 'solr.ini' );
@@ -35,6 +63,7 @@ class simpleForumSolr implements ezpSearchEngine
 	 * Whether a commit operation is required after adding/removing objects.
 	 *
 	 * @see commit()
+	 * 
 	 * @return bool
 	 */
 	public function needCommit()
@@ -46,6 +75,7 @@ class simpleForumSolr implements ezpSearchEngine
 	 * Whether calling removeObject() is required when updating an object.
 	 *
 	 * @see removeObject()
+	 * 
 	 * @return bool
 	 */
 	public function needRemoveWithUpdate()
@@ -54,11 +84,14 @@ class simpleForumSolr implements ezpSearchEngine
 	}
 	
 	/**
-	 * Adds object $contentObject to the search database.
+	 * Adds object $object to the search database.
 	 *
-	 * @param eZContentObject $contentObject Object to add to search engine
-	 * @param bool $commit Whether to commit after adding the object
-	 * @return bool True if the operation succeed.
+	 * @param eZContentObject $object 
+	 *   Object to add to search engine
+	 * @param boolean         $commit 
+	 *   Whether to commit after adding the object
+	 * 
+	 * @return bool
 	 */
 	public function addObject( $object, $commit = true )
 	{
@@ -74,9 +107,12 @@ class simpleForumSolr implements ezpSearchEngine
 	/**
 	 * Removes object $contentObject from the search database.
 	 *
-	 * @param eZContentObject $contentObject the content object to remove
-	 * @param bool $commit Whether to commit after removing the object
-	 * @return bool True if the operation succeed.
+	 * @param eZContentObject $contentObject 
+	 *   the content object to remove
+	 * @param bool            $commit 
+	 *   Whether to commit after removing the object
+	 *   
+	 * @return bool
 	 */
 	public function removeObject( $contentObject, $commit = true )
 	{
@@ -88,9 +124,14 @@ class simpleForumSolr implements ezpSearchEngine
 	 *
 	 * @see supportedSearchTypes()
 	 * 
-	 * @param string $searchText  Search term
-	 * @param array  $params      Search parameters
-	 * @param array  $searchTypes Search types
+	 * @param string $searchText  
+	 *   Search term
+	 * @param array  $params      
+	 *   Search parameters
+	 * @param array  $searchTypes 
+	 *   Search types
+	 *   
+	 * @return array
 	 */
 	public function search( $searchText, $params = array(), $searchTypes = array() )
 	{
@@ -153,8 +194,7 @@ class simpleForumSolr implements ezpSearchEngine
 	
 	/**
 	 * Returns an array describing the supported search types by the search engine.
-	 *
-	 * @see search()
+	 * 
 	 * @return array
 	 */
 	public function supportedSearchTypes()

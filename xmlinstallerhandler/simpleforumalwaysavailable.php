@@ -13,10 +13,21 @@ include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 class simpleForumAlwaysAvailable extends eZXMLInstallerHandler
 {
 
+    /**
+     * Constructor
+     */
     function simpleForumAlwaysAvailable( )
     {
     }
 
+    /**
+     * Execute actions when ezxmlinstaller file has a SimpleForumAlwaysAvailable tag
+     *
+     * @see eZXMLInstallerHandler::execute()
+     *
+     * @param DOMElement $xml
+     *   the SimpleForumAlwaysAvailable dom element
+     */
     function execute( $xmlNode )
     {
         $objectID = $this->getReferenceID( $xmlNode->getAttribute( 'object' ) );
@@ -37,9 +48,19 @@ class simpleForumAlwaysAvailable extends eZXMLInstallerHandler
         }
     }
 
+    /**
+     * Define the xml tag name used by this handler
+     *
+     * @static
+     *
+     * @return array
+     */
     static public function handlerInfo()
     {
-        return array( 'XMLName' => 'SimpleForumAlwaysAvailable', 'Info' => 'Set content translation always available' );
+        return array( 
+            'XMLName' => 'SimpleForumAlwaysAvailable', 
+            'Info'    => 'Set content translation always available' 
+        );
     }
 
 }
