@@ -19,7 +19,7 @@
                      objectNamePattern="&lt;title&gt;"
                      urlAliasPattern="&lt;title&gt;"
                      classExistAction="replace">
-        <Names eng-GB="Forum" always-available="eng-GB"/>
+        <Names eng-GB="Forum" fre-FR="Forum" always-available="eng-GB"/>
         <Groups>
             <Group name="Forum" />
         </Groups>
@@ -31,7 +31,7 @@
                        translatable="true"
                        identifier="title"
                        placement="1">
-                <Names eng-GB="Title" always-available="eng-GB"/>
+                <Names eng-GB="Title" fre-FR="Titre" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <max-length>150</max-length>
                     <default-string />
@@ -44,7 +44,7 @@
                        translatable="true"
                        identifier="description"
                        placement="2">
-                <Names eng-GB="Description" always-available="eng-GB"/>
+                <Names eng-GB="Description" fre-FR="Description" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <text-column-count>2</text-column-count>
                 </DatatypeParameters>
@@ -56,7 +56,7 @@
                        translatable="false"
                        identifier="image"
                        placement="3">
-                <Names eng-GB="Image" always-available="eng-GB"/>
+                <Names eng-GB="Image" fre-FR="Image" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <max-size>2</max-size>
                 </DatatypeParameters>
@@ -68,7 +68,7 @@
                        translatable="false"
                        identifier="depth"
                        placement="4">
-                <Names eng-GB="Depth" always-available="eng-GB"/>
+                <Names eng-GB="Depth" fre-FR="Profondeur" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <default-value>1</default-value>
                     <min-value>0</min-value>
@@ -82,7 +82,7 @@
                        translatable="false"
                        identifier="topic_count"
                        placement="5">
-                <Names eng-GB="Topic Number" always-available="eng-GB"/>
+                <Names eng-GB="Topic Number" fre-FR="Nombre de sujet" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <default-value>0</default-value>
                     <min-value>0</min-value>
@@ -96,7 +96,7 @@
                        translatable="true"
                        identifier="meta_title"
                        placement="6">
-                <Names eng-GB="Meta Title" always-available="eng-GB"/>
+                <Names eng-GB="Meta Title" fre-FR="Meta titre" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <max-length>150</max-length>
                     <default-string />
@@ -109,7 +109,7 @@
                        translatable="true"
                        identifier="meta_description"
                        placement="7">
-                <Names eng-GB="Meta Description" always-available="eng-GB"/>
+                <Names eng-GB="Meta Description" fre-FR="Meta description" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <text-column-count>2</text-column-count>
                 </DatatypeParameters>
@@ -121,7 +121,7 @@
                        translatable="true"
                        identifier="meta_keywords"
                        placement="8">
-                <Names eng-GB="Meta Keywords" always-available="eng-GB"/>
+                <Names eng-GB="Meta Keywords" fre-FR="Meta mots clés" always-available="eng-GB"/>
                 <DatatypeParameters>
                     <keyword-string />
                 </DatatypeParameters>
