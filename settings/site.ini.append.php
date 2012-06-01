@@ -15,6 +15,17 @@ ShowModeratedForumItems=true
 # 2 engines are available :
 #   simpleForumSolr to use with ezfind. ezfind must be configured in multicore. See documentation
 #   simpleForumSearch default search engine directly in current database
-SearchEngine=simpleForumSearch
+SearchEngine=simpleForumSolr
+
+[Cache]
+CacheItems[]=simpleforum
+
+[Cache_simpleforum]
+name=Simpleforum view cache
+id=simpleforum
+tags[]=content
+tags[]=simpleforum
+class=simpleForumCacheManager
+purgeClass=simpleForumCacheManager
 
 */ ?>
