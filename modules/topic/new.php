@@ -76,8 +76,8 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
     if (!count($errors))
     {
         $newTopic = SimpleForumTopic::create(array(
-            'name'        => $name,
-            'content'     => $content,
+            'name'        => htmlspecialchars($name),
+            'content'     => htmlspecialchars($content),
             'node_id'     => $forumID,
             'language_id' => $language
         ));

@@ -9,10 +9,10 @@
  * @package simpleforum
  */
 
-$Module = $Params['Module'];
-$http = eZHTTPTool::instance();
+$Module       = $Params['Module'];
+$http         = eZHTTPTool::instance();
+$cacheManager = simpleForumCacheManager::getezcManager();
 
-$offset  = $Params['Offset'];
 $topicID = $Params['TopicID'];
 
 $topic   = SimpleForumTopic::fetch($topicID);
@@ -27,8 +27,9 @@ if (!$topic->canRead())
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
 
-if ( $offset )
-    $offset = (int) $offset;
+$offset = 0;
+if ( isset($Params['Offset']) && $Params['Offset'] )
+    $offset = (int) $Params['Offset'];
 
 if ( isset( $Params['UserParameters'] ) )
 {
@@ -71,8 +72,19 @@ $tpl->setVariable('topic',    $topic);
 
 $tpl->setVariable('view_parameters', $viewParameters);
 
+$cacheKey = 'topic_view_'.$topicID.'_'.$offset;
+if ( ( $resultContent = $cacheManager->restore( $cacheKey, $topic->getCacheAttributes() ) ) === false )
+{
+    $resultContent = $tpl->fetch( 'design:topic/view.tpl' );
+    $cacheManager->store( $cacheKey, $resultContent, $topic->getCacheAttributes() );
+}
+else
+{
+    eZDebug::writeDebug('View cache loaded');
+}
+
 $Result = array();
-$Result['content'] = $tpl->fetch( 'design:topic/view.tpl' );
-$Result['path'] = $topic->fetchPath();
+$Result['content'] = $resultContent;
+$Result['path']    = $topic->fetchPath();
 
 ?>

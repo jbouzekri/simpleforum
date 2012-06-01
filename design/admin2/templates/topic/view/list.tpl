@@ -1,6 +1,6 @@
 <tr class="simpleforum-topic_item {$class}">
     <td><input type="checkbox" name="delete_ids[]" value="{$topic.id}" /></td>
-    <td><a href="{$topic.url_alias|ezurl('no')}">{$topic.name}</a></td>
+    <td><a href="{$topic.url_alias|ezurl('no')}">{$topic.name|wash}</a></td>
     <td>{$topic.modified|l10n('shortdatetime')}</td>
     <td>{$topic.view_count}</td>
     <td>{$topic.response_count}</td>

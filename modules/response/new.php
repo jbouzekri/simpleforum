@@ -55,8 +55,8 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
     if (!count($errors))
     {
         $newResponse = SimpleForumResponse::create(array(
-            'name' => $name,
-            'content' => $content,
+            'name' => htmlspecialchars($name),
+            'content' => htmlspecialchars($content),
             'topic_id' => $topicID
         ));
         $newResponse->store();
