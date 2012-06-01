@@ -204,8 +204,9 @@ class SimpleForumTopic extends eZPersistentObject
         {
             $text = eZURLAliasML::findUniqueText(
                 $parentAlias[0]->attribute('id'),
-                eZURLAliasML::convertToAlias($this->attribute('name'))
-            );
+                eZURLAliasML::convertToAlias($this->attribute('name')),
+                null
+           );
             $urlAliasMl = eZURLAliasML::create(
                     $text,
                     'module:topic/view/'.$this->attribute('id'), 
@@ -648,5 +649,18 @@ class SimpleForumTopic extends eZPersistentObject
         }
         
         return $cleanURL;
+    }
+    
+    /**
+     * Return an array of attribute to generate cache keys
+     * 
+     * @return array
+     */
+    public function getCacheAttributes()
+    {
+        return array(
+            'type' => 'topic',
+            'id'   => $this->attribute('id')
+        );
     }
 }
