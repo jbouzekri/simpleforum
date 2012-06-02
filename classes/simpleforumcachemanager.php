@@ -1,27 +1,23 @@
 <?php
 
 /**
- * @file
- * Define a cache manager for simpleforum custom module/views 
+ * File containing the simpleForumCacheManager class.
  *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class simpleForumCacheManager simpleforumcachemanager.php
+@brief Define a cache manager for simpleforum custom module/views 
+*/
+
 class simpleForumCacheManager
 {
-    /**
-     * the singleton
-     * 
-     * @static
-     * @var simpleForumCacheManager
-     */
+    /// The singleton
     public static $instance = false;
     
-    /**
-     * The ezc cache storage file
-     * 
-     * @var ezcCacheStorageFile
-     */
+    /// The ezc cache storage file
     private $manager = false;
     
     /**

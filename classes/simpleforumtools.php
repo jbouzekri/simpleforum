@@ -1,12 +1,17 @@
 <?php
 
 /**
- * @file
- * Some functions used in simpleforum code
- * 
+ * File containing the SimpleForumTools class.
+ *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class SimpleForumTools simpleforumtools.php
+ @brief Some functions used in simpleforum code
+*/
+
 class SimpleForumTools {
 	
     /**

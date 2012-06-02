@@ -1,13 +1,18 @@
 <?php
 
 /**
- * @file
- * Define the simpleForumTopicSearch class which is used by ezfind search engine
- * for simpleForumTopic instance
+ * File containing the simpleForumTopicSearch class.
  *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class simpleForumTopicSearch simpleforumtopicsearch.php
+ @brief Define the simpleForumTopicSearch class which is used by ezfind search engine 
+for simpleForumTopic instance
+*/
+
 class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionProvider
 {
     /**
@@ -249,7 +254,7 @@ class simpleForumTopicSearch implements ezcBasePersistable, ezcSearchDefinitionP
      * Return the name of all properties
      * used in template for attribute(show) operator
      *
-     * @param array
+     * @return array
      */
     public function attributes()
     {

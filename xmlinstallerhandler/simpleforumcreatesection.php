@@ -1,13 +1,16 @@
 <?php
 
 /**
- * @file
- * Create a new section in ezxmlinstaller script
- * Copied from ezxmlinstaller handler to fix some bugs
+ * File containing the simpleForumCreateSection class.
  *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class simpleForumCreateSection simpleforumcreatesection.php
+ @brief Create a new section in ezxmlinstaller script. Copied from ezxmlinstaller handler to fix some bugs
+*/
 
 include_once('extension/ezxmlinstaller/classes/ezxmlinstallerhandler.php');
 
@@ -25,7 +28,7 @@ class simpleForumCreateSection extends eZXMLInstallerHandler
      *
      * @see eZXMLInstallerHandler::execute()
      *
-     * @param DOMElement $xml
+     * @param DOMElement $xmlNode
      *   the SimpleForumCreateSection dom element
      */
     function execute( $xmlNode )

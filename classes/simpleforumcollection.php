@@ -1,12 +1,17 @@
 <?php
 
 /**
- * @file
- * Define all custom fetch function used by this extension
- * 
+ * File containing the SimpleForumCollection class.
+ *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class SimpleForumCollection simpleforumcollection.php
+ @brief Define all custom fetch function used by this extension
+*/
+
 class SimpleForumCollection {
     
     /**

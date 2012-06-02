@@ -1,21 +1,35 @@
 <?php
 
 /**
- * @file
- * SimpleForumResponse object which represents a response to a forum topic
+ * File containing the SimpleForumResponse class.
  *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class SimpleForumResponse simpleforumresponse.php
+ @brief SimpleForumResponse object which represents a response to a forum topic
+*/
+
 class SimpleForumResponse extends eZPersistentObject
 {
+    /// A constant use for indexing object type
     const SEARCH_TYPE = 'response';
     
+    /// A constant use for validated state
     const STATUS_VALIDATED = 'VALIDATED';
+    
+    /// A constant use for moderated state
     const STATUS_MODERATED = 'MODERATED';
+    
+    /// A constant use for published state
     const STATUS_PUBLISHED = 'PUBLISHED';
-     
+    
+    /// The SimpleForumTopic which contains the response
     protected $topic = false;
+    
+    /// The eZUser author of the response
     protected $user  = false;
      
      /**

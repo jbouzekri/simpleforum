@@ -1,23 +1,41 @@
 <?php
 
 /**
- * @file
- * SimpleForumTopic object which represents a forum topic
+ * File containing the SimpleForumTopic class.
  *
  * @author jobou
  * @package simpleforum
- */ 
+ */
+
+/*!
+ @class SimpleForumTopic simpleforumtopic.php
+ @brief SimpleForumTopic object which represents a forum topic
+*/
+
 class SimpleForumTopic extends eZPersistentObject
 {
+     /// A constant use for validated state
      const STATUS_VALIDATED = 'VALIDATED';
+     
+     /// A constant use for moderated state
      const STATUS_MODERATED = 'MODERATED';
+     
+     /// A constant use for published state
      const STATUS_PUBLISHED = 'PUBLISHED';
+     
+     /// A constant use for closed state
      const STATUS_CLOSED    = 'CLOSED';
      
+     /// A constant use for indexing object type
      const SEARCH_TYPE = 'topic';
      
+     /// The eZContentObjectTree object containing the topic
      protected $forumNode = false;
+     
+     /// The eZUser author of the topic
      protected $user      = false;
+     
+     /// The eZContentLanguage of the topic
      protected $language  = false;
      
      /**

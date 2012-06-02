@@ -1,88 +1,50 @@
 <?php
 /**
- * @file
- * Define the simpleForumResponseSearch class which is used by ezfind search engine
- * for simpleForumResponse instance
+ * File containing the simpleForumResponseSearch class.
  * 
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class simpleForumResponseSearch simpleforumresponsesearch.php
+ @brief Define the simpleForumResponseSearch class which is used by ezfind search engine
+  for simpleForumResponse instance
+*/
+
 class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefinitionProvider
 {
-    /**
-     * Define the type of entity in search index
-     */
+    /// Define the type of entity in search index 
     const SEARCH_TYPE = 'response';
     
-    /**
-     * Id of solr search index
-     * 
-     * @var int $id
-     */
+    /// Id of solr search index
     public $id;
     
-    /**
-     * Id of the response
-     *
-     * @var int $entity_id
-     */
+    /// Id of the response
     public $entity_id;
     
-    /**
-     * Id of the topic
-     *
-     * @var int $parent_id
-     */
+    /// Id of the topic
     public $parent_id;
     
-    /**
-     * type of the entity
-     * In this class, its value is always "response"
-     *
-     * @var string $type
-     */
+    /// type of the entity. In this class, its value is always "response"
     public $type;
     
-    /**
-     * Url of the topic
-     *
-     * @var string $url
-     */
+    /// Url of the topic
     public $url;
     
-    /**
-     * Language of the response
-     *
-     * @var string $language_code
-     */
+    /// Language of the response
     public $language_code;
     
-    /**
-     * Content of the response
-     *
-     * @var string $content
-     */
+    /// Content of the response
     public $content;
     
-    /**
-     * Publication/Creation date of the response
-     *
-     * @var int $published
-     */
+    /// Publication/Creation date of the response. Timestamp.
     public $published;
     
-    /**
-     * Last modification date of the response
-     *
-     * @var int $modified
-     */
+    /// Last modification date of the response. Timestamp.
     public $modified;
     
-    /**
-     * SimpleForumResponse object related to the solr response index
-     *
-     * @var SimpleForumResponse $ez_object
-     */
+    /// SimpleForumResponse object related to the solr response index
     public $ez_object = false;
     
     /**
@@ -226,10 +188,11 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
     }
     
     /**
-     * Return the value of a property
-     * used in template for attribute(show) operator
+     * Return the value of a property. 
+     * Used in template for attribute(show) operator
      * 
      * @param string $name
+     *     The name of the property to return
      * 
      * @return string
      */
@@ -244,10 +207,10 @@ class simpleForumResponseSearch implements ezcBasePersistable, ezcSearchDefiniti
     }
     
     /**
-     * Return the name of all properties
-     * used in template for attribute(show) operator
+     * Return the name of all properties. 
+     * Used in template for attribute(show) operator
      *
-     * @param array
+     * @return array
      */
     public function attributes()
     {

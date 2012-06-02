@@ -1,13 +1,17 @@
 <?php
 
 /**
- * @file
- * Factory used to instanciate the forum search engine according
- * to the configuration
+ * File containing the simpleForumSearch class.
  *
  * @author jobou
  * @package simpleforum
  */
+
+/*!
+ @class simpleForumSearch simpleforumsearch.php
+ @brief Factory used to instanciate the forum search engine according to the configuration
+*/
+
 class simpleForumSearch
 {
     /**
