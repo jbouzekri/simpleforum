@@ -53,6 +53,7 @@ if (!$response->canDelete())
 
 $response->remove();
 $response->topic()->decResponseCount();
+simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'topic','id'=>$response->attribute('topic_id')),true);
 
 if ($http->variable('ajax'))
 {

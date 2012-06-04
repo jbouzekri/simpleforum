@@ -65,6 +65,8 @@ elseif ($action == 'reset' || $response->canResetVote())
 	$response->resetVote();
 }
 
+simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'topic','id'=>$response->attribute('topic_id')),true);
+
 if ($http->variable('ajax'))
 {
         $Result = array();

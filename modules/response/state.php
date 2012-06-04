@@ -56,6 +56,7 @@ if (in_array(strtoupper($newState), SimpleForumResponse::availableStates()))
 {
     $response->setAttribute('state', strtoupper($newState));
     $response->store();
+    simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'topic','id'=>$response->attribute('topic_id')),true);
 }
 
 if ($http->variable('ajax'))
