@@ -9,11 +9,12 @@
  * @package simpleforum
  */
 
-$Module = $Params['Module'];
-$http = eZHTTPTool::instance();
+$Module        = $Params['Module'];
+$http          = eZHTTPTool::instance();
+$cacheManager  = simpleForumCacheManager::getezcManager();
 
-$offset  = $Params['Offset'];
-$forumID = $Params['ForumID'];
+$offset   = $Params['Offset'];
+$forumID  = $Params['ForumID'];
 $language = $Params['Language'];
 
 $forum = eZContentObjectTreeNode::fetch($forumID);
@@ -86,8 +87,21 @@ $tpl->setVariable('forum',    $forum);
 
 $tpl->setVariable('view_parameters', $viewParameters);
 
+$cacheKey = 'topic_list_'.$forumID.'_'.$offset.'_'.$language;
+$cacheAttributes = array( 'type'=>'list_topic', 'id'=>$forumID, 'language_code' => $language );
+if ( ( $resultContent = $cacheManager->restore( $cacheKey, $cacheAttributes ) ) === false )
+{
+    $resultContent = $tpl->fetch( 'design:topic/list.tpl' );
+    $cacheManager->store( $cacheKey, $resultContent, $cacheAttributes );
+}
+else
+{
+    eZDebug::writeDebug('View cache loaded');
+}
+
+
 $Result = array();
-$Result['content'] = $tpl->fetch( 'design:topic/list.tpl' );
+$Result['content'] = $resultContent;
 $Result['path'] = array( array( 'url' => 'topic/list',
                                 'text' => 'List Topic' ) );
 

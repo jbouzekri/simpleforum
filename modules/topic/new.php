@@ -86,6 +86,7 @@ if( $http->hasPostVariable('NewButton') || $Module->isCurrentAction('New') )
         {
             $newTopic->incForumTopicCount();
             eZContentCacheManager::clearContentCacheIfNeeded( $forum->object()->ID );
+            simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'list_topic','id'=>$forumID),true);
             return $Module->redirectTo('/topic/view/'.$newTopic->id);
         }
         else

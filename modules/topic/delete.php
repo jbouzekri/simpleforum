@@ -54,6 +54,7 @@ if (!$topic->canDelete())
 $topic->remove();
 $topic->decForumTopicCount();
 eZContentCacheManager::clearContentCacheIfNeeded( $topic->forumNode()->object()->ID );
+simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'list_topic','id'=>$topic->attribute('node_id')),true);
 
 if ($http->variable('ajax'))
 {
