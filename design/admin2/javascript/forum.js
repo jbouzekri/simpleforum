@@ -5,7 +5,7 @@
 
 jQuery(function( $ )
 {
-    $('.context-information .actions a, .simpleforum-topic_item .actions a, simpleforum-response_item .actions a').click(function(){
+    $('.context-information .actions a, .simpleforum-topic_item .actions a, .simpleforum-response_item .actions a').click(function(){
         var url = $(this).attr('href');
         $.ajax({
             url: url+'?ajax=1',

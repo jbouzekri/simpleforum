@@ -41,7 +41,7 @@ class simpleForumCacheManager
         }
         catch (ezcCacheInvalidIdException $e)
         {
-            ezcCacheManager::createCache( 'simpleforum', $basePath.'/simpleforum', 'ezcCacheStoragePlain', $options );
+            ezcCacheManager::createCache( 'simpleforum', $basePath.'/simpleforum', 'ezcCacheStorageFilePlain', $options );
             $this->manager = ezcCacheManager::getCache('simpleforum');
         }
     }
