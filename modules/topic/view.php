@@ -73,7 +73,11 @@ $tpl->setVariable('topic',    $topic);
 $tpl->setVariable('view_parameters', $viewParameters);
 
 $cacheKey = 'topic_view_'.$topicID.'_'.$offset;
-if ( ( $resultContent = $cacheManager->restore( $cacheKey, $topic->getCacheAttributes() ) ) === false )
+if (eZINI::instance()->variable('SimpleForumCacheSettings','CacheEnabled') == 'disabled')
+{
+    $resultContent = $tpl->fetch( 'design:topic/view.tpl' );
+}
+elseif ( ( $resultContent = $cacheManager->restore( $cacheKey, $topic->getCacheAttributes() ) ) === false )
 {
     $resultContent = $tpl->fetch( 'design:topic/view.tpl' );
     $cacheManager->store( $cacheKey, $resultContent, $topic->getCacheAttributes() );

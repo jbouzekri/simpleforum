@@ -57,6 +57,10 @@ if (in_array(strtoupper($newState), SimpleForumTopic::availableStates()))
     $topic->setAttribute('state', strtoupper($newState));
     $topic->store();
     eZContentCacheManager::clearContentCacheIfNeeded( $topic->forumNode()->object()->ID );
+    if (eZINI::instance()->variable('SimpleForumCacheSettings','CacheEnabled') != 'disabled')
+    {
+        simpleForumCacheManager::getezcManager()->delete(null, array('type'=>'list_topic','id'=>$topic->attribute('node_id')),true);
+    }
 }
 
 if ($http->variable('ajax'))

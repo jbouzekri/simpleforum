@@ -17,6 +17,9 @@ ShowModeratedForumItems=true
 #   simpleForumSearch default search engine directly in current database
 SearchEngine=simpleForumSolr
 
+[SimpleForumCacheSettings]
+CacheEnabled=enabled
+
 [Cache]
 CacheItems[]=simpleforum
 

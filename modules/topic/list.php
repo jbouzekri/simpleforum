@@ -89,7 +89,11 @@ $tpl->setVariable('view_parameters', $viewParameters);
 
 $cacheKey = 'topic_list_'.$forumID.'_'.$offset.'_'.$language;
 $cacheAttributes = array( 'type'=>'list_topic', 'id'=>$forumID, 'language_code' => $language );
-if ( ( $resultContent = $cacheManager->restore( $cacheKey, $cacheAttributes ) ) === false )
+if (eZINI::instance()->variable('SimpleForumCacheSettings','CacheEnabled') == 'disabled')
+{
+    $resultContent = $tpl->fetch( 'design:topic/list.tpl' );
+}
+elseif ( ( $resultContent = $cacheManager->restore( $cacheKey, $cacheAttributes ) ) === false )
 {
     $resultContent = $tpl->fetch( 'design:topic/list.tpl' );
     $cacheManager->store( $cacheKey, $resultContent, $cacheAttributes );
