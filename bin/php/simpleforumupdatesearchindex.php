@@ -88,14 +88,20 @@ if ($searchEngine == 'simpleForumSolr')
 // Instantiate search engine
 $simpleForumSearch = new $searchEngine();
 
-if ( $options['clean'] )
+$indexation = eZSiteData::fetchByName( 'simpleforum_last_indexation' );
+if ( $options['clean'] || !$indexation )
 {
     $cli->output( "Cleaning up all forum search data" );
     $simpleForumSearch->cleanUp();
+    $topics = SimpleForumTopic::fetchList();
+}
+else
+{
+    $topics = SimpleForumTopic::fetchList(array(
+        'modified' => array('>=', $indexation->attribute('value'))
+    ));
 }
 
-// Fetch topic to index
-$topics = SimpleForumTopic::fetchList();
 foreach ($topics as $topic)
 {
     // Index topic
@@ -113,6 +119,12 @@ if ($simpleForumSearch->needCommit())
 {
     $simpleForumSearch->commit();
 }
+
+$siteData = new eZSiteData(array(
+        'name' => 'simpleforum_last_indexation',
+        'value' => time()
+));
+$siteData->store();
 
 $script->shutdown( 0 );
 

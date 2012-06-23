@@ -250,13 +250,7 @@ class SimpleForumTopic extends eZPersistentObject
      * @return array
      */
     public static function fetchList(array $cond=array(), $limit = null, $sortBy = null, $asObject = true)
-    {
-        if (!isset($cond['node_id']))
-        {
-            $contentIni = eZINI::instance('content.ini.append.php');
-            $cond['node_id'] = $contentIni->variable('NodeSettings', 'ForumRootNode');
-        }
-        
+    {       
         $list = eZPersistentObject::fetchObjectList( 
                 self::definition(), null, $cond, $sortBy, $limit, $asObject 
         );
