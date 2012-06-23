@@ -2,7 +2,7 @@
 
 # Configure the forum arborescence root node id
 [NodeSettings]
-ForumRootNode=63
+ForumRootNode=__FORUM_NODE_ID__
 
 */
 

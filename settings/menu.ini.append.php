@@ -7,8 +7,8 @@ Tabs[]=forum
 # Configure the forum tab link in admin
 [Topmenu_forum]
 URL[]
-URL[default]=content/view/full/63
-URL[browse]=content/browse/63
+URL[default]=content/view/full/__FORUM_NODE_ID__
+URL[browse]=content/browse/__FORUM_NODE_ID__
 NavigationPartIdentifier=ezforumnavigationpart
 Name=Forum
 Tooltip=Manage the forum of the site.
@@ -20,7 +20,7 @@ Shown[]
 Shown[default]=true
 Shown[navigation]=true
 Shown[browse]=true
-PolicyList[]=63
+PolicyList[]=__FORUM_NODE_ID__
 
 # Configure the left menu in forum section
 [Leftmenu_forum]

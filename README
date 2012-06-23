@@ -1,0 +1,42 @@
+- SimpleForum 0.1 extension information
+
+About SimpleForum
+=====================
+
+Provide forum functionnality in eZPublish :
+- back office administration interface
+- fetch function to quickly build templates
+- indexation of content in search engine
+- roles and security policies
+
+The main philosophy is to pull out all forum topics and response from the eZ Publish 
+content and node systems and store them in custom ezpersistentobject in order to attain 
+high performance even with high number of contributions.
+
+Installation
+============
+
+In order to install this extension, you need to install ezxmlinstaller extension :
+https://github.com/ezsystems/ezxmlinstaller
+
+As for all ezpublish extension, move the simpleforum folder to the extension directory
+of your ezpublish installation.
+
+In your ezpublish root folder, launch the command :
+php extension/ezxmlinstaller/bin/php/xmlinstaller.php --file=extension/simpleforum/install/installer.xml
+
+Verify if the installation was successful :
+- In the file extension/simpleforum/settings/content.ini.append.php, the value of the variable 
+ForumRootNode in the section NodeSettings must be the node id of the newly created "Forum" node.
+- In the file extension/simpleforum/settings/contentstructuremenu.ini.append.php, the value of the 
+variable ForumRootNodeID in the section TreeMenu must be the node id of the newly created "Forum" node.
+- In the file extension/simpleforum/settings/menu.ini.append.php, the value of the variable URL in 
+the section Topmenu_forum must user the node id of the newly created "Forum" node.
+
+If there is a problem in these file or if the value has not been replaced and you see the string :
+__FORUM_NODE_ID__, get the node_id of the newly created Forum node directly in your database
+thanks to this request :
+SELECT     node_id 
+FROM       ezcontentobject_tree t 
+INNER JOIN ezcontentobject_name n ON t.contentobject_id=n.contentobject_id 
+WHERE      n.name='Forum';

@@ -2,7 +2,7 @@
 
 [TreeMenu]
 # Set the forum tree root node id
-ForumRootNodeID=63
+ForumRootNodeID=__FORUM_NODE_ID__
 # Add the forum class to show in the forum left tree
 ShowClasses[]=forum
 # Enabled the dynamic tree
