@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+-- Table simpleforum_topic
+-- -----------------------------------------------------
 CREATE TABLE simpleforum_topic (
   id int(11) NOT NULL auto_increment,
   node_id int(11) NOT NULL default '0',
@@ -13,6 +16,9 @@ CREATE TABLE simpleforum_topic (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+-- -----------------------------------------------------
+-- Table simpleforum_response
+-- -----------------------------------------------------
 CREATE TABLE simpleforum_response (
   id int(11) NOT NULL auto_increment,
   topic_id int(11) NOT NULL default '0',
